@@ -1,0 +1,36 @@
+html{
+  display: flex;
+  justify-content: center;
+  justify-self: center;
+  margin-top: 300px;
+  margin-left: 400px;
+  margin-right: 400px;
+  background-color: #ff8300;
+  border-radius: 30px;
+}
+#wrapper{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+h1{
+  text-align: center;
+}
+body{
+  background-color: #ff8300;
+}
+
+#loginbttn{
+  width: 150px;
+  height: 40px;
+  border-radius: 30px;
+  background-color: #ffc400;
+}
+
+#registerbttn{
+  width: 150px;
+  height: 40px;
+  border-radius: 30px;
+  background-color: #ffc400;
+}

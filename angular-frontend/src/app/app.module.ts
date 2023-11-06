@@ -26,7 +26,8 @@ const routes: Routes = [
   { path: 'profile', component: UserProfileComponent},
   { path: 'editProfile', component: UserProfileEditComponent},
   { path: 'passwordChange', component: PasswordChangeComponent},
-  { path: 'login', component: LoginComponent}
+  { path: 'login', component: LoginComponent},
+  { path: 'register', component: RegisterComponent},
 ];
 @NgModule({
   declarations: [

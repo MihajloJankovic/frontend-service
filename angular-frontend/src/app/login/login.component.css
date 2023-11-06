@@ -75,22 +75,38 @@ button.login-button:hover {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
-/* Za osnovni izgled Toastr poruka */
 .ngx-toastr {
   position: fixed;
   z-index: 10000;
 }
 
-/* Stil za različite vrste poruka (success, error, warning) */
 .toast-success {
-  background-color: #28a745; /* Promenite boju prema vašem dizajnu */
+  background-color: #28a745;
 }
 
 .toast-error {
-  background-color: #dc3545; /* Promenite boju prema vašem dizajnu */
+  background-color: #dc3545;
 }
 
 .toast-warning {
-  background-color: #ffc107; /* Promenite boju prema vašem dizajnu */
+  background-color: #ffc107;
+}
+
+.signup-link {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 16px;
+  color: #333;
+}
+
+.signup-link a {
+  color: #007BFF;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s;
+}
+
+.signup-link a:hover {
+  color: #0056b3;
 }
 

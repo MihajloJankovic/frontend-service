@@ -1,7 +1,8 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {ActivatedRoute, Router} from '@angular/router';
-import {AuthService} from '../services/auth.service';
+import {Component} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import {DialogComponent} from "../dialog/dialog.component";
 
 
 
@@ -11,51 +12,44 @@ import {AuthService} from '../services/auth.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
-  title = 'Login';
+export class LoginComponent{
+  loginForm: FormGroup;
+  private dialogIsOpen = false;
 
-  formLogin = new FormGroup({
-    username: new FormControl(''),
-    password: new FormControl('')
-  });
-
-  submitted = false;
-
-  private returnUrl: any;
-  public a: any;
-
-  constructor(
-    private authService: AuthService,
-    private router: Router,
-    private route: ActivatedRoute,
-    private formBuilder: FormBuilder
-  ) {
+  constructor(private fb: FormBuilder, private router: Router, private dialog: MatDialog) {
+    this.loginForm = this.fb.group({
+      username: ['', Validators.required],
+      password: ['', Validators.required]
+    });
   }
 
-  ngOnInit() {
+  openDialog(message: string) {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      data: { message: message },
+    });
 
-    // get return url from route parameters or default to '/'
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-
+    dialogRef.afterClosed().subscribe(() => {
+      if (message === 'Login successful') {
+        this.router.navigate(['/profile']);
+      }
+    });
   }
 
+  submitForm() {
+    const username = this.loginForm.get('username')?.value;
+    const password = this.loginForm.get('password')?.value;
 
-  back()
-  {
-    let returnUrl : String;
-    returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-    this.router.navigate([returnUrl]);
-  }
-  onSubmit() {
-    /**
-     * Innocent until proven guilty
-     */
+    let message: string;
 
-    this.submitted = true;
-    console.warn('Your order has been submitted', this.formLogin.value);
-    this.authService.login(this.formLogin.value)
+    if (!username || !password) {
+      message = 'Both username and password are required.';
+    } else if (username === 'Perica' && password === 'pera321') {
+      message = 'Login successful';
+    } else {
+      message = 'Invalid credentials. Please check your username and password.';
+    }
 
-
+    this.openDialog(message);
   }
 }
 

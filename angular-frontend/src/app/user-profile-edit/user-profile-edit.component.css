@@ -71,7 +71,7 @@ button.save-button {
   font-size: 18px;
   transition: background 0.3s;
   display: block;
-  margin: 0 auto; 
+  margin: 0 auto;
 }
 
 button.save-button:hover {

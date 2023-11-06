@@ -16,12 +16,17 @@ import { HomeComponent } from './home/home.component';
 import {NoopAnimationsModule} from "@angular/platform-browser/animations";
 import {CommonModule} from "@angular/common";
 import { UserProfileEditComponent } from './user-profile-edit/user-profile-edit.component';
+import { ToastrModule } from 'ngx-toastr';
+import { DialogComponent } from './dialog/dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
+
 
 
 const routes: Routes = [
   { path: 'profile', component: UserProfileComponent},
   { path: 'editProfile', component: UserProfileEditComponent},
   { path: 'passwordChange', component: PasswordChangeComponent},
+  { path: 'login', component: LoginComponent}
 ];
 @NgModule({
   declarations: [
@@ -32,6 +37,7 @@ const routes: Routes = [
     LoginComponent,
     HomeComponent,
     UserProfileEditComponent,
+    DialogComponent,
 
   ],
   imports: [
@@ -44,6 +50,7 @@ const routes: Routes = [
     NoopAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
+    MatDialogModule,
   ],
   exports: [RouterModule],
 

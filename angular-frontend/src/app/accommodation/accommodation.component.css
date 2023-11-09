@@ -4,9 +4,9 @@ html, body, div, h1, h2, p, ul, li, button, img {
   padding: 0;
   border: 0;
 }
-
 body {
   font-family: Arial, sans-serif;
+  background: linear-gradient(to bottom, #00b2ff, #fff);
 }
 
 .accommodation-container {

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Accommodation Details</title>
+  <link rel="stylesheet" href="accommodation.component.css">
+</head>
+<body>
+<div class="accommodation-container">
+  <div class="accommodation-header">
+    <h1>{{ accommodationTitle }}</h1>
+  </div>
+  <div class="accommodation-gallery">
+    <div class="gallery-wrapper">
+      <div class="image-container">
+        <button class="arrow left" (click)="prevImage()" *ngIf="arrows[0]">&#8249;</button>
+        <img [src]="currentImage" alt="Accommodation Image">
+        <button class="arrow right" (click)="nextImage()" *ngIf="arrows[1]">&#8250;</button>
+      </div>
+
+    </div>
+
+
+  </div>
+  <div class="accommodation-body">
+    <div class="accommodation-description">
+      <h2>Description</h2>
+      <p>{{ accommodationDescription }}</p>
+    </div>
+    <div class="accommodation-facilities">
+      <h2>Facilities</h2>
+      <ul>
+        <li *ngFor="let facility of facilities">{{ facility }}</li>
+      </ul>
+    </div>
+    <div class="accommodation-location">
+      <h2>Location</h2>
+      <p>{{ locationDescription }}</p>
+    </div>
+    <div class="accommodation-container">
+      <button class="reserve-button" (click)="openReservationDialog()">Reserve accommodation</button>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -19,7 +19,8 @@ import { UserProfileEditComponent } from './user-profile-edit/user-profile-edit.
 import { ToastrModule } from 'ngx-toastr';
 import { DialogComponent } from './dialog/dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
-
+import { AccommodationComponent } from './accommodation/accommodation.component';
+import { ReservationComponent } from './reservation/reservation.component';
 
 
 const routes: Routes = [
@@ -28,6 +29,7 @@ const routes: Routes = [
   { path: 'passwordChange', component: PasswordChangeComponent},
   { path: 'login', component: LoginComponent},
   { path: 'register', component: RegisterComponent},
+  { path: 'accommodation', component: AccommodationComponent}
 ];
 @NgModule({
   declarations: [
@@ -39,8 +41,10 @@ const routes: Routes = [
     HomeComponent,
     UserProfileEditComponent,
     DialogComponent,
-
+    AccommodationComponent,
+    ReservationComponent,
   ],
+
   imports: [
     BrowserModule,
     CommonModule,

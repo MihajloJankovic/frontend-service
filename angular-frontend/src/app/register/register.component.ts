@@ -3,12 +3,13 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from "../dialog/dialog.component";
-
+import { ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  styleUrls: ['./register.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class RegisterComponent {
   registerForm: FormGroup;
@@ -21,7 +22,7 @@ export class RegisterComponent {
       name: ['', Validators.required],
       surname: ['', Validators.required],
       gender: ['', Validators.required],
-      birthDate: [null],
+      birthDate: new FormControl(null, Validators.required),
       username: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
@@ -29,13 +30,7 @@ export class RegisterComponent {
   });
   }
 
-  onDateChange(event:any) {
-    const birthDateControl = this.registerForm.get('birthDate');
 
-    if (birthDateControl) {
-      console.log(birthDateControl.value);
-    }
-  }
 
   openDialog(message: string) {
     const dialogRef = this.dialog.open(DialogComponent, {

@@ -20,11 +20,12 @@ import { DialogComponent } from './dialog/dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { AccommodationComponent } from './accommodation/accommodation.component';
 import { ReservationComponent } from './reservation/reservation.component';
-import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-import {MatInputModule} from "@angular/material/input";
-import {MatNativeDateModule} from "@angular/material/core";
-import {MatDatepickerModule} from "@angular/material/datepicker";
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 import {CalendarModule} from "primeng/calendar";
+import {MatInputModule} from "@angular/material/input";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatIconModule} from "@angular/material/icon";
 
 
 const routes: Routes = [
@@ -62,6 +63,11 @@ const routes: Routes = [
     MatDialogModule,
     BrowserAnimationsModule,
     CalendarModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule,
   ],
   exports: [RouterModule],
 

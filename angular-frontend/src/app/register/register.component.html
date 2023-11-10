@@ -32,7 +32,11 @@
         </div>
         <div class="form-group">
           <label for="birthDate">Birth date</label>
-          <p-calendar id="birthDate" formControlName="birthDate" (ngModelChange)="onDateChange($event)"></p-calendar>
+          <div class="custom-datepicker-input-container">
+            <input readonly matInput [matDatepicker]="picker" formControlName="birthDate" id="birthDate" class="custom-datepicker-input" (focus)="picker.open()">
+            <mat-datepicker #picker class="custom-datepicker"></mat-datepicker>
+            <i class="material-icons">calendar_today</i>
+          </div>
         </div>
 
         <div class="form-group">

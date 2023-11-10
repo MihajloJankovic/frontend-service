@@ -13,14 +13,18 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
-import {NoopAnimationsModule} from "@angular/platform-browser/animations";
+import {NoopAnimationsModule, BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {CommonModule} from "@angular/common";
 import { UserProfileEditComponent } from './user-profile-edit/user-profile-edit.component';
-import { ToastrModule } from 'ngx-toastr';
 import { DialogComponent } from './dialog/dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { AccommodationComponent } from './accommodation/accommodation.component';
 import { ReservationComponent } from './reservation/reservation.component';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import {MatInputModule} from "@angular/material/input";
+import {MatNativeDateModule} from "@angular/material/core";
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {CalendarModule} from "primeng/calendar";
 
 
 const routes: Routes = [
@@ -56,6 +60,8 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     MatDialogModule,
+    BrowserAnimationsModule,
+    CalendarModule,
   ],
   exports: [RouterModule],
 

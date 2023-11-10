@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from "../dialog/dialog.component";
+
 
 @Component({
   selector: 'app-register',
@@ -11,18 +12,29 @@ import { DialogComponent } from "../dialog/dialog.component";
 })
 export class RegisterComponent {
   registerForm: FormGroup;
-  private dialogIsOpen = false;
 
   constructor(private fb: FormBuilder, private router: Router, private dialog: MatDialog) {
+
+
+
     this.registerForm = this.fb.group({
       name: ['', Validators.required],
       surname: ['', Validators.required],
       gender: ['', Validators.required],
+      birthDate: [null],
       username: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', [Validators.required, Validators.minLength(6)]]
   });
+  }
+
+  onDateChange(event:any) {
+    const birthDateControl = this.registerForm.get('birthDate');
+
+    if (birthDateControl) {
+      console.log(birthDateControl.value);
+    }
   }
 
   openDialog(message: string) {

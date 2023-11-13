@@ -14,10 +14,10 @@
     <h2 class="dialog-title">Reservation</h2>
     <form [formGroup]="reservationForm" class="dialog-form" (ngSubmit)="submitReservation()">
       <label for="name">Name:</label>
-      <input type="text" id="name" formControlName="name" class="dialog-input">
+      <input type="text" id="name" formControlName="name" class="dialog-input" readonly>
 
       <label for="email">Email:</label>
-      <input type="email" id="email" formControlName="email" class="dialog-input">
+      <input type="email" id="email" formControlName="email" class="dialog-input" readonly>
 
       <label for="checkIn">Check-In Date:</label>
       <input type="date" id="checkIn" formControlName="checkIn" class="dialog-input">

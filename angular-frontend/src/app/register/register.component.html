@@ -12,33 +12,34 @@
     <h1>Register</h1>
   </div>
   <form class="login-form" (ngSubmit)="submitForm()" [formGroup]="registerForm">
+    <hr>
     <div class="form-content">
       <div>
         <div class="form-group">
-          <label for="name">Name</label>
-          <input type="text" id="name" formControlName="name" required>
+          <label for="firstname">Firstname</label>
+          <input type="text" id="firstname" formControlName="firstname" required>
         </div>
         <div class="form-group">
-          <label for="surname">Surname</label>
-          <input type="text" id="surname" formControlName="surname" required>
+          <label for="lastname">Lastname</label>
+          <input type="text" id="lastname" formControlName="lastname" required>
         </div>
         <div class="form-group">
           <label for="gender">Gender</label>
           <select id="gender" formControlName="gender" required>
             <option value="male">Male</option>
             <option value="female">Female</option>
-            <option value="other">Other</option>
           </select>
         </div>
         <div class="form-group">
           <label for="birthDate">Birth date</label>
           <div class="custom-datepicker-input-container">
-            <input readonly matInput [matDatepicker]="picker" formControlName="birthDate" id="birthDate" class="custom-datepicker-input" (focus)="picker.open()">
+            <input readonly matInput [matDatepicker]="picker" formControlName="birthDate" id="birthDate" placeholder="Choose a date" class="custom-datepicker-input" (focus)="picker.open()">
             <mat-datepicker #picker class="custom-datepicker"></mat-datepicker>
             <i class="material-icons">calendar_today</i>
           </div>
         </div>
-
+      </div>
+      <div>
         <div class="form-group">
           <label for="username">Username</label>
           <input type="text" id="username" formControlName="username" required>
@@ -57,7 +58,6 @@
         </div>
       </div>
       <div id="address-segment">
-        <h2>Address details</h2>
         <div class="form-group">
           <label for="street">Street</label>
           <input type="text" id="street" formControlName="street" required>
@@ -76,8 +76,10 @@
         </div>
       </div>
     </div>
+    <hr>
     <button type="submit" class="login-button">Register</button>
   </form>
+  <br>
   <p class="login-link">Have an account? <a href="/login">Login here</a></p>
 </div>
 </body>

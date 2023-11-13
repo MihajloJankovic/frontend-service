@@ -1,7 +1,10 @@
-html, body, div, h1, form, label, input, button {
+/* Dodaj ove stilove u user-profile-edit.component.css */
+
+html, body, div, h1, form, label, input, button, a {
   margin: 0;
   padding: 0;
   border: 0;
+  text-decoration: none;
 }
 
 body {
@@ -17,7 +20,7 @@ body {
   background: #fff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   border-radius: 8px;
-  width: 400px;
+  width: fit-content;
   padding: 20px;
   text-align: center;
 }
@@ -36,6 +39,12 @@ body {
   text-align: left;
 }
 
+.form-content {
+  display: flex;
+  flex-direction: row;
+  gap: 60px;
+}
+
 label {
   font-weight: 600;
   color: #333;
@@ -43,11 +52,15 @@ label {
   margin-bottom: 5px;
 }
 
+.form-group {
+  margin-bottom: 15px;
+}
+
 input[type="text"],
 input[type="email"],
+input[type="password"],
 input[type="tel"] {
-  width: 95%;
-  max-width: 100%;
+  width: 100%;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -57,11 +70,21 @@ input[type="tel"] {
 
 input[type="text"]:focus,
 input[type="email"]:focus,
+input[type="password"]:focus,
 input[type="tel"]:focus {
   border-color: #007BFF;
 }
 
-button.save-button {
+.form-group select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+.save-button {
   background: #007BFF;
   color: #fff;
   border: none;
@@ -70,11 +93,9 @@ button.save-button {
   cursor: pointer;
   font-size: 18px;
   transition: background 0.3s;
-  display: block;
-  margin: 0 auto;
 }
 
-button.save-button:hover {
+.save-button:hover {
   background: #0056b3;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }

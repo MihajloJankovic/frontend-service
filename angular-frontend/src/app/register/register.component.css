@@ -87,6 +87,7 @@ input[type="password"]:focus {
 
 .form-group select {
   width: 100%;
+  height: 46px;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -140,7 +141,10 @@ a {
   visibility: visible;
 
 }
-
+hr {
+  border: 1px solid #002e64;
+  margin: 20px 0;
+}
 /* Stilovi za MatDatepickerToggle */
 .custom-datepicker-toggle {
   cursor: pointer;

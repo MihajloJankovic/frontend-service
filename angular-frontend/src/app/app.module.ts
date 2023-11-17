@@ -26,6 +26,8 @@ import {CalendarModule} from "primeng/calendar";
 import {MatInputModule} from "@angular/material/input";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatIconModule} from "@angular/material/icon";
+import { AccommodationsComponent } from './accommodations/accommodations.component';
+
 
 
 const routes: Routes = [
@@ -34,7 +36,8 @@ const routes: Routes = [
   { path: 'passwordChange', component: PasswordChangeComponent},
   { path: 'login', component: LoginComponent},
   { path: 'register', component: RegisterComponent},
-  { path: 'accommodation', component: AccommodationComponent}
+  { path: 'accommodation', component: AccommodationComponent},
+  { path: 'accommodations', component: AccommodationsComponent}
 ];
 @NgModule({
   declarations: [
@@ -48,6 +51,7 @@ const routes: Routes = [
     DialogComponent,
     AccommodationComponent,
     ReservationComponent,
+    AccommodationsComponent,
   ],
 
   imports: [

@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
-import {HttpHeaders, HttpStatusCode} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpStatusCode} from '@angular/common/http';
 
 import { ConfigService} from '../services/config.service';
-import { catchError, map } from 'rxjs/operators';
+import {catchError, map, tap} from 'rxjs/operators';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ApiService} from "../services/api.service";
 import {UserService} from "../services/user.service";
 import { JwtHelperService } from '@auth0/angular-jwt';
+import {Observable} from "rxjs";
 @Injectable({providedIn: 'root'})
 export class AuthService {
 
@@ -14,6 +15,7 @@ export class AuthService {
     public jwtHelper: JwtHelperService,
     private apiService: ApiService,
     private userService: UserService,
+    private http: HttpClient,
     private config: ConfigService,
     private router: Router,
     private route: ActivatedRoute,
@@ -40,9 +42,9 @@ export class AuthService {
     });
     // const body = `username=${user.username}&password=${user.password}`;
     const body = {
-      'newPassword': user.NewPassword,
-      'oldPassword1': user.oldPassword1,
-      'oldPassword2': user.oldPassword2
+      'currentPassword': user.currentPassword,
+      'newPassword': user.newPassword,
+      'confirmPassword': user.confirmPassword
     };
     return this.apiService.post(this.config._passwordChange_url, JSON.stringify(body), loginHeaders)
       .subscribe((res) => {
@@ -53,34 +55,37 @@ export class AuthService {
           console.log('Change success');
           let returnUrl : String;
           returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-          this.router.navigate([returnUrl + "/HomePage"]);
+          this.router.navigate([returnUrl + "/login"]);
         }
       });
   }
   private _access_token = null;
-  login(user:any) {
-    if (user.username === 'pera123' && user.password === 'pera321') {
-      console.log('Login success');
-      let returnUrl: String;
-      returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-      this.router.navigate([returnUrl + "/profile"]);
-    } else {
-      alert("Wrong Login credentials!!!");
-    }
+
+  login(user: any): Observable<any> {
+    const loginHeaders = new HttpHeaders({
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    });
+
+    return this.http.post<any>(this.config._login_url, user, { headers: loginHeaders })
+      .pipe(
+        tap(response => {
+          this._access_token = response.headers.get('jwt');
+          localStorage.setItem('jwt', response.jwt);
+        })
+      );
   }
 
-  logout() {
-    this.userService.currentUser = null;
+  logout(): void {
     this._access_token = null;
-    this.router.navigate(['/login']);
+    localStorage.removeItem('jwt');
   }
 
   tokenIsPresent() {
-    return this._access_token != undefined && this._access_token != null;
+    return this._access_token !== undefined && this._access_token !== null;
   }
 
   getToken() {
     return this._access_token;
   }
-
 }

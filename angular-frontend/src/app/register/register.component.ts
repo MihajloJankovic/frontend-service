@@ -22,12 +22,13 @@ export class RegisterComponent {
       firstname: ['', Validators.required],
       lastname: ['', Validators.required],
       gender: ['', Validators.required],
+      role: ['', Validators.required],
       birthDate: new FormControl(null, Validators.required),
       username: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', [Validators.required, Validators.minLength(6)]]
-  });
+    });
   }
 
 
@@ -52,5 +53,6 @@ export class RegisterComponent {
       const message = 'Invalid form data. Please check the fields.';
       this.openDialog(message);
     }
+
   }
 }

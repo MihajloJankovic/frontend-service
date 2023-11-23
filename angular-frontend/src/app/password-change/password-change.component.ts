@@ -3,6 +3,7 @@ import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {DialogComponent} from "../dialog/dialog.component";
 import {Router} from "@angular/router";
+import {AuthService} from "../services/auth.service";
 
 @Component({
   selector: 'app-password-change',
@@ -12,7 +13,7 @@ import {Router} from "@angular/router";
 export class PasswordChangeComponent {
   changePasswordForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private dialog: MatDialog, private router: Router) {
+  constructor(private fb: FormBuilder, private dialog: MatDialog, private router: Router, private auth: AuthService) {
     this.changePasswordForm = this.fb.group({
       currentPassword: ['', Validators.required],
       newPassword: ['', [Validators.required, Validators.minLength(6)]],
@@ -31,7 +32,7 @@ export class PasswordChangeComponent {
       }
     });
   }
-
+  user:any
   submitForm() {
     let message: string;
     if (this.changePasswordForm.valid) {
@@ -44,7 +45,7 @@ export class PasswordChangeComponent {
       if (newPassword !== confirmPassword) {
         message = 'Passwords do not match';
       } else {
-        // Implement logic for changing the password
+        this.auth.changePassword(this.user)
         message = 'Password changed successfully';
       }
     } else {

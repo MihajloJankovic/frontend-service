@@ -7,7 +7,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {ApiService} from "../services/api.service";
 import {UserService} from "../services/user.service";
 import { JwtHelperService } from '@auth0/angular-jwt';
-import {Observable} from "rxjs";
+import { catchError, map } from 'rxjs/operators';
+import {Observable, throwError} from "rxjs";
 @Injectable({providedIn: 'root'})
 export class AuthService {
 
@@ -64,14 +65,28 @@ export class AuthService {
   login(user: any): Observable<any> {
     const loginHeaders = new HttpHeaders({
       'Accept': 'application/json',
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     });
 
-    return this.http.post<any>(this.config._login_url, user, { headers: loginHeaders })
+    return this.http.post<any>(`${this.config._login_url}`, user, {
+      headers: loginHeaders,
+      observe: 'response', // Observe the full response to access headers
+    })
       .pipe(
-        tap(response => {
-          this._access_token = response.headers.get('jwt');
-          localStorage.setItem('jwt', response.jwt);
+        map((response) => {
+          // Check if the response contains the JWT token in the headers
+          const token = response.headers.get('Authorization');
+
+          if (token) {
+            // Save the token to local storage
+            localStorage.setItem('jwt', token);
+          }
+
+          return response.body;
+        }),
+        catchError((error) => {
+          console.error('Error during login:', error);
+          return throwError(error);
         })
       );
   }

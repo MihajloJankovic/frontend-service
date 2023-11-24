@@ -33,6 +33,7 @@ export class ConfigService {
   _getAllAvailability_url: string;
   _checkAvailability_url: string;
 
+
   constructor() {
     this._api_url = 'http://localhost:9090'; // Adjust the port as needed
 

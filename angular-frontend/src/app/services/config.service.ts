@@ -12,10 +12,8 @@ export class ConfigService {
   _profile_edit_url: string;
 
   // User Endpoints
-  _user_url: string;
   _login_url: string;
   _passwordChange_url: string;
-  _users_url: string;
 
   // Accommodation Endpoints
   _accommodation_url: string;
@@ -42,10 +40,8 @@ export class ConfigService {
     this._profile_edit_url = this._api_url + '/update-profile';
 
     // User Endpoints
-    this._user_url = this._api_url + '/accommodation';
     this._login_url = this._api_url + '/login';
     this._passwordChange_url = this._api_url + '/change-password';
-    this._users_url = this._api_url + '/get-all-users';
 
     // Accommodation Endpoints
     this._accommodation_url = this._api_url + '/accommodation';

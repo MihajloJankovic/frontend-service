@@ -1,6 +1,9 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {Router} from "@angular/router";
+import {ReservationComponent} from "../reservation/reservation.component";
+import {AccommodationCreateComponent} from "../accommodation-create/accommodation-create.component";
+import {MatDialog} from "@angular/material/dialog";
 
 class Accommodation {
   constructor(
@@ -16,7 +19,7 @@ class Accommodation {
   templateUrl: './accommodations.component.html',
   styleUrls: ['./accommodations.component.css']
 })
-export class AccommodationsComponent {
+export class AccommodationsComponent{
   amenities: string[] = ['Swimming Pool', 'Free Wi-Fi', 'Gym'];
   selectedAmenities: { [key: string]: boolean } = {};
   accommodations: Accommodation[] = [];
@@ -25,7 +28,7 @@ export class AccommodationsComponent {
   maxPrice: number | undefined;
   ownerFilter = '';
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router, private dialog: MatDialog) {}
 
   get filteredAccommodations(): Accommodation[] {
     return this.accommodations.filter(acc =>
@@ -56,8 +59,23 @@ export class AccommodationsComponent {
     return selectedAmenities.length === 0 ||
            selectedAmenities.some(amenity => accommodation.amenities.includes(amenity));
   }
-  viewAccommodationDetails(accommodationId: number): void {
+  viewAccommodationDetails(): void {
     // Navigacija ka stranici sa detaljima smestaja
-    this.router.navigate(['/accommodation', accommodationId]);
+    this.router.navigate(['/accommodation']);
   }
+  showCreateAccommodationDialog: boolean = false;
+
+  openCreateAccommodationDialog() {
+    const dialogRef = this.dialog.open(AccommodationCreateComponent, {
+
+    });
+
+    // Optional: Add logic after the dialog is closed
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Accommodation creating dialog closed. Result: ${result}`);
+    });
+  }
+
+
+
 }

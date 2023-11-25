@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+// accommodation-create.component.ts
+import { Component, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
 @Component({
   selector: 'app-accommodation-create',
@@ -8,31 +10,34 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 })
 export class AccommodationCreateComponent {
   accommodationForm: FormGroup;
-  accommodationName: string = '';
-  accommodationDescription: string = '';
-  priceMode: string = '';
-  totalPrice: number = 0;
-  pricePerPerson: number = 0;
-  numberOfPersons: number = 0;
 
-  constructor(private formBuilder: FormBuilder) {
-    this.accommodationForm = this.formBuilder.group({
+  constructor(
+    private fb: FormBuilder,
+    public dialogRef: MatDialogRef<AccommodationCreateComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {
+    this.accommodationForm = this.fb.group({
       name: ['', Validators.required],
       description: ['', Validators.required],
-      priceMode: ['', Validators.required],
-      totalPrice: [0, Validators.required],
-      pricePerPerson: [0, Validators.required],
-      numberOfPersons: [0, Validators.required]
+      priceMode: ['total', Validators.required],
+      totalPrice: [null, Validators.required],
+      pricePerPerson: [null, Validators.required],
+      numberOfPersons: [null, Validators.required]
     });
   }
 
-  submitForm() {
+  submitAccommodation() {
     if (this.accommodationForm.valid) {
-      // Ako je forma validna, obavi željenu akciju
-      console.log('Forma je validna. Podaci:', this.accommodationForm.value);
+      const accommodationData = this.accommodationForm.value;
+      console.log('Accommodation created:', accommodationData);
+
+      this.dialogRef.close();
     } else {
-      // Ako forma nije validna, prikaži greške ili obavi odgovarajuće akcije
-      console.log('Forma nije validna. Popravi greške.');
+      console.log('Form is invalid. Please check the fields.');
     }
+  }
+
+  closeDialog() {
+    this.dialogRef.close();
   }
 }

@@ -1,75 +1,81 @@
-/* create-accommodation.component.css */
+/* accommodation-create.component.css */
 
-html, body, div, h1, form, label, input, button, textarea {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  text-decoration: none;
-}
-
-body {
-  font-family: Arial, sans-serif;
-  background: linear-gradient(to bottom, #00b2ff, #fff);
+.dialog-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.3);
 }
 
-.create-accommodation-container {
+.dialog-content {
+  max-width: 400px;
   background: #fff;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  border-radius: 8px;
-  width: 300px;
   padding: 20px;
-  text-align: center;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  position: relative;
 }
 
-.create-accommodation-container h1 {
+.dialog-title {
   font-size: 24px;
-  color: #333;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.dialog-close {
+  font-size: 24px;
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+.dialog-close:hover {
+  color: #ff0000;
 }
 
-label {
-  font-weight: 600;
-  color: #333;
-  display: block;
-  margin-bottom: 5px;
+.dialog-form {
+  margin-top: 20px;
 }
 
-input, textarea {
-  width: 100%;
+.dialog-input {
+  width: 95%;
   padding: 10px;
+  margin-bottom: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  font-size: 16px;
-  color: #333;
-  margin-bottom: 15px;
 }
 
-input:focus, textarea:focus {
-  border-color: #007BFF;
+.price-mode {
+  margin-bottom: 10px;
 }
 
-button {
+.price-mode label {
+  margin-right: 10px;
+}
+
+.dialog-button-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.dialog-button {
   background: #007BFF;
   color: #fff;
-  border: none;
   padding: 10px 20px;
   border-radius: 4px;
-  cursor: pointer;
+  border: none;
+  text-decoration: none;
   font-size: 18px;
   transition: background 0.3s;
+  cursor: pointer;
 }
 
-button:hover {
+.dialog-button:hover {
   background: #0056b3;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }

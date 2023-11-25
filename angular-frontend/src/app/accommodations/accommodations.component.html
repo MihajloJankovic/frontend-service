@@ -1,35 +1,41 @@
 <!-- accommodations.component.html -->
 
-<div>
-    <h2>Accommodations</h2>
-  
-    <div>
-      <input type="text" placeholder="Search by name" [(ngModel)]="searchText">
-      <button (click)="applyFilters()">Search</button>
-    </div>
-  
-    <div>
+<div class="accommodations-container">
+  <h2>Accommodations</h2>
+
+  <div class="search-bar">
+    <input type="text" placeholder="Search by name" [(ngModel)]="searchText">
+    <button (click)="applyFilters()">Search</button>
+  </div>
+
+  <div class="filters">
+    <div class="price-filter">
       <label for="price">Price Range:</label>
       <input type="number" id="minPrice" placeholder="Min" [(ngModel)]="minPrice">
       <input type="number" id="maxPrice" placeholder="Max" [(ngModel)]="maxPrice">
     </div>
-  
-    <div>
+
+    <div class="owner-filter">
       <label for="owner">Owner:</label>
       <input type="text" id="owner" placeholder="Search by owner" [(ngModel)]="ownerFilter">
     </div>
-  
-    <div>
+
+    <div class="amenities-filter">
       <label for="amenities">Amenities:</label>
       <div *ngFor="let amenity of amenities">
         <input type="checkbox" id="{{ amenity }}" [(ngModel)]="selectedAmenities[amenity]" [value]="amenity">
         <label for="{{ amenity }}">{{ amenity }}</label>
       </div>
     </div>
-  
-    <ul>
-      <li *ngFor="let accommodation of filteredAccommodations">
-        {{ accommodation.name }} - Price: ${{ accommodation.price }} - Owner: {{ accommodation.owner }}
-      </li>
-    </ul>
+  </div>
+
+  <ul class="accommodations-list">
+    <li *ngFor="let accommodation of filteredAccommodations" class="accommodation-item">
+      <div class="accommodation-details">
+        <h3>{{ accommodation.name }}</h3>
+        <p>Price: ${{ accommodation.price }} per night</p>
+        <p>Owner: {{ accommodation.owner }}</p>
+      </div>
+    </li>
+  </ul>
 </div>

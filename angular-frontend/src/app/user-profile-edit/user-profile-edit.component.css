@@ -42,7 +42,7 @@ body {
 .form-content {
   display: flex;
   flex-direction: row;
-  gap: 60px;
+  gap: 40px;
 }
 
 label {
@@ -60,7 +60,7 @@ input[type="text"],
 input[type="email"],
 input[type="password"],
 input[type="tel"] {
-  width: 100%;
+  width: 95%;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -99,3 +99,15 @@ input[type="tel"]:focus {
   background: #0056b3;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
+
+#user-segment, #address-segment{
+  width: 100%;
+}
+
+.custom-datepicker-input {
+  height:40px;
+  border:solid 1px #c0c0c0;
+  border-radius: 5px;
+  width:100%;
+}
+

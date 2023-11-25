@@ -7,7 +7,6 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {ApiService} from "../services/api.service";
 import {UserService} from "../services/user.service";
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { catchError, map } from 'rxjs/operators';
 import {Observable, throwError} from "rxjs";
 @Injectable({providedIn: 'root'})
 export class AuthService {

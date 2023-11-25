@@ -52,14 +52,6 @@ export class LoginComponent {
     };
 
     this.authService.login(credentials)
-      .subscribe(
-        () => {
-          this.openDialog('Login successful');
-          this.router.navigate(['/profile']);
-        },
-        () => {
-          this.openDialog('Invalid credentials. Please check your username and password.');
-        }
-      );
+
   }
 }

@@ -59,10 +59,7 @@ export class AccommodationsComponent{
     return selectedAmenities.length === 0 ||
            selectedAmenities.some(amenity => accommodation.amenities.includes(amenity));
   }
-  viewAccommodationDetails(): void {
-    // Navigacija ka stranici sa detaljima smestaja
-    this.router.navigate(['/accommodation']);
-  }
+
   showCreateAccommodationDialog: boolean = false;
 
   openCreateAccommodationDialog() {
@@ -76,6 +73,9 @@ export class AccommodationsComponent{
     });
   }
 
-
+  viewAccommodationDetails(accommodation: any) {
+    this.router.navigate(['/accommodation'])
+    console.log('View details for accommodation:', accommodation);
+  }
 
 }

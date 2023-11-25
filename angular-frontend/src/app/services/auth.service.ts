@@ -7,10 +7,18 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {ApiService} from "../services/api.service";
 import {UserService} from "../services/user.service";
 import { JwtHelperService } from '@auth0/angular-jwt';
-import {Observable, throwError} from "rxjs";
+import {Observable, Subscription, throwError} from "rxjs";
+import {LoginComponent} from "../login/login.component";
 @Injectable({providedIn: 'root'})
 export class AuthService {
 
+  get access_token(): any {
+    return this._access_token;
+  }
+
+  set access_token(value: any) {
+    this._access_token = value;
+  }
   constructor(
     public jwtHelper: JwtHelperService,
     private apiService: ApiService,
@@ -59,35 +67,36 @@ export class AuthService {
         }
       });
   }
-  private _access_token = null;
+  private _access_token : any;
 
-  login(user: any): Observable<any> {
+  login(user: any): Subscription {
     const loginHeaders = new HttpHeaders({
       'Accept': 'application/json',
       'Content-Type': 'application/json',
     });
 
-    return this.http.post<any>(`${this.config._login_url}`, user, {
-      headers: loginHeaders,
-      observe: 'response', // Observe the full response to access headers
-    })
-      .pipe(
-        map((response) => {
-          // Check if the response contains the JWT token in the headers
-          const token = response.headers.get('Authorization');
+    const body = {
+      'email': user.email,
+      'password': user.password,
+    };
 
-          if (token) {
-            // Save the token to local storage
-            localStorage.setItem('jwt', token);
-          }
+    return this.apiService.post(this.config._login_url, JSON.stringify(body), loginHeaders)
+      .subscribe((res) => {
+          console.log('Login success');
+          localStorage.setItem("jwt", res.body)
+          console.log(res.body)
+          console.log(res)
+          this.router.navigate(['/profile']);
+        },
+        (error) => {
+          alert('Wrong credentials');
 
-          return response.body;
-        }),
-        catchError((error) => {
-          console.error('Error during login:', error);
-          return throwError(error);
-        })
+        }
       );
+
+
+
+
   }
 
   logout(): void {

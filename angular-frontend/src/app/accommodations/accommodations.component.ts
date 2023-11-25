@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import {Router} from "@angular/router";
 
 class Accommodation {
   constructor(
@@ -20,11 +21,11 @@ export class AccommodationsComponent {
   selectedAmenities: { [key: string]: boolean } = {};
   accommodations: Accommodation[] = [];
   searchText = '';
-  minPrice: number | undefined; 
-  maxPrice: number | undefined; 
+  minPrice: number | undefined;
+  maxPrice: number | undefined;
   ownerFilter = '';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   get filteredAccommodations(): Accommodation[] {
     return this.accommodations.filter(acc =>
@@ -52,7 +53,11 @@ export class AccommodationsComponent {
   }
 
   private hasAnyAmenity(accommodation: Accommodation, selectedAmenities: string[]): boolean {
-    return selectedAmenities.length === 0 || 
+    return selectedAmenities.length === 0 ||
            selectedAmenities.some(amenity => accommodation.amenities.includes(amenity));
+  }
+  viewAccommodationDetails(accommodationId: number): void {
+    // Navigacija ka stranici sa detaljima smestaja
+    this.router.navigate(['/accommodation', accommodationId]);
   }
 }

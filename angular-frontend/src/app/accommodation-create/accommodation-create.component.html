@@ -1,0 +1,63 @@
+<!-- create-accommodation.component.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Create Accommodation</title>
+  <link rel="stylesheet" href="accommodation-create.component.css">
+</head>
+<body>
+<div class="create-accommodation-container">
+  <h1>Create Accommodation</h1>
+
+  <form (submit)="submitForm()">
+    <!-- Unos za osnovne informacije o smestaju -->
+    <div class="form-group">
+      <label for="name">Name:</label>
+      <input type="text" id="name" [(ngModel)]="accommodationName" required>
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description:</label>
+      <textarea id="description" [(ngModel)]="accommodationDescription" required></textarea>
+    </div>
+
+    <!-- Radio dugme za izbor režima cene -->
+    <div class="form-group">
+      <label>Cena:</label>
+      <div>
+        <label>
+          <input type="radio" name="priceMode" [(ngModel)]="priceMode" value="total" required>
+          Cena po celom smestaju
+        </label>
+      </div>
+      <div>
+        <label>
+          <input type="radio" name="priceMode" [(ngModel)]="priceMode" value="perPerson" required>
+          Cena po osobi
+        </label>
+      </div>
+    </div>
+
+    <!-- Unos za cenu i broj osoba -->
+    <div *ngIf="priceMode === 'total'" class="form-group">
+      <label for="totalPrice">Cena po celom smestaju:</label>
+      <input type="number" id="totalPrice" [(ngModel)]="totalPrice" required>
+    </div>
+
+    <div *ngIf="priceMode === 'perPerson'" class="form-group">
+      <label for="pricePerPerson">Cena po osobi:</label>
+      <input type="number" id="pricePerPerson" [(ngModel)]="pricePerPerson" required>
+
+      <label for="numberOfPersons">Broj osoba:</label>
+      <input type="number" id="numberOfPersons" [(ngModel)]="numberOfPersons" required>
+    </div>
+
+    <div class="form-group">
+      <button type="submit">Create Accommodation</button>
+    </div>
+  </form>
+</div>
+</body>
+</html>

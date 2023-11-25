@@ -27,6 +27,7 @@ import {MatInputModule} from "@angular/material/input";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatIconModule} from "@angular/material/icon";
 import { AccommodationsComponent } from './accommodations/accommodations.component';
+import { AccommodationCreateComponent } from './accommodation-create/accommodation-create.component';
 
 
 
@@ -37,7 +38,8 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent},
   { path: 'register', component: RegisterComponent},
   { path: 'accommodation', component: AccommodationComponent},
-  { path: 'accommodations', component: AccommodationsComponent}
+  { path: 'accommodations', component: AccommodationsComponent},
+  // { path: 'accommodationsCreate', component: AccommodationCreateComponent}
 ];
 @NgModule({
   declarations: [
@@ -52,6 +54,7 @@ const routes: Routes = [
     AccommodationComponent,
     ReservationComponent,
     AccommodationsComponent,
+    AccommodationCreateComponent,
   ],
 
   imports: [

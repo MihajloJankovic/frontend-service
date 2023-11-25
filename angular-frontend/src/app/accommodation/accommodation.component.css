@@ -1,125 +1,50 @@
-/* Resetiranje stilova za osnovne HTML elemente */
-html, body, div, h1, h2, p, ul, li, button, img {
-  margin: 0;
-  padding: 0;
-  border: 0;
-}
+/* accommodation-create.component.css */
+
 body {
   font-family: Arial, sans-serif;
   background: linear-gradient(to bottom, #00b2ff, #fff);
 }
 
-.accommodation-container {
-  max-width: 800px;
+.create-accommodation-container {
+  max-width: 600px;
   margin: 0 auto;
-  margin-top: 20px;
   padding: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   border-radius: 8px;
   background-color: #fff;
 }
 
-.accommodation-header {
+h1 {
   text-align: center;
   margin-bottom: 20px;
 }
 
-.accommodation-header h1 {
-  font-size: 28px;
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+input[type="text"],
+input[type="number"],
+textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
   color: #333;
 }
 
-.accommodation-body {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-  text-align: left;
+input[type="radio"] {
+  margin-right: 5px;
 }
 
-.accommodation-description,
-.accommodation-facilities,
-.accommodation-location {
-  margin-bottom: 20px;
-}
-
-.accommodation-facilities h2,
-.accommodation-location h2 {
-  border-bottom: 2px solid #007BFF;
-  padding-bottom: 5px;
-  margin-bottom: 10px;
-}
-
-.accommodation-facilities ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-.accommodation-facilities li {
-  margin-bottom: 5px;
-  font-size: 16px;
-}
-
-.accommodation-location p {
-  margin-top: 10px;
-  font-size: 16px;
-}
-
-.accommodation-gallery {
-  position: relative;
-  overflow: hidden;
-  margin-top: 20px;
-}
-
-.gallery-wrapper {
-  display: flex;
-  align-items: center;
-  width: 100%;
-}
-
-.image-container {
-  position: relative;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  margin: 0 auto;
-}
-
-.image-container img {
-  width: 100%;
-  height: auto;
-  max-height: 500px;
-  border-radius: 8px;
-  object-fit: cover;
-  transition: transform 0.3s ease-in-out;
-}
-
-.arrow {
-  position: absolute;
-  top: 50%;
-  font-size: 24px;
-  color: #fff;
-  background-color: rgba(161, 161, 161, 0.72);
-  border: none;
-  padding: 10px;
-  cursor: pointer;
-  border-radius: 50%;
-  transition: background-color 0.3s;
-}
-
-.arrow:hover {
-  background-color: rgba(255, 255, 255, 0.33);
-}
-
-.left {
-  left: 10px;
-}
-
-.right {
-  right: 10px;
-}
-
-button.reserve-button {
-  /* Style the reservation button */
+button {
   padding: 10px 20px;
   background-color: #007BFF;
   color: #fff;
@@ -129,6 +54,6 @@ button.reserve-button {
   font-size: 16px;
 }
 
-button.reserve-button:hover {
+button:hover {
   background-color: #0056b3;
 }

@@ -4,6 +4,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ReservationService} from "../services/reservation.service";
 import { AuthGuard } from '../services/auth.guard';
 import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
+import {AuthService} from "../services/auth.service";
 
 @Component({
   selector: 'app-reservation',
@@ -14,14 +15,23 @@ export class ReservationComponent {
   reservationForm: FormGroup;
 
   constructor(
+
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<ReservationComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
 
     private reservation : ReservationService,
-    private authGuard: AuthGuard,
+    private authGuard: AuthGuard,private auth : AuthService,
     private router: Router
   ) {
+    if(this.auth.isAuthenticated())
+    {
+
+    }
+    else {
+
+      this.router.navigate(['/']);
+    }
     this.reservationForm = this.fb.group({
       accid: ['', Validators.required],
       dateFrom: ['', Validators.required],
@@ -31,18 +41,7 @@ export class ReservationComponent {
   }
 
   ngOnInit(): void {
-    // Perform role check
-    const canActivate = this.authGuard.canActivate(
-      {} as ActivatedRouteSnapshot,
-      {} as RouterStateSnapshot
-    );
 
-    if (!canActivate) {
-      console.log('Unauthorized access');
-      this.router.navigate(['/login']);
-    } else {
-      console.log('Component initialized');
-    }
   }
 
   submitReservation() {

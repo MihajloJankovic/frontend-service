@@ -17,6 +17,14 @@ export class UserProfileEditComponent {
 
   constructor(private fb: FormBuilder, private router: Router,private auth : AuthService,private service : UserService,
     private authGuard: AuthGuard,) {
+    if(this.auth.isAuthenticated())
+    {
+
+    }
+    else {
+
+      this.router.navigate(['/']);
+    }
     this.userForm = this.fb.group({
       email: ['', Validators.required],
       username: ['', Validators.required],
@@ -33,17 +41,6 @@ export class UserProfileEditComponent {
   token:any;
   async ngOnInit() {
 
-    const canActivate = this.authGuard.canActivate(
-      {} as ActivatedRouteSnapshot,
-      {} as RouterStateSnapshot
-    );
-
-    if (!canActivate) {
-      console.log('Unauthorized access');
-      this.router.navigate(['/login']);
-    } else {
-      console.log('Component initialized');
-    }
     this.token = this.auth.getDecodedAccessToken()
     var profile = this.service.getOne(this.token.email).subscribe((data) => {
       this.post = data;

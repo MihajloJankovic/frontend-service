@@ -99,6 +99,27 @@ export class AuthService {
 
   }
 
+  sendResetRequest(user: any): Subscription{
+    const resetHeaders = new HttpHeaders({
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    });
+
+    const body = {
+      'email': user.email
+    };
+
+    return this.apiService.post(this.config._reset_request_url, JSON.stringify(body), resetHeaders)
+    .subscribe((res) => {
+      console.log('Reset request success');
+      console.log(res.body)
+      console.log(res)
+    },(errot) => {
+      alert('Wrong');
+    }
+    )
+  }
+
   logout(): void {
     this._access_token = null;
     localStorage.removeItem('jwt');

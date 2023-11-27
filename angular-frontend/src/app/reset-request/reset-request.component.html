@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>reset-request</title>
+  <link rel="stylesheet" href="reset-request.component.css">
+</head>
+<body>
+<div class="reset-request-container">
+  <div class="reset-request-header">
+    <h1>reset-request</h1>
+  </div>
+  <form class="reset-request-form" (ngSubmit)="submitForm()" [formGroup]="resetForm">
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="text" id="email" formControlName="email" required>
+    </div>
+    
+    <button type="submit" class="reset-request-button">reset-request</button>
+  </form>
+  <p class="signup-link">Have an account? <a routerLink="/login">Login here</a></p>
+</div>
+</body>
+</html>

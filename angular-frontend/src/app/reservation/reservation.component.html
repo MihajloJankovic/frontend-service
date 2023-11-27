@@ -15,8 +15,6 @@
 
 
     <form [formGroup]="reservationForm" class="dialog-form" (ngSubmit)="submitReservation()">
-      <label for="accid">accid:</label>
-      <input type="text" id="accid" formControlName="accid" class="dialog-input" >
 
       <label for="dateFrom">Check-In Date:</label>
       <input type="text" id="dateFrom" formControlName="dateFrom" class="dialog-input" >
@@ -25,8 +23,6 @@
       <label for="dateTo">Check-Out Date:</label>
       <input type="text" id="dateTo" formControlName="dateTo" class="dialog-input" >
 <!--      <input type="date" id="checkOut" formControlName="checkOut" class="dialog-input">-->
-      <label for="priceAcc">[Temporality field] price :</label>
-      <input type="number" id="priceAcc" formControlName="priceAcc" class="dialog-input" >
 
       <div class="dialog-button-container">
         <button type="submit" class="dialog-button">Submit</button>

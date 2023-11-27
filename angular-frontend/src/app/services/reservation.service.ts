@@ -34,9 +34,6 @@ export class ReservationService {
       'email': s.email,
       'DateFrom': reservation.dateFrom,
       'DateTo': reservation.dateTo,
-      'PricePerson': 0,
-      'PriceAcc': reservation.priceAcc,
-      'NumberOfPeople': 0,
       'Accid': reservation.accid,
     };
     return this.apiService.post(this.config._reservation_url, JSON.stringify(body), loginHeaders)

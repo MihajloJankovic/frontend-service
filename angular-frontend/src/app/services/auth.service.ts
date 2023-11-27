@@ -120,6 +120,34 @@ export class AuthService {
     )
   }
 
+  resetPassword(email: string, ticketReset: string, newPassword: string): Subscription {
+    const resetHeaders = new HttpHeaders({
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    });
+
+    const body = {
+      'email': email,
+      'ticketReset': ticketReset,
+      'newPassword': newPassword
+    };
+
+    return this.apiService.post(this.config._reset_password_url, JSON.stringify(body), resetHeaders)
+      .subscribe(
+        (res) => {
+          console.log('Reset password success');
+          console.log(res.body);
+          console.log(res);
+          // Optionally, you can navigate to a different route after a successful password reset
+          this.router.navigate(['/login']);
+        },
+        (error) => {
+          console.error('Reset password failed', error);
+          // Handle error, show appropriate message to the user
+        }
+      );
+  }
+
   logout(): void {
     this._access_token = null;
     localStorage.removeItem('jwt');

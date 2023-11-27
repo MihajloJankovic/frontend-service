@@ -1,0 +1,103 @@
+/* accommodations.component.css */
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: linear-gradient(to bottom, #00b2ff, #fff);
+}
+
+.mainDiv {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.filter-container {
+  display: flex;
+  flex-direction: column; /* Postavljamo raspored vertikalno */
+  align-items: flex-start; /* Postavljamo poravnanje sa leve strane */
+  margin-right: 20px;
+}
+
+.search-bar {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.search-bar input,
+.price-filter input,
+.owner-filter input {
+  padding: 10px;
+  margin-right: 10px;
+}
+
+.price-filter label,
+.owner-filter label,
+.amenities-filter label {
+  margin-right: 10px;
+}
+
+.amenities-filter input {
+  margin-right: 5px;
+}
+
+.accommodations-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.accommodation-card {
+  width: 300px;
+  margin: 10px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.accommodation-image {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.accommodation-info {
+  padding: 10px;
+}
+
+.view-details-button {
+  background-color: #007BFF;
+  color: #fff;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.view-details-button:hover {
+  background-color: #0056b3;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.add-accommodation-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.add-accommodation-button {
+  background-color: #28a745;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.add-accommodation-button:hover {
+  background-color: #218838;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}

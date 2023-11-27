@@ -7,10 +7,18 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {ApiService} from "../services/api.service";
 import {UserService} from "../services/user.service";
 import { JwtHelperService } from '@auth0/angular-jwt';
-import {Observable} from "rxjs";
+import {Observable, Subscription, throwError} from "rxjs";
+import {LoginComponent} from "../login/login.component";
 @Injectable({providedIn: 'root'})
 export class AuthService {
 
+  get access_token(): any {
+    return this._access_token;
+  }
+
+  set access_token(value: any) {
+    this._access_token = value;
+  }
   constructor(
     public jwtHelper: JwtHelperService,
     private apiService: ApiService,
@@ -59,21 +67,57 @@ export class AuthService {
         }
       });
   }
-  private _access_token = null;
+  private _access_token : any;
 
-  login(user: any): Observable<any> {
+  login(user: any): Subscription {
     const loginHeaders = new HttpHeaders({
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    });
+
+    const body = {
+      'email': user.email,
+      'password': user.password,
+    };
+
+    return this.apiService.post(this.config._login_url, JSON.stringify(body), loginHeaders)
+      .subscribe((res) => {
+          console.log('Login success');
+          localStorage.setItem("jwt", res.body)
+          console.log(res.body)
+          console.log(res)
+          this.router.navigate(['/profile']);
+        },
+        (error) => {
+          alert('Wrong credentials');
+
+        }
+      );
+
+
+
+
+  }
+
+  sendResetRequest(user: any): Subscription{
+    const resetHeaders = new HttpHeaders({
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     });
 
-    return this.http.post<any>(this.config._login_url, user, { headers: loginHeaders })
-      .pipe(
-        tap(response => {
-          this._access_token = response.headers.get('jwt');
-          localStorage.setItem('jwt', response.jwt);
-        })
-      );
+    const body = {
+      'email': user.email
+    };
+
+    return this.apiService.post(this.config._reset_request_url, JSON.stringify(body), resetHeaders)
+    .subscribe((res) => {
+      console.log('Reset request success');
+      console.log(res.body)
+      console.log(res)
+    },(errot) => {
+      alert('Wrong');
+    }
+    )
   }
 
   logout(): void {

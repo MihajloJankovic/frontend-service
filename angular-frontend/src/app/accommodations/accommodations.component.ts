@@ -1,5 +1,9 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import {Router} from "@angular/router";
+import {ReservationComponent} from "../reservation/reservation.component";
+import {AccommodationCreateComponent} from "../accommodation-create/accommodation-create.component";
+import {MatDialog} from "@angular/material/dialog";
 
 class Accommodation {
   constructor(
@@ -15,16 +19,16 @@ class Accommodation {
   templateUrl: './accommodations.component.html',
   styleUrls: ['./accommodations.component.css']
 })
-export class AccommodationsComponent {
+export class AccommodationsComponent{
   amenities: string[] = ['Swimming Pool', 'Free Wi-Fi', 'Gym'];
   selectedAmenities: { [key: string]: boolean } = {};
   accommodations: Accommodation[] = [];
   searchText = '';
-  minPrice: number | undefined; 
-  maxPrice: number | undefined; 
+  minPrice: number | undefined;
+  maxPrice: number | undefined;
   ownerFilter = '';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router, private dialog: MatDialog) {}
 
   get filteredAccommodations(): Accommodation[] {
     return this.accommodations.filter(acc =>
@@ -52,7 +56,26 @@ export class AccommodationsComponent {
   }
 
   private hasAnyAmenity(accommodation: Accommodation, selectedAmenities: string[]): boolean {
-    return selectedAmenities.length === 0 || 
+    return selectedAmenities.length === 0 ||
            selectedAmenities.some(amenity => accommodation.amenities.includes(amenity));
   }
+
+  showCreateAccommodationDialog: boolean = false;
+
+  openCreateAccommodationDialog() {
+    const dialogRef = this.dialog.open(AccommodationCreateComponent, {
+
+    });
+
+    // Optional: Add logic after the dialog is closed
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Accommodation creating dialog closed. Result: ${result}`);
+    });
+  }
+
+  viewAccommodationDetails(accommodation: any) {
+    this.router.navigate(['/accommodation'])
+    console.log('View details for accommodation:', accommodation);
+  }
+
 }

@@ -12,4 +12,7 @@ export class UserProfileComponent {
   navigateToEditProfile() {
     this.router.navigate(['/edit-profile']);
   }
+  async ngOnInit() {
+
+  }
 }

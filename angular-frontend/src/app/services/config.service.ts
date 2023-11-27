@@ -12,10 +12,8 @@ export class ConfigService {
   _profile_edit_url: string;
 
   // User Endpoints
-  _user_url: string;
   _login_url: string;
   _passwordChange_url: string;
-  _users_url: string;
 
   // Accommodation Endpoints
   _accommodation_url: string;
@@ -27,11 +25,14 @@ export class ConfigService {
   _register_url: string;
   _getTicket_url: string;
   _activate_url: string;
+  _reset_request_url: string;
 
   // Availability Endpoints
   _setAvailability_url: string;
   _getAllAvailability_url: string;
   _checkAvailability_url: string;
+  
+
 
   constructor() {
     this._api_url = 'http://localhost:9090'; // Adjust the port as needed
@@ -41,10 +42,8 @@ export class ConfigService {
     this._profile_edit_url = this._api_url + '/update-profile';
 
     // User Endpoints
-    this._user_url = this._api_url + '/accommodation';
     this._login_url = this._api_url + '/login';
     this._passwordChange_url = this._api_url + '/change-password';
-    this._users_url = this._api_url + '/get-all-users';
 
     // Accommodation Endpoints
     this._accommodation_url = this._api_url + '/accommodation';
@@ -56,6 +55,7 @@ export class ConfigService {
     this._register_url = this._api_url + '/register';
     this._getTicket_url = this._api_url + '/getTicket';
     this._activate_url = this._api_url + '/activate';
+    this._reset_request_url = this._api_url + '/reset-request';
 
     // Availability Endpoints
     this._setAvailability_url = this._api_url + '/set-availability';

@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {Router} from "@angular/router";
+import {ActivatedRouteSnapshot, Router, RouterStateSnapshot} from "@angular/router";
 import {ReservationComponent} from "../reservation/reservation.component";
 import {AccommodationCreateComponent} from "../accommodation-create/accommodation-create.component";
 import {MatDialog} from "@angular/material/dialog";
+import { AuthGuard } from '../services/auth.guard';
 
 class Accommodation {
   constructor(
@@ -28,7 +29,23 @@ export class AccommodationsComponent{
   maxPrice: number | undefined;
   ownerFilter = '';
 
-  constructor(private http: HttpClient, private router: Router, private dialog: MatDialog) {}
+  constructor(private http: HttpClient, private router: Router, private dialog: MatDialog,
+    private authGuard: AuthGuard) {}
+
+  ngOnInit(): void {
+    // Perform role check
+    const canActivate = this.authGuard.canActivate(
+      {} as ActivatedRouteSnapshot,
+      {} as RouterStateSnapshot
+    );
+
+    if (!canActivate) {
+      console.log('Unauthorized access');
+      this.router.navigate(['/login']);
+    } else {
+      console.log('Component initialized');
+    }
+  }
 
   get filteredAccommodations(): Accommodation[] {
     return this.accommodations.filter(acc =>

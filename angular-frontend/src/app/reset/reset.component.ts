@@ -1,32 +1,39 @@
 // reset-password.component.ts
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-reset-password',
-  templateUrl: './reset-password.component.html',
-  styleUrls: ['./reset-password.component.css']
+  templateUrl: './reset.component.html',
+  styleUrls: ['./reset.component.css']
 })
 export class ResetPasswordComponent {
   email: string;
   token: string;
-  newPassword: string = '';  // Initialize the properties
+  newPassword: string = '';
   repeatPassword: string = '';
 
-  constructor(private route: ActivatedRoute, private router: Router) {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private authService: AuthService  // Inject AuthService directly into the constructor
+  ) {
     // Use paramMap to access route parameters
     this.email = this.route.snapshot.paramMap.get('email') || '';
     this.token = this.route.snapshot.paramMap.get('token') || '';
   }
 
   submitResetPassword(): void {
-    // Implement logic to submit the new password
-    // You can use this.newPassword and this.repeatPassword
     console.log('New Password:', this.newPassword);
     console.log('Repeat Password:', this.repeatPassword);
 
-    // After handling the reset logic, you might want to navigate to another page
-    // For example, navigate to the login page
-    this.router.navigate(['/login']);
+    if (this.newPassword === this.repeatPassword) {
+      this.authService.resetPassword(this.email, this.token, this.newPassword);
+      this.router.navigate(['/login']);
+    } else {
+      console.error('Passwords do not match');
+    }
+    
   }
 }

@@ -60,7 +60,7 @@ const routes: Routes = [
     AccommodationsComponent,
     AccommodationCreateComponent,
     ResetRequestComponent,
-    ResetComponent,
+    ResetPasswordComponent,
   ],
 
   imports: [

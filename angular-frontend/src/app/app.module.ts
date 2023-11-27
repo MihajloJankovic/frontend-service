@@ -29,6 +29,7 @@ import {MatIconModule} from "@angular/material/icon";
 import { AccommodationsComponent } from './accommodations/accommodations.component';
 import { AccommodationCreateComponent } from './accommodation-create/accommodation-create.component';
 import { ResetRequestComponent } from './reset-request/reset-request.component';
+import { ResetComponent } from './reset/reset.component';
 
 
 
@@ -59,6 +60,7 @@ const routes: Routes = [
     AccommodationsComponent,
     AccommodationCreateComponent,
     ResetRequestComponent,
+    ResetComponent,
   ],
 
   imports: [

@@ -55,7 +55,7 @@ export class ConfigService {
     this._register_url = this._api_url + '/register';
     this._getTicket_url = this._api_url + '/getTicket';
     this._activate_url = this._api_url + '/activate';
-    this._reset_request_url = this._api_url + '/reset-request';
+    this._reset_request_url = this._api_url + '/request-reset';
 
     // Availability Endpoints
     this._setAvailability_url = this._api_url + '/set-availability';

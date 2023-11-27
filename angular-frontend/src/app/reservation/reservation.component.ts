@@ -1,6 +1,7 @@
 import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {ReservationService} from "../services/reservation.service";
 
 @Component({
   selector: 'app-reservation',
@@ -13,19 +14,21 @@ export class ReservationComponent {
   constructor(
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<ReservationComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private reservation : ReservationService
   ) {
     this.reservationForm = this.fb.group({
-      name: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      checkIn: ['', Validators.required],
-      checkOut: ['', Validators.required]
+      accid: ['', Validators.required],
+      dateFrom: ['', Validators.required],
+      dateTo: ['', Validators.required],
+      priceAcc: ['', Validators.required]
     });
   }
 
   submitReservation() {
     if (this.reservationForm.valid) {
       const reservationData = this.reservationForm.value;
+      this.reservation.reserve(reservationData,)
       console.log('Reservation submitted:', reservationData);
 
       this.dialogRef.close();

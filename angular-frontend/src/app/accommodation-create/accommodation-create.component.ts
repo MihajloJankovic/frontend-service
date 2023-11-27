@@ -28,6 +28,7 @@ export class AccommodationCreateComponent {
 
   submitAccommodation() {
     if (this.accommodationForm.valid) {
+
       const accommodationData = this.accommodationForm.value;
       console.log('Accommodation created:', accommodationData);
 

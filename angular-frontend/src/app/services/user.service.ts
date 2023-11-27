@@ -15,20 +15,69 @@ export class UserService {
     private router: Router,
     private route: ActivatedRoute
   ) { }
-  getOne() {
-    return this.apiService.get(this.config._profile_url);
+  getOne(email : string) {
+    return this.apiService.get(this.config._profile_url+"/"+email);
   }
+  register(userToSave:any) {
+    const loginHeaders = new HttpHeaders({
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    });
+    if (userToSave.gender == "male")
+    {
+      userToSave.gender = "true";
+    }
+    if (userToSave.gender == "female")
+    {
+      userToSave.gender = "false";
+    }
 
+    const body = {
+      'username': userToSave.username,
+      'firstname': userToSave.firstname,
+      'lastname': userToSave.lastname,
+      'gender': userToSave.gender,
+      'birthday': userToSave.birthday,
+      'email': userToSave.email,
+      'role' : userToSave.role,
+      'password' : userToSave.password
+    };
+
+    return this.apiService.post(this.config._register_url, JSON.stringify(body), loginHeaders)
+      .subscribe((res) => {
+        if(res.body == "NOT_ACCEPTABLE" || res.name == "HttpErrorResponse")
+        {
+          alert("Error")
+        }else {
+          alert("Save success");
+          console.log(res)
+          let returnUrl : String;
+          returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+          this.router.navigate([returnUrl + "/HomePage"]);
+        }
+      });
+  }
   saveUser(userToSave:any) {
     const loginHeaders = new HttpHeaders({
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     });
-
+    if (userToSave.gender == "Male")
+    {
+      userToSave.gender = "true";
+    }
+    if (userToSave.gender == "female")
+    {
+      userToSave.gender = "false";
+    }
 
     const body = {
-      'displayName': userToSave.name,
-      'description': userToSave.content
+      'username': userToSave.username,
+      'firstname': userToSave.firstname,
+      'lastname': userToSave.lastname,
+      'gender': userToSave.gender,
+      'birthday': userToSave.birthday,
+      'email': userToSave.email,
     };
 
     return this.apiService.post(this.config._profile_edit_url, JSON.stringify(body), loginHeaders)
@@ -38,6 +87,7 @@ export class UserService {
           alert("Error")
         }else {
           alert("Save success");
+          console.log(res)
           let returnUrl : String;
           returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
           this.router.navigate([returnUrl + "/HomePage"]);

@@ -26,7 +26,7 @@ export class TokenInterceptor implements HttpInterceptor {
     {
       request = request.clone({
         setHeaders: {
-          Authorization: `jwt ${localStorage.getItem("jwt")}`
+          jwt: `${localStorage.getItem("jwt")}`
         }
       });
     }

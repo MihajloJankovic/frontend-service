@@ -31,7 +31,7 @@ export class ConfigService {
   _setAvailability_url: string;
   _getAllAvailability_url: string;
   _checkAvailability_url: string;
-  
+  _reservation_url: string;
 
 
   constructor() {
@@ -40,6 +40,7 @@ export class ConfigService {
     // Profile Endpoints
     this._profile_url = this._api_url + '/profile';
     this._profile_edit_url = this._api_url + '/update-profile';
+    this._reservation_url = this._api_url + '/set-reservation';
 
     // User Endpoints
     this._login_url = this._api_url + '/login';

@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from "../dialog/dialog.component";
 import { ViewEncapsulation } from '@angular/core';
+import {AuthService} from "../services/auth.service";
+import {UserService} from "../services/user.service";
 
 @Component({
   selector: 'app-register',
@@ -14,7 +16,7 @@ import { ViewEncapsulation } from '@angular/core';
 export class RegisterComponent {
   registerForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private router: Router, private dialog: MatDialog) {
+  constructor(private fb: FormBuilder, private router: Router, private dialog: MatDialog,private auth: AuthService,private service : UserService) {
 
 
 
@@ -23,7 +25,7 @@ export class RegisterComponent {
       lastname: ['', Validators.required],
       gender: ['', Validators.required],
       role: ['', Validators.required],
-      birthDate: new FormControl(null, Validators.required),
+      birthday: new FormControl(null, Validators.required),
       username: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
@@ -47,11 +49,12 @@ export class RegisterComponent {
 
   submitForm() {
     if (this.registerForm.valid) {
+      this.service.register(this.registerForm.value)
       const message = 'Registration successful';
-      this.openDialog(message);
+      // this.openDialog(message);
     } else {
       const message = 'Invalid form data. Please check the fields.';
-      this.openDialog(message);
+      // this.openDialog(message);
     }
 
   }

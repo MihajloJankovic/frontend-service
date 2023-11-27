@@ -29,6 +29,8 @@ import {MatIconModule} from "@angular/material/icon";
 import { AccommodationsComponent } from './accommodations/accommodations.component';
 import { AccommodationCreateComponent } from './accommodation-create/accommodation-create.component';
 import { ResetRequestComponent } from './reset-request/reset-request.component';
+import {UserService} from "./services/user.service";
+import {ReservationService} from "./services/reservation.service";
 
 
 
@@ -87,7 +89,7 @@ const routes: Routes = [
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
       multi: true
-    }, { provide: JWT_OPTIONS, useValue: JWT_OPTIONS }, JwtHelperService, ConfigService],
+    }, { provide: JWT_OPTIONS, useValue: JWT_OPTIONS }, JwtHelperService, ConfigService,UserService,ReservationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

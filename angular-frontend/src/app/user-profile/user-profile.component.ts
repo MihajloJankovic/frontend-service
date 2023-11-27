@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import {AuthService} from "../services/auth.service";
+import {UserService} from "../services/user.service";
+import {FormControl, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-user-profile',
@@ -7,12 +10,42 @@ import { Router } from '@angular/router';
   styleUrls: ['user-profile.component.css']
 })
 export class UserProfileComponent {
-  constructor(private router: Router) {}
+  constructor(private router: Router,  private service: UserService,private auth : AuthService) {
+      if(this.auth.isAuthenticated())
+      {
+
+      }
+      else {
+
+          this.router.navigate(['/']);
+      }
+  }
 
   navigateToEditProfile() {
     this.router.navigate(['/edit-profile']);
   }
+    b= 0;
+  post:any;
+  uname:any;
+    email:any;
+    bdate:any;
+    token:any;
+    forma :any;
   async ngOnInit() {
+      this. uname = document.getElementById('username');
+    this.email = document.getElementById('email');
+      this.bdate = document.getElementById('bdate');
+      this.token = this.auth.getDecodedAccessToken()
+    var profile = this.service.getOne(this.token.email).subscribe((data) => {
+      this.post  = data;
 
+        this.forma = new FormGroup({
+            username: new FormControl(this.post.username),
+            email: new FormControl(this.post.email),
+            bdate: new FormControl(this.post.birthday),
+
+        });
+        this.b=1;
+    });
   }
 }

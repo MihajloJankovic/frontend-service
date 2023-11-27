@@ -11,7 +11,16 @@ import {Observable, Subscription, throwError} from "rxjs";
 import {LoginComponent} from "../login/login.component";
 @Injectable({providedIn: 'root'})
 export class AuthService {
+  token:any
+  getDecodedAccessToken(): any {
 
+    this.token = localStorage.getItem('jwt');
+    try {
+      return this.jwtHelper.decodeToken(this.token);
+    } catch(Error) {
+      return null;
+    }
+  }
   get access_token(): any {
     return this._access_token;
   }

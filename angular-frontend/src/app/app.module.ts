@@ -29,7 +29,7 @@ import {MatIconModule} from "@angular/material/icon";
 import { AccommodationsComponent } from './accommodations/accommodations.component';
 import { AccommodationCreateComponent } from './accommodation-create/accommodation-create.component';
 import { ResetRequestComponent } from './reset-request/reset-request.component';
-import { ResetComponent } from './reset/reset.component';
+import { ResetPasswordComponent } from './reset/reset.component';
 
 
 
@@ -43,7 +43,7 @@ const routes: Routes = [
   { path: 'accommodations', component: AccommodationsComponent},
   // { path: 'accommodationsCreate', component: AccommodationCreateComponent},
   { path: 'reset-request', component: ResetRequestComponent},
-  // { path: 'reset', component: ResetComponent},
+  { path: 'reset', component: ResetPasswordComponent},
 ];
 @NgModule({
   declarations: [

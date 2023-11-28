@@ -1,84 +1,73 @@
-import { Component } from '@angular/core';
-
-import {AuthService} from "../services/auth.service";
-import {UserService} from "../services/user.service"; // Dodajemo Router
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router'; // Dodajemo Router
-import { AuthGuard } from '../services/auth.guard';
+import {Component, ViewEncapsulation} from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from "../services/auth.service";
+import { UserService } from "../services/user.service";
 
 @Component({
   selector: 'app-user-profile-edit',
   templateUrl: 'user-profile-edit.component.html',
-  styleUrls: ['user-profile-edit.component.css']
+  styleUrls: ['user-profile-edit.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class UserProfileEditComponent {
   userForm: FormGroup;
 
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private auth: AuthService,
+    private service: UserService,
+    private route: ActivatedRoute
+  ) {
+    // ... (ostatak koda)
 
-  constructor(private fb: FormBuilder, private router: Router,private auth : AuthService,private service : UserService,
-    private authGuard: AuthGuard,) {
-    if(this.auth.isAuthenticated())
-    {
-
-    }
-    else {
-
-      this.router.navigate(['/']);
-    }
     this.userForm = this.fb.group({
-      email: ['', Validators.required],
-      username: ['', Validators.required],
-      firstname: ['', Validators.required, Validators.minLength(3)],
-      lastname: ['', Validators.required, Validators.minLength(3)],
+      email: [''],
+      username: [''],
+      firstname: [''],
+      lastname: [''],
       gender: [''],
       birthday: [''],
     });
   }
-  b= 0;
-  post:any;
-  gender:any;
-  email:any;
-  token:any;
-  async ngOnInit() {
 
+  b = 0;
+  post: any;
+  gender: any;
+  email: any;
+  token: any;
+
+  async ngOnInit() {
     this.token = this.auth.getDecodedAccessToken()
     var profile = this.service.getOne(this.token.email).subscribe((data) => {
       this.post = data;
 
-      if (this.post.gender == "true") {
-        this.userForm = new FormGroup({
-          email: new FormControl(this.post.email),
-          username: new FormControl(this.post.username),
-          firstname: new FormControl(this.post.firstname),
-          lastname: new FormControl(this.post.lastname),
-          birthday: new FormControl(this.post.birthday),
-          gender: new FormControl("Male"),
-        });
-      } else {
-        this.userForm = new FormGroup({
-          email: new FormControl(this.post.email),
-          username: new FormControl(this.post.username),
-          firstname: new FormControl(this.post.firstname),
-          lastname: new FormControl(this.post.lastname),
-          birthday: new FormControl(this.post.birthday),
-          gender: new FormControl("Female"),
-        });
-      }
-      this.b = 1;
+      this.userForm.patchValue({
+        email: this.post.email,
+        username: this.post.username,
+        firstname: this.post.firstname,
+        lastname: this.post.lastname,
+        birthday: this.post.birthday,
+        gender: this.post.gender
+      });
+
+      console.log(this.post)
+
     });
+    this.b = 1;
   }
-    submitForm()
-    {
-      if (this.userForm.valid) {
-        const updatedUserData = this.userForm.value;
-        this.service.saveUser(updatedUserData)
-        console.log('Changes saved:', updatedUserData);
 
-        this.router.navigate(['/profile']);
-      } else {
+  submitForm() {
+    if (this.userForm.valid) {
+      const updatedUserData = this.userForm.value;
+      this.service.saveUser(updatedUserData)
+      console.log('Changes saved:', updatedUserData);
 
-        alert('Form is invalid. Please check the fields.');
-        this.router.navigate(['/profile']);
-      }
+      this.router.navigate(['/profile']);
+    } else {
+      alert('Form is invalid. Please check the fields.');
+      this.router.navigate(['/profile']);
     }
+  }
 }

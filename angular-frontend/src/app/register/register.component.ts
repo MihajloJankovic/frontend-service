@@ -6,6 +6,8 @@ import { DialogComponent } from "../dialog/dialog.component";
 import { ViewEncapsulation } from '@angular/core';
 import {AuthService} from "../services/auth.service";
 import {UserService} from "../services/user.service";
+import {ConfigService} from "../services/config.service";
+
 
 @Component({
   selector: 'app-register',
@@ -16,7 +18,7 @@ import {UserService} from "../services/user.service";
 export class RegisterComponent {
   registerForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private router: Router, private dialog: MatDialog,private auth: AuthService,private service : UserService) {
+  constructor(private fb: FormBuilder, private router: Router, private dialog: MatDialog,private auth: AuthService,private service : UserService, private config: ConfigService) {
 
 
 
@@ -50,11 +52,9 @@ export class RegisterComponent {
   submitForm() {
     if (this.registerForm.valid) {
       this.service.register(this.registerForm.value)
-      const message = 'Registration successful';
-      // this.openDialog(message);
+      this.router.navigate(['/login'])
     } else {
-      const message = 'Invalid form data. Please check the fields.';
-      // this.openDialog(message);
+      alert('Invalid form data. Please check the fields.');
     }
 
   }

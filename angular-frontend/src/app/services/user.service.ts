@@ -3,6 +3,7 @@ import {ConfigService} from "../services/config.service";
 import {ApiService} from "../services/api.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {HttpHeaders} from "@angular/common/http";
+import {DatePipe} from "@angular/common";
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,8 @@ export class UserService {
     private apiService: ApiService,
     private config: ConfigService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private datePipe: DatePipe
   ) { }
   getOne(email : string) {
     return this.apiService.get(this.config._profile_url+"/"+email);
@@ -23,14 +25,16 @@ export class UserService {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     });
-    if (userToSave.gender == "male")
-    {
-      userToSave.gender = "true";
-    }
-    if (userToSave.gender == "female")
-    {
-      userToSave.gender = "false";
-    }
+    // if (userToSave.gender == "male")
+    // {
+    //   userToSave.gender = "true";
+    // }
+    // if (userToSave.gender == "female")
+    // {
+    //   userToSave.gender = "false";
+    // }
+
+    userToSave.birthday = this.datePipe.transform(userToSave.birthday, 'yyyy-MM-dd')
 
     const body = {
       'username': userToSave.username,
@@ -43,6 +47,8 @@ export class UserService {
       'password' : userToSave.password
     };
 
+
+
     return this.apiService.post(this.config._register_url, JSON.stringify(body), loginHeaders)
       .subscribe((res) => {
         if(res.body == "NOT_ACCEPTABLE" || res.name == "HttpErrorResponse")
@@ -52,8 +58,6 @@ export class UserService {
           alert("Save success");
           console.log(res)
           let returnUrl : String;
-          returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-          this.router.navigate([returnUrl + "/HomePage"]);
         }
       });
   }
@@ -62,15 +66,15 @@ export class UserService {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     });
-    if (userToSave.gender == "Male")
-    {
-      userToSave.gender = "true";
-    }
-    if (userToSave.gender == "female")
-    {
-      userToSave.gender = "false";
-    }
-
+    // if (userToSave.gender == "male")
+    // {
+    //   userToSave.gender = "true";
+    // }
+    // if (userToSave.gender == "female")
+    // {
+    //   userToSave.gender = "false";
+    // }
+    userToSave.birthday = this.datePipe.transform(userToSave.birthday, 'yyyy-MM-dd')
     const body = {
       'username': userToSave.username,
       'firstname': userToSave.firstname,
@@ -89,8 +93,6 @@ export class UserService {
           alert("Save success");
           console.log(res)
           let returnUrl : String;
-          returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-          this.router.navigate([returnUrl + "/HomePage"]);
         }
       });
   }

@@ -19,7 +19,7 @@ export class AccomondationService {
                private config: ConfigService,
                private router: Router,
                private route: ActivatedRoute,) { }
-
+  token:any;
   getOne(id : string) {
     return this.apiService.get(this.config._accommodation_url+"/"+id)
   }
@@ -29,14 +29,15 @@ export class AccomondationService {
       'Content-Type': 'application/json'
     });
 
-
+    this.token = localStorage.getItem('jwt');
+    let s = this.jwtHelper.decodeToken(this.token)
 
     const body = {
-      'name': accommodationToCreate.na,
-      'location': accommodationToCreate.firstname,
-      'adress': accommodationToCreate.lastname,
-      'email': accommodationToCreate.gender,
-      'amenities': accommodationToCreate.birthday,
+      'name': accommodationToCreate.name,
+      'location': accommodationToCreate.location,
+      'adress': accommodationToCreate.location,
+      'email': s.email,
+      'amenities': accommodationToCreate.amenities,
     };
 
 

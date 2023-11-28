@@ -43,6 +43,7 @@ const routes: Routes = [
   { path: 'accommodations', component: AccommodationsComponent},
   // { path: 'accommodationsCreate', component: AccommodationCreateComponent},
   { path: 'reset-request', component: ResetRequestComponent},
+  { path: 'reset/:email/:token', component: ResetPasswordComponent },
   { path: 'reset', component: ResetPasswordComponent},
 ];
 @NgModule({

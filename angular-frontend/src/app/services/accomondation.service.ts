@@ -5,7 +5,7 @@ import {UserService} from "./user.service";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {ConfigService} from "./config.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {Observable} from "rxjs";
+import {Observable, Subscription} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -23,12 +23,35 @@ export class AccomondationService {
   getOne(id : string) {
     return this.apiService.get(this.config._accommodation_url+"/"+id)
   }
-  createAccommodation(accommodation: any): Observable<any> {
-    const headers = new HttpHeaders({
+  createAccommodation(accommodationToCreate: any): Subscription {
+    const loginHeaders = new HttpHeaders({
       'Accept': 'application/json',
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     });
 
-    return this.apiService.post(this.config._addAccommodation_url, JSON.stringify(accommodation), headers);
+
+
+    const body = {
+      'name': accommodationToCreate.na,
+      'location': accommodationToCreate.firstname,
+      'adress': accommodationToCreate.lastname,
+      'email': accommodationToCreate.gender,
+      'amenities': accommodationToCreate.birthday,
+    };
+
+
+
+
+    return this.apiService.post(this.config._addAccommodation_url, JSON.stringify(body), loginHeaders)
+      .subscribe((res) => {
+        if(res.body == "NOT_ACCEPTABLE" || res.name == "HttpErrorResponse")
+        {
+          alert("Error")
+        }else {
+          alert("Save success");
+          console.log(res)
+          let returnUrl : String;
+        }
+      });
   }
 }

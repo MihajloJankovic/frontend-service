@@ -1,63 +1,67 @@
-// accommodation-create.component.ts
-import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthGuard } from '../services/auth.guard';
-import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
+import { Component } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogComponent } from '../dialog/dialog.component';
+import { ViewEncapsulation } from '@angular/core';
+import { AccomondationService } from '../services/accomondation.service';
 
 @Component({
   selector: 'app-accommodation-create',
   templateUrl: './accommodation-create.component.html',
   styleUrls: ['./accommodation-create.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
-export class AccommodationCreateComponent implements OnInit {
+export class AccommodationCreateComponent {
   accommodationForm: FormGroup;
+  amenitiesList: string[] = ['Wifi', 'Parking', 'Air Conditioning', 'Swimming Pool', 'Gym']
 
   constructor(
     private fb: FormBuilder,
-    public dialogRef: MatDialogRef<AccommodationCreateComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
-    private authGuard: AuthGuard,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog,
+    private accommodationService: AccomondationService
   ) {
     this.accommodationForm = this.fb.group({
       name: ['', Validators.required],
       description: ['', Validators.required],
-      priceMode: ['total', Validators.required],
-      totalPrice: [null, Validators.required],
-      pricePerPerson: [null, Validators.required],
-      numberOfPersons: [null, Validators.required],
+      amenities: this.fb.array([]),
     });
   }
 
-  ngOnInit(): void {
-    // Perform role check
-    const canActivate = this.authGuard.canActivate(
-      {} as ActivatedRouteSnapshot,
-      {} as RouterStateSnapshot
-    );
+  openDialog(message: string) {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      data: { message: message },
+    });
 
-    if (!canActivate) {
-      console.log('Unauthorized access');
-      this.router.navigate(['/login']);
-    } else {
-      console.log('Component initialized');
-    }
+    dialogRef.afterClosed().subscribe(() => {
+      if (message === 'Accommodation created successfully') {
+        this.router.navigate(['/accommodations']);
+      }
+    });
   }
 
   submitAccommodation() {
     if (this.accommodationForm.valid) {
-
-      const accommodationData = this.accommodationForm.value;
-      console.log('Accommodation created:', accommodationData);
-
-      this.dialogRef.close();
+      this.accommodationService.createAccommodation(this.accommodationForm.value).subscribe(
+        (res) => {
+          if (res.body === 'NOT_ACCEPTABLE' || res.name === 'HttpErrorResponse') {
+            this.openDialog('Error');
+          } else {
+            this.openDialog('Accommodation created successfully');
+          }
+        },
+        (error) => {
+          console.error('Error creating accommodation:', error);
+          this.openDialog('Error');
+        }
+      );
     } else {
-      console.log('Form is invalid. Please check the fields.');
+      alert('Invalid form data. Please check the fields.');
     }
   }
 
   closeDialog() {
-    this.dialogRef.close();
+    this.dialog.closeAll()
   }
 }

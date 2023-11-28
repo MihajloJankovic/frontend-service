@@ -24,9 +24,6 @@ export class UserProfileComponent {
       }
   }
 
-  navigateToEditProfile() {
-    this.router.navigate(['/edit-profile']);
-  }
     b= 0;
   post:any;
   uname:any;

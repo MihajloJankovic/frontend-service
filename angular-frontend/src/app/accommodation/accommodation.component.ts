@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import {MatDialog} from "@angular/material/dialog";
 import {ReservationComponent} from "../reservation/reservation.component";
+import {ActivatedRoute, ActivatedRouteSnapshot, RouterStateSnapshot} from "@angular/router";
+import {AccomondationService} from "../services/accomondation.service";
+import {FormControl, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-accommodation',
@@ -9,7 +12,6 @@ import {ReservationComponent} from "../reservation/reservation.component";
 })
 export class AccommodationComponent {
   accommodationTitle: string = 'Beautiful Accommodation';
-  accommodationDescription: string = 'A wonderful place to relax and enjoy your vacation.';
   locationDescription: string = 'Located in a peaceful area with stunning views.';
   facilities: string[] = ['Free Wi-Fi', 'Swimming Pool', 'Gym', 'Restaurant'];
 
@@ -25,10 +27,10 @@ export class AccommodationComponent {
     '/assets/images/image6.jpg',
     // Add more image paths as needed
   ];
-
+  b:number  = 0
   currentImageIndex: number = 0;
 
-  constructor(private dialog: MatDialog) {
+  constructor(private dialog: MatDialog,private accservice : AccomondationService,private route: ActivatedRoute) {
     // ...
   }
 
@@ -51,10 +53,28 @@ export class AccommodationComponent {
     this.arrows[0] = this.currentImageIndex !== 0;
     this.arrows[1] = this.currentImageIndex !== this.images.length - 1;
   }
+id:any;
+  post:any;
+    ngOnInit(): void {
+        this.id = this.route.snapshot.paramMap.get('id');
+        this.accservice.getOne(this.id).subscribe((data) => {
+          this.post  = data;
 
+          this.accommodationTitle = this.post.name;
+          this.locationDescription = this.post.location;
+          this.facilities = this.post.amenities;
+
+          this.b = 1;
+        });
+
+    }
   openReservationDialog(): void {
     const dialogRef = this.dialog.open(ReservationComponent, {
-      // Optional: Set additional options for the reservation dialog
+      data: {
+        id: this.id,
+        key2: 'value2',
+        // Add any other data you want to pass to the dialog
+      },
     });
 
     // Optional: Add logic after the dialog is closed

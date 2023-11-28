@@ -1,8 +1,10 @@
 import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {ReservationService} from "../services/reservation.service";
 import { AuthGuard } from '../services/auth.guard';
-import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
+import {ActivatedRoute, ActivatedRouteSnapshot, Router, RouterStateSnapshot} from '@angular/router';
+import {AuthService} from "../services/auth.service";
 
 @Component({
   selector: 'app-reservation',
@@ -16,35 +18,33 @@ export class ReservationComponent {
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<ReservationComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private authGuard: AuthGuard,
+
+    private reservation : ReservationService,
+    private authGuard: AuthGuard,private auth : AuthService,
     private router: Router
   ) {
+    if(this.auth.isAuthenticated())
+    {
+
+    }
+    else {
+
+      this.router.navigate(['/']);
+    }
     this.reservationForm = this.fb.group({
-      name: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      checkIn: ['', Validators.required],
-      checkOut: ['', Validators.required]
+      dateFrom: ['', Validators.required],
+      dateTo: ['', Validators.required],
     });
   }
 
   ngOnInit(): void {
-    // Perform role check
-    const canActivate = this.authGuard.canActivate(
-      {} as ActivatedRouteSnapshot,
-      {} as RouterStateSnapshot
-    );
-
-    if (!canActivate) {
-      console.log('Unauthorized access');
-      this.router.navigate(['/login']);
-    } else {
-      console.log('Component initialized');
-    }
   }
 
   submitReservation() {
     if (this.reservationForm.valid) {
       const reservationData = this.reservationForm.value;
+      reservationData.accid = this.data.id
+      this.reservation.reserve(reservationData)
       console.log('Reservation submitted:', reservationData);
 
       this.dialogRef.close();

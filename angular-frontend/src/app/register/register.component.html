@@ -38,12 +38,14 @@
           </select>
         </div>
         <div class="form-group">
-          <label for="birthDate">Birth date</label>
-          <div class="custom-datepicker-input-container">
-            <input readonly matInput [matDatepicker]="picker" formControlName="birthDate" id="birthDate" placeholder="Choose a date" class="custom-datepicker-input" (focus)="picker.open()">
-            <mat-datepicker #picker class="custom-datepicker"></mat-datepicker>
-            <i class="material-icons"></i>
-          </div>
+          <label for="birthday">Birthday</label>
+          <input type="text" id="birthday" formControlName="birthday" required>
+<!--          <label for="birthDate">Birth date</label>-->
+<!--          <div class="custom-datepicker-input-container">-->
+<!--            <input readonly matInput [matDatepicker]="picker" formControlName="birthDate" id="birthDate" placeholder="Choose a date" class="custom-datepicker-input" (focus)="picker.open()">-->
+<!--            <mat-datepicker #picker class="custom-datepicker"></mat-datepicker>-->
+<!--            <i class="material-icons"></i>-->
+<!--          </div>-->
         </div>
       </div>
       <div>
@@ -62,24 +64,6 @@
         <div class="form-group">
           <label for="confirmPassword">Confirm Password</label>
           <input type="password" id="confirmPassword" formControlName="confirmPassword" required>
-        </div>
-      </div>
-      <div id="address-segment">
-        <div class="form-group">
-          <label for="street">Street</label>
-          <input type="text" id="street" formControlName="street" required>
-        </div>
-        <div class="form-group">
-          <label for="number">Number</label>
-          <input type="text" id="number" formControlName="number" required>
-        </div>
-        <div class="form-group">
-          <label for="city">City</label>
-          <input type="text" id="city" formControlName="city" required>
-        </div>
-        <div class="form-group">
-          <label for="country">Country</label>
-          <input type="text" id="country" formControlName="country" required>
         </div>
       </div>
     </div>

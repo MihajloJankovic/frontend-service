@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+import {AuthService} from "../services/auth.service";
+import {UserService} from "../services/user.service"; // Dodajemo Router
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router'; // Dodajemo Router
 import { AuthGuard } from '../services/auth.guard';
 
@@ -11,43 +14,71 @@ import { AuthGuard } from '../services/auth.guard';
 export class UserProfileEditComponent {
   userForm: FormGroup;
 
-  constructor(private fb: FormBuilder,
-    private authGuard: AuthGuard,
-    private router: Router) {
+
+  constructor(private fb: FormBuilder, private router: Router,private auth : AuthService,private service : UserService,
+    private authGuard: AuthGuard,) {
+    if(this.auth.isAuthenticated())
+    {
+
+    }
+    else {
+
+      this.router.navigate(['/']);
+    }
     this.userForm = this.fb.group({
+      email: ['', Validators.required],
       username: ['', Validators.required],
-      password: ['', Validators.required, Validators.minLength(6)],
-      email: ['', [Validators.required, Validators.email]],
-      phone: [''],
-      country: [''],
+      firstname: ['', Validators.required, Validators.minLength(3)],
+      lastname: ['', Validators.required, Validators.minLength(3)],
+      gender: [''],
+      birthday: [''],
     });
   }
+  b= 0;
+  post:any;
+  gender:any;
+  email:any;
+  token:any;
+  async ngOnInit() {
 
+    this.token = this.auth.getDecodedAccessToken()
+    var profile = this.service.getOne(this.token.email).subscribe((data) => {
+      this.post = data;
 
-  ngOnInit(): void {
-    // Perform role check
-    const canActivate = this.authGuard.canActivate(
-      {} as ActivatedRouteSnapshot,
-      {} as RouterStateSnapshot
-    );
-
-    if (!canActivate) {
-      console.log('Unauthorized access');
-      this.router.navigate(['/login']);
-    } else {
-      console.log('Component initialized');
-    }
+      if (this.post.gender == "true") {
+        this.userForm = new FormGroup({
+          email: new FormControl(this.post.email),
+          username: new FormControl(this.post.username),
+          firstname: new FormControl(this.post.firstname),
+          lastname: new FormControl(this.post.lastname),
+          birthday: new FormControl(this.post.birthday),
+          gender: new FormControl("Male"),
+        });
+      } else {
+        this.userForm = new FormGroup({
+          email: new FormControl(this.post.email),
+          username: new FormControl(this.post.username),
+          firstname: new FormControl(this.post.firstname),
+          lastname: new FormControl(this.post.lastname),
+          birthday: new FormControl(this.post.birthday),
+          gender: new FormControl("Female"),
+        });
+      }
+      this.b = 1;
+    });
   }
-  submitForm() {
-    if (this.userForm.valid) {
-      const updatedUserData = this.userForm.value;
-      console.log('Changes saved:', updatedUserData);
+    submitForm()
+    {
+      if (this.userForm.valid) {
+        const updatedUserData = this.userForm.value;
+        this.service.saveUser(updatedUserData)
+        console.log('Changes saved:', updatedUserData);
 
-      this.router.navigate(['/profile']);
-    } else {
+        this.router.navigate(['/profile']);
+      } else {
 
-      console.log('Form is invalid. Please check the fields.');
-      this.router.navigate(['/profile']);
+        alert('Form is invalid. Please check the fields.');
+        this.router.navigate(['/profile']);
+      }
     }
-  }
 }

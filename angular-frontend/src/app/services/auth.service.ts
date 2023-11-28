@@ -11,7 +11,16 @@ import {Observable, Subscription, throwError} from "rxjs";
 import {LoginComponent} from "../login/login.component";
 @Injectable({providedIn: 'root'})
 export class AuthService {
+  token:any
+  getDecodedAccessToken(): any {
 
+    this.token = localStorage.getItem('jwt');
+    try {
+      return this.jwtHelper.decodeToken(this.token);
+    } catch(Error) {
+      return null;
+    }
+  }
   get access_token(): any {
     return this._access_token;
   }
@@ -50,9 +59,9 @@ export class AuthService {
     });
     // const body = `username=${user.username}&password=${user.password}`;
     const body = {
+      'email' : user.email,
       'currentPassword': user.currentPassword,
       'newPassword': user.newPassword,
-      'confirmPassword': user.confirmPassword
     };
     return this.apiService.post(this.config._passwordChange_url, JSON.stringify(body), loginHeaders)
       .subscribe((res) => {
@@ -61,6 +70,8 @@ export class AuthService {
           alert("Wrong Password")
         }else {
           console.log('Change success');
+          this._access_token = null;
+          localStorage.removeItem('jwt');
           let returnUrl : String;
           returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
           this.router.navigate([returnUrl + "/login"]);

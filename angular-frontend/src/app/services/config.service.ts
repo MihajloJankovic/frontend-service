@@ -32,7 +32,7 @@ export class ConfigService {
   _setAvailability_url: string;
   _getAllAvailability_url: string;
   _checkAvailability_url: string;
-  
+  _reservation_url: string;
 
 
   constructor() {
@@ -41,13 +41,14 @@ export class ConfigService {
     // Profile Endpoints
     this._profile_url = this._api_url + '/profile';
     this._profile_edit_url = this._api_url + '/update-profile';
+    this._reservation_url = this._api_url + '/set-reservation';
 
     // User Endpoints
     this._login_url = this._api_url + '/login';
     this._passwordChange_url = this._api_url + '/change-password';
 
     // Accommodation Endpoints
-    this._accommodation_url = this._api_url + '/accommodation';
+    this._accommodation_url = this._api_url + '/accomondation-one';
     this._accommodations_url = this._api_url + '/accommodations';
     this._addAccommodation_url = this._api_url + '/add-accommodation';
     this._updateAccommodation_url = this._api_url + '/update-accommodation';

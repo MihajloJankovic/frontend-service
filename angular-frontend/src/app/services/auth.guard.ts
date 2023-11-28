@@ -18,7 +18,7 @@ export class AuthGuard implements CanActivate {
       return false;
     }
 
-    if ('roles' in route.data && !this.checkRoles(token)) {
+    if ('role' in route.data && !this.checkRoles(token)) {
       this.router.navigate(['/login']);
       return false;
     }
@@ -30,5 +30,5 @@ export class AuthGuard implements CanActivate {
     const decodedToken = this.jwtHelper.decodeToken(token);
     return !!decodedToken.role;
   }
-  
+
 }

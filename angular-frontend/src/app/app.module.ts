@@ -30,6 +30,10 @@ import { AccommodationsComponent } from './accommodations/accommodations.compone
 import { AccommodationCreateComponent } from './accommodation-create/accommodation-create.component';
 import { ResetRequestComponent } from './reset-request/reset-request.component';
 import { ResetPasswordComponent } from './reset/reset.component';
+import {UserService} from "./services/user.service";
+import {ReservationService} from "./services/reservation.service";
+import {AccomondationService} from "./services/accomondation.service";
+
 
 
 
@@ -39,9 +43,9 @@ const routes: Routes = [
   { path: 'passwordChange', component: PasswordChangeComponent},
   { path: 'login', component: LoginComponent},
   { path: 'register', component: RegisterComponent},
-  { path: 'accommodation', component: AccommodationComponent},
+  { path: 'accommodation/:id', component: AccommodationComponent},
   { path: 'accommodations', component: AccommodationsComponent},
-  // { path: 'accommodationsCreate', component: AccommodationCreateComponent},
+  { path: 'accommodationsCreate', component: AccommodationCreateComponent},
   { path: 'reset-request', component: ResetRequestComponent},
   { path: 'reset', component: ResetPasswordComponent},
 ];
@@ -89,7 +93,7 @@ const routes: Routes = [
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
       multi: true
-    }, { provide: JWT_OPTIONS, useValue: JWT_OPTIONS }, JwtHelperService, ConfigService],
+    }, { provide: JWT_OPTIONS, useValue: JWT_OPTIONS }, JwtHelperService, ConfigService,UserService,AccomondationService,ReservationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

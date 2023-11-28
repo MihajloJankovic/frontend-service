@@ -12,18 +12,17 @@
   <div class="dialog-content">
     <span class="dialog-close" (click)="closeDialog()">×</span>
     <h2 class="dialog-title">Reservation</h2>
+
+
     <form [formGroup]="reservationForm" class="dialog-form" (ngSubmit)="submitReservation()">
-      <label for="name">Name:</label>
-      <input type="text" id="name" formControlName="name" class="dialog-input" readonly>
 
-      <label for="email">Email:</label>
-      <input type="email" id="email" formControlName="email" class="dialog-input" readonly>
+      <label for="dateFrom">Check-In Date:</label>
+      <input type="text" id="dateFrom" formControlName="dateFrom" class="dialog-input" >
+<!--      <input type="date" id="checkIn" formControlName="checkIn" class="dialog-input">-->
 
-      <label for="checkIn">Check-In Date:</label>
-      <input type="date" id="checkIn" formControlName="checkIn" class="dialog-input">
-
-      <label for="checkOut">Check-Out Date:</label>
-      <input type="date" id="checkOut" formControlName="checkOut" class="dialog-input">
+      <label for="dateTo">Check-Out Date:</label>
+      <input type="text" id="dateTo" formControlName="dateTo" class="dialog-input" >
+<!--      <input type="date" id="checkOut" formControlName="checkOut" class="dialog-input">-->
 
       <div class="dialog-button-container">
         <button type="submit" class="dialog-button">Submit</button>

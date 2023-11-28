@@ -6,7 +6,7 @@
   <link rel="stylesheet" href="accommodation.component.css">
 </head>
 <body>
-<div class="accommodation-container">
+<div class="accommodation-container" *ngIf="b ==1">
   <div class="accommodation-header">
     <h1>{{ accommodationTitle }}</h1>
   </div>
@@ -22,11 +22,7 @@
 
 
   </div>
-  <div class="accommodation-body">
-    <div class="accommodation-description">
-      <h2>Description</h2>
-      <p>{{ accommodationDescription }}</p>
-    </div>
+  <div class="accommodation-body" *ngIf="b ==1">
     <div class="accommodation-facilities">
       <h2>Facilities</h2>
       <ul>

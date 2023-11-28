@@ -4,6 +4,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthGuard } from '../services/auth.guard';
 import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
+import {AccomondationService} from "../services/accomondation.service";
 
 @Component({
   selector: 'app-accommodation-create',
@@ -12,21 +13,21 @@ import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/ro
 })
 export class AccommodationCreateComponent implements OnInit {
   accommodationForm: FormGroup;
+  amenitiesList: string[] = ['Wifi', 'Parking', 'Air Conditioning', 'Swimming Pool', 'Gym']
 
   constructor(
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<AccommodationCreateComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private authGuard: AuthGuard,
+    private service: AccomondationService,
     private router: Router
   ) {
     this.accommodationForm = this.fb.group({
       name: ['', Validators.required],
       description: ['', Validators.required],
-      priceMode: ['total', Validators.required],
-      totalPrice: [null, Validators.required],
-      pricePerPerson: [null, Validators.required],
-      numberOfPersons: [null, Validators.required],
+      amenities: this.fb.array([]),
+
     });
   }
 
@@ -47,11 +48,11 @@ export class AccommodationCreateComponent implements OnInit {
 
   submitAccommodation() {
     if (this.accommodationForm.valid) {
-
-      const accommodationData = this.accommodationForm.value;
-      console.log('Accommodation created:', accommodationData);
+      this.service.createAccommodation(this.accommodationForm.value)
+      console.log('Accommodation created:', this.accommodationForm.value);
 
       this.dialogRef.close();
+      this.router.navigate(['/accommodations'])
     } else {
       console.log('Form is invalid. Please check the fields.');
     }

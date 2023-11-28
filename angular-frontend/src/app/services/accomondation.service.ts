@@ -2,9 +2,11 @@ import { Injectable } from '@angular/core';
 import {JwtHelperService} from "@auth0/angular-jwt";
 import {ApiService} from "./api.service";
 import {UserService} from "./user.service";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {ConfigService} from "./config.service";
 import {ActivatedRoute, Router} from "@angular/router";
+import {Observable, Subscription} from "rxjs";
+
 
 @Injectable({
   providedIn: 'root'
@@ -21,5 +23,37 @@ export class AccomondationService {
 
   getOne(id : string) {
     return this.apiService.get(this.config._accommodation_url+"/"+id)
+  }
+
+  createAccommodation(accommodationToCreate: any): Subscription {
+    const loginHeaders = new HttpHeaders({
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    });
+
+
+
+    const body = {
+      'name': accommodationToCreate.na,
+      'location': accommodationToCreate.firstname,
+      'adress': accommodationToCreate.lastname,
+      'email': accommodationToCreate.gender,
+      'amenities': accommodationToCreate.birthday,
+    };
+
+
+
+
+    return this.apiService.post(this.config._addAccommodation_url, JSON.stringify(body), loginHeaders)
+      .subscribe((res) => {
+        if(res.body == "NOT_ACCEPTABLE" || res.name == "HttpErrorResponse")
+        {
+          alert("Error")
+        }else {
+          alert("Save success");
+          console.log(res)
+          let returnUrl : String;
+        }
+      });
   }
 }

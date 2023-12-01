@@ -23,6 +23,9 @@ export class AccomondationService {
   getOne(id : string) {
     return this.apiService.get(this.config._accommodation_url+"/"+id)
   }
+  getAllAccommodations(): Observable<any> {
+    return this.apiService.get(this.config._accommodations_url);
+  }
   createAccommodation(accommodationToCreate: any): Subscription {
     const loginHeaders = new HttpHeaders({
       'Accept': 'application/json',
@@ -54,5 +57,9 @@ export class AccomondationService {
           let returnUrl : String;
         }
       });
+  }
+
+  getFilteredAccommodations(filters: any): Observable<any> {
+    return this.apiService.post(this.config._filtered_accommodations_url, filters);
   }
 }

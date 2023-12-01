@@ -36,6 +36,11 @@ body {
   margin-bottom: 20px;
   text-align: left;
 }
+.form-group2{
+  padding: 25px;
+  display: flex;
+  justify-content: center;
+}
 
 label {
   font-weight: 600;

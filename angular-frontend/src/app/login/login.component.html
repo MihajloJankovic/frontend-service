@@ -20,6 +20,10 @@
       <label for="password">Password</label>
       <input type="password" id="password" formControlName="password" required>
     </div>
+
+    <div class="form-group2">
+      <re-captcha  (resolved)="onRecaptchaResolved($event)" siteKey="6LeOqyIpAAAAAFK2azb4_6rC8NcW27PqIUfQ_1jt"></re-captcha>
+    </div>
     <button type="submit" class="login-button">Login</button>
   </form>
   <p class="signup-link">Forgot your password? <a routerLink="/reset-request">Reset password</a></p>

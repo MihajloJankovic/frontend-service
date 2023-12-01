@@ -33,6 +33,7 @@ import { ResetPasswordComponent } from './reset/reset.component';
 import {UserService} from "./services/user.service";
 import {ReservationService} from "./services/reservation.service";
 import {AccomondationService} from "./services/accomondation.service";
+import {RecaptchaModule} from "ng-recaptcha";
 
 
 
@@ -86,6 +87,7 @@ const routes: Routes = [
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
+    RecaptchaModule,
   ],
   exports: [RouterModule],
 

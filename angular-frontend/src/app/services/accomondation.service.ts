@@ -13,16 +13,19 @@ import {Observable, Subscription} from "rxjs";
 })
 export class AccomondationService {
 
-  constructor( public jwtHelper: JwtHelperService,
-               private apiService: ApiService,
-               private userService: UserService,
-               private http: HttpClient,
-               private config: ConfigService,
-               private router: Router,
-               private route: ActivatedRoute,) { }
-  token:any;
-  getOne(id : string) {
-    return this.apiService.get(this.config._accommodation_url+"/"+id)
+  constructor(public jwtHelper: JwtHelperService,
+              private apiService: ApiService,
+              private userService: UserService,
+              private http: HttpClient,
+              private config: ConfigService,
+              private router: Router,
+              private route: ActivatedRoute,) {
+  }
+
+  token: any;
+
+  getOne(id: string) {
+    return this.apiService.get(this.config._accommodation_url + "/" + id)
   }
 
   getAllAccommodations(): Observable<any> {
@@ -38,37 +41,44 @@ export class AccomondationService {
 
 
 
-    this.token = localStorage.getItem('jwt');
-    let s = this.jwtHelper.decodeToken(this.token)
-
-    const body = {
-      'name': accommodationToCreate.name,
-      'location': accommodationToCreate.location,
-      'adress': accommodationToCreate.location,
-      'email': s.email,
-      'amenities': accommodationToCreate.amenities,
-    };
 
 
 
+      this.token = localStorage.getItem('jwt');
+      let s = this.jwtHelper.decodeToken(this.token)
 
-    return this.apiService.post(this.config._addAccommodation_url, JSON.stringify(body), loginHeaders)
-      .subscribe((res) => {
-        if(res.body == "NOT_ACCEPTABLE" || res.name == "HttpErrorResponse")
-        {
-          alert("Error")
-        }else {
-          alert("Save success");
-          console.log(res)
-          let returnUrl : String;
-        }
-      });
+      const body = {
+        'name': accommodationToCreate.name,
+        'location': accommodationToCreate.location,
+        'adress': accommodationToCreate.location,
+        'email': s.email,
+        'amenities': accommodationToCreate.amenities,
+      };
+
+
+
+
+      return this.apiService.post(this.config._addAccommodation_url, JSON.stringify(body), loginHeaders)
+        .subscribe((res) => {
+          if (res.body == "NOT_ACCEPTABLE" || res.name == "HttpErrorResponse") {
+            alert("Error")
+          } else {
+            alert("Save success");
+            console.log(res)
+            let returnUrl: String;
+          }
+        });
+    }
+
+
+    getFilteredAccommodations(filters
+  :
+    any
+  ):
+    Observable < any > {
+      return this.apiService.post(this.config._filtered_accommodations_url, filters);
+    }
+
   }
 
-
-  getFilteredAccommodations(filters: any): Observable<any> {
-    return this.apiService.post(this.config._filtered_accommodations_url, filters);
-  }
-
-}
 

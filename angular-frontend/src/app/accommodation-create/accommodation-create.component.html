@@ -10,14 +10,15 @@
 <body>
 <div class="dialog-container">
   <div class="dialog-content">
-    <span class="dialog-close" (click)="closeDialog()">×</span>
     <h2 class="dialog-title">Create Accommodation</h2>
+    <span class="dialog-close" (click)="closeDialog()">×</span>
     <form [formGroup]="accommodationForm" class="dialog-form" (ngSubmit)="submitAccommodation()">
       <label for="name">Name:</label>
       <input type="text" id="name" formControlName="name" class="dialog-input" required>
 
-      <label for="description">Description:</label>
-      <textarea id="description" formControlName="description" class="dialog-input" required></textarea>
+      <label for="location">Location:</label>
+      <input type="text" id="location" formControlName="location" class="dialog-input" required>
+
 
       <label for="amenities">Amenities:</label>
       <div class="amenities-checkboxes">

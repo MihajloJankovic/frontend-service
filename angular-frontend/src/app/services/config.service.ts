@@ -18,6 +18,7 @@ export class ConfigService {
   // Accommodation Endpoints
   _accommodation_url: string;
   _accommodations_url: string;
+  _filtered_accommodations_url: string;
   _addAccommodation_url: string;
   _updateAccommodation_url: string;
 
@@ -26,6 +27,7 @@ export class ConfigService {
   _getTicket_url: string;
   _activate_url: string;
   _reset_request_url: string;
+  _reset_password_url: string;
 
   // Availability Endpoints
   _setAvailability_url: string;
@@ -49,6 +51,7 @@ export class ConfigService {
     // Accommodation Endpoints
     this._accommodation_url = this._api_url + '/accomondation-one';
     this._accommodations_url = this._api_url + '/accommodations';
+    this._filtered_accommodations_url = this._api_url + '/filtered_accommodations';
     this._addAccommodation_url = this._api_url + '/add-accommodation';
     this._updateAccommodation_url = this._api_url + '/update-accommodation';
 
@@ -56,7 +59,8 @@ export class ConfigService {
     this._register_url = this._api_url + '/register';
     this._getTicket_url = this._api_url + '/getTicket';
     this._activate_url = this._api_url + '/activate';
-    this._reset_request_url = this._api_url + '/reset-request';
+    this._reset_request_url = this._api_url + '/request-reset';
+    this._reset_password_url = this._api_url + '/reset';
 
     // Availability Endpoints
     this._setAvailability_url = this._api_url + '/set-availability';

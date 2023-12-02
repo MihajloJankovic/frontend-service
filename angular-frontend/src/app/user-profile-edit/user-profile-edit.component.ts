@@ -39,6 +39,7 @@ export class UserProfileEditComponent {
   token: any;
 
   async ngOnInit() {
+    this.b = 1;
     this.token = this.auth.getDecodedAccessToken()
     var profile = this.service.getOne(this.token.email).subscribe((data) => {
       this.post = data;
@@ -55,7 +56,7 @@ export class UserProfileEditComponent {
       console.log(this.post)
 
     });
-    this.b = 1;
+
   }
 
   submitForm() {

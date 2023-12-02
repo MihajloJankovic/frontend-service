@@ -26,6 +26,7 @@ export class AccommodationCreateComponent implements OnInit {
     this.accommodationForm = this.fb.group({
       name: ['', Validators.required],
       description: ['', Validators.required],
+      location:['', Validators.required],
       amenities: this.fb.array([]),
 
     });

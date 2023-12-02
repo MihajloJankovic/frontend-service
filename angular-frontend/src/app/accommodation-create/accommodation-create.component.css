@@ -40,13 +40,16 @@
 .dialog-form {
   margin-top: 20px;
 }
-
+#description{
+  height: 130px;
+}
 .dialog-input {
   width: 95%;
   padding: 10px;
   margin-bottom: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
+  resize: none;
 }
 
 .price-mode {
@@ -78,4 +81,18 @@
 .dialog-button:hover {
   background: #0056b3;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.amenities-checkboxes {
+  margin-bottom: 20px;
+}
+
+.amenities-checkboxes label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: normal;
+}
+
+.dialog-button-container {
+  margin-top: 20px;
 }

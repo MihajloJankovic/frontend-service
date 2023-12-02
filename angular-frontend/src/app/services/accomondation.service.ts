@@ -20,9 +20,13 @@ export class AccomondationService {
                private config: ConfigService,
                private router: Router,
                private route: ActivatedRoute,) { }
-
+  token:any;
   getOne(id : string) {
     return this.apiService.get(this.config._accommodation_url+"/"+id)
+  }
+
+  getAllAccommodations(): Observable<any> {
+    return this.apiService.get(this.config._accommodations_url);
   }
 
   createAccommodation(accommodationToCreate: any): Subscription {
@@ -39,6 +43,15 @@ export class AccomondationService {
       'adress': accommodationToCreate.lastname,
       'email': accommodationToCreate.gender,
       'amenities': accommodationToCreate.birthday,
+    this.token = localStorage.getItem('jwt');
+    let s = this.jwtHelper.decodeToken(this.token)
+
+    const body = {
+      'name': accommodationToCreate.name,
+      'location': accommodationToCreate.location,
+      'adress': accommodationToCreate.location,
+      'email': s.email,
+      'amenities': accommodationToCreate.amenities,
     };
 
 
@@ -56,4 +69,10 @@ export class AccomondationService {
         }
       });
   }
+
+
+  getFilteredAccommodations(filters: any): Observable<any> {
+    return this.apiService.post(this.config._filtered_accommodations_url, filters);
+  }
+
 }

@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../dialog/dialog.component';
 import { AuthService } from '../services/auth.service';
-
+import { RECAPTCHA_SETTINGS, RecaptchaFormsModule, RecaptchaModule, RecaptchaSettings } from 'ng-recaptcha';
 @Component({
   selector: 'app-login.component',
   templateUrl: './login.component.html',
@@ -21,7 +21,8 @@ export class LoginComponent {
   ) {
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
-      password: ['', Validators.required]
+      password: ['', Validators.required],
+      recaptcha: ['', Validators.required]
     });
   }
 
@@ -37,7 +38,12 @@ export class LoginComponent {
     });
   }
 
+  onRecaptchaResolved(captchaResponse: string | null): void {
+    // Update the 'recaptcha' form control value with the resolved captcha response
+    this.loginForm.get('recaptcha')?.setValue(captchaResponse);
+  }
   submitForm() {
+
     const username = this.loginForm.get('username')?.value;
     const password = this.loginForm.get('password')?.value;
 
@@ -45,7 +51,10 @@ export class LoginComponent {
       this.openDialog('Both username and password are required.');
       return;
     }
-
+    if (this.loginForm.invalid) {
+      alert("capcha is required !")
+      return;
+    }
     const credentials = {
       email: username,
       password: password

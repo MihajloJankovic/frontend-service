@@ -64,12 +64,9 @@ export class AccommodationsComponent{
       owner: this.ownerFilter,
       amenities: this.amenities
     };
-
+    console.log("aa");
     //ovde se doda zahtev
-    this.http.post<any>('/api/filterAccommodations', filters)
-      .subscribe(data => {
-        this.accommodations = data.dummyList.dummy;
-      });
+    
   }
 
   private hasAnyAmenity(accommodation: Accommodation, selectedAmenities: string[]): boolean {

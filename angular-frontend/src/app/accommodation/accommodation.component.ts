@@ -80,7 +80,7 @@ id:any;
   openAvaibilityDialog(): void {
     const dialogfdd = this.dialog.open(AvabilityComponent, {
       data: {
-        id: this.id,
+        uid: this.id,
         // Add any other data you want to pass to the dialog
       },
     });

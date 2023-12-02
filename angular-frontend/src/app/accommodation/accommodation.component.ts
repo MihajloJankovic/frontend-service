@@ -4,6 +4,8 @@ import {ReservationComponent} from "../reservation/reservation.component";
 import {ActivatedRoute, ActivatedRouteSnapshot, RouterStateSnapshot} from "@angular/router";
 import {AccomondationService} from "../services/accomondation.service";
 import {FormControl, FormGroup} from "@angular/forms";
+import {JwtHelperService} from "@auth0/angular-jwt";
+import {AvabilityComponent} from "../avability/avability.component";
 
 @Component({
   selector: 'app-accommodation',
@@ -30,7 +32,7 @@ export class AccommodationComponent {
   b:number  = 0
   currentImageIndex: number = 0;
 
-  constructor(private dialog: MatDialog,private accservice : AccomondationService,private route: ActivatedRoute) {
+  constructor(private dialog: MatDialog,private accservice : AccomondationService,public jwtHelper: JwtHelperService,private route: ActivatedRoute) {
     // ...
   }
 
@@ -55,7 +57,13 @@ export class AccommodationComponent {
   }
 id:any;
   post:any;
+  owner:any;
+  emaila: any;
+  token:any;
     ngOnInit(): void {
+      this.token = localStorage.getItem('jwt');
+      let s = this.jwtHelper.decodeToken(this.token)
+      this.emaila = s.email;
         this.id = this.route.snapshot.paramMap.get('id');
         this.accservice.getOne(this.id).subscribe((data) => {
           this.post  = data;
@@ -63,11 +71,25 @@ id:any;
           this.accommodationTitle = this.post.name;
           this.locationDescription = this.post.location;
           this.facilities = this.post.amenities;
-
+          this.owner = this.post.email;
           this.b = 1;
         });
 
     }
+
+  openAvaibilityDialog(): void {
+    const dialogfdd = this.dialog.open(AvabilityComponent, {
+      data: {
+        id: this.id,
+        // Add any other data you want to pass to the dialog
+      },
+    });
+
+    // Optional: Add logic after the dialog is closed
+    dialogfdd.afterClosed().subscribe(result => {
+      console.log(`Avability dialog closed. Result: ${result}`);
+    });
+  }
   openReservationDialog(): void {
     const dialogRef = this.dialog.open(ReservationComponent, {
       data: {

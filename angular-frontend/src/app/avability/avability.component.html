@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Accommodation</title>
+  <link rel="stylesheet" href="avability.component.css">
+</head>
+<body>
+<div class="dialog-container">
+  <div class="dialog-content">
+    <h2 class="dialog-title">Create Accommodation</h2>
+    <span class="dialog-close" (click)="closeDialog()">×</span>
+    <form [formGroup]="avaForm" class="dialog-form" (ngSubmit)="submitAccommodation()">
+      <label for="name">Name:</label>
+      <input type="text" id="name" formControlName="name" class="dialog-input" required>
+
+      <label for="description">Description:</label>
+      <textarea id="description" formControlName="description" class="dialog-input" required></textarea>
+
+
+
+      <div class="dialog-button-container">
+        <button type="submit" class="dialog-button">Create Accommodation</button>
+      </div>
+    </form>
+  </div>
+</div>
+</body>
+</html>

@@ -54,4 +54,39 @@ export class ReservationService {
 
 
   }
+  set_avability(reservation: any): Subscription {
+    const loginHeaders = new HttpHeaders({
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    });
+    this.token = localStorage.getItem('jwt');
+    // Check whether the token is expired and return
+    // true or false
+    let s = this.jwtHelper.decodeToken(this.token)
+    const body = {
+      'uid': s.uid,
+      'price_per_person': reservation.ppp,
+      'priceHole': reservation.dateTo,
+      'numberOfPeople': reservation.accid,
+      'from': reservation.accid,
+      'to': reservation.accid,
+    };
+    return this.apiService.post(this.config._avaibility_set_url, JSON.stringify(body), loginHeaders)
+      .subscribe((res) => {
+        if(res.body == "NOT_ACCEPTABLE" || res.name == "HttpErrorResponse")
+        {
+          alert("Error")
+        }else {
+          alert("Save success");
+          console.log(res)
+          let returnUrl : String;
+          returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+          this.router.navigate([returnUrl + "/accomondations"]);
+        }
+      });
+
+
+
+
+  }
 }

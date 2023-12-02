@@ -36,6 +36,9 @@
     <div class="accommodation-container">
       <button class="reserve-button" (click)="openReservationDialog()">Reserve accommodation</button>
     </div>
+    <div class="accommodation-container" *ngIf="emaila == owner">
+      <button class="reserve-button" (click)="openAvaibilityDialog()">Add avability for accommodation</button>
+    </div>
   </div>
 </div>
 </body>

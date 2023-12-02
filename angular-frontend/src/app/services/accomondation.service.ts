@@ -37,12 +37,7 @@ export class AccomondationService {
 
 
 
-    const body = {
-      'name': accommodationToCreate.na,
-      'location': accommodationToCreate.firstname,
-      'adress': accommodationToCreate.lastname,
-      'email': accommodationToCreate.gender,
-      'amenities': accommodationToCreate.birthday,
+
     this.token = localStorage.getItem('jwt');
     let s = this.jwtHelper.decodeToken(this.token)
 
@@ -76,3 +71,4 @@ export class AccomondationService {
   }
 
 }
+

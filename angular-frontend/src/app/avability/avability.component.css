@@ -1,0 +1,98 @@
+/* accommodation-create.component.css */
+
+.dialog-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.dialog-content {
+  max-width: 400px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+.dialog-title {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.dialog-close {
+  font-size: 24px;
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+.dialog-close:hover {
+  color: #ff0000;
+}
+
+.dialog-form {
+  margin-top: 20px;
+}
+#description{
+  height: 130px;
+}
+.dialog-input {
+  width: 95%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: none;
+}
+
+.price-mode {
+  margin-bottom: 10px;
+}
+
+.price-mode label {
+  margin-right: 10px;
+}
+
+.dialog-button-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.dialog-button {
+  background: #007BFF;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 4px;
+  border: none;
+  text-decoration: none;
+  font-size: 18px;
+  transition: background 0.3s;
+  cursor: pointer;
+}
+
+.dialog-button:hover {
+  background: #0056b3;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.amenities-checkboxes {
+  margin-bottom: 20px;
+}
+
+.amenities-checkboxes label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: normal;
+}
+
+.dialog-button-container {
+  margin-top: 20px;
+}

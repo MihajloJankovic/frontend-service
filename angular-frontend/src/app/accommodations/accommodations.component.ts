@@ -5,6 +5,7 @@ import {ReservationComponent} from "../reservation/reservation.component";
 import {AccommodationCreateComponent} from "../accommodation-create/accommodation-create.component";
 import {MatDialog} from "@angular/material/dialog";
 import { AuthGuard } from '../services/auth.guard';
+import { AccomondationService } from '../services/accomondation.service';
 
 class Accommodation {
   constructor(
@@ -30,21 +31,31 @@ export class AccommodationsComponent{
   ownerFilter = '';
 
   constructor(private http: HttpClient, private router: Router, private dialog: MatDialog,
-    private authGuard: AuthGuard) {}
+    private authGuard: AuthGuard,
+    private accommodationsService: AccomondationService) {}
 
   ngOnInit(): void {
     // Perform role check
-    const canActivate = this.authGuard.canActivate(
-      {} as ActivatedRouteSnapshot,
-      {} as RouterStateSnapshot
-    );
-
-    if (!canActivate) {
-      console.log('Unauthorized access');
-      this.router.navigate(['/login']);
-    } else {
-      console.log('Component initialized');
-    }
+    // kada ase otkomentarise role check baca gresku i svakako pusta da se ostane na stranice, ne radi redirect na login kao sto bi trebalo
+    // const canActivate = this.authGuard.canActivate(
+    //   {} as ActivatedRouteSnapshot,
+    //   {} as RouterStateSnapshot
+    // );
+    this.accommodationsService.getAllAccommodations().subscribe(
+      (data) => {
+        console.log("data:" + data)
+        this.accommodations = data;
+      },
+      (error) => {
+        console.error("error fetching accommodations", error);
+      }
+    )
+    // if (!canActivate) {
+    //   console.log('Unauthorized access');
+    //   this.router.navigate(['/login']);
+    // } else {
+    //   console.log('Component initialized');
+    // }
   }
 
   get filteredAccommodations(): Accommodation[] {

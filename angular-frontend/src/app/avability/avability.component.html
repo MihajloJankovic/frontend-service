@@ -39,7 +39,7 @@
         <input type="number" id="numberOfPersons" formControlName="numberOfPersons" class="dialog-input" min="1" required>
       </div>
       <div class="form-group">
-        <label for="from">Birth date</label>
+        <label for="from">From</label>
         <div class="custom-datepicker-input-container">
           <input readonly matInput [matDatepicker]="picker" formControlName="from" id="from" placeholder="Choose a date" class="custom-datepicker-input" (focus)="picker.open()">
           <mat-datepicker #picker class="custom-datepicker"></mat-datepicker>
@@ -47,7 +47,7 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="to">Birth date</label>
+        <label for="to">To</label>
         <div class="custom-datepicker-input-container">
           <input readonly matInput [matDatepicker]="picker" formControlName="to" id="to" placeholder="Choose a date" class="custom-datepicker-input" (focus)="picker.open()">
           <mat-datepicker #picker class="custom-datepicker"></mat-datepicker>

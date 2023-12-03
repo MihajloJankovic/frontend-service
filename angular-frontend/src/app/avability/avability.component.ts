@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, ViewEncapsulation} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {AuthGuard} from "../services/auth.guard";
@@ -10,7 +10,8 @@ import {ReservationService} from "../services/reservation.service";
 @Component({
   selector: 'app-avability',
   templateUrl: './avability.component.html',
-  styleUrls: ['./avability.component.css']
+  styleUrls: ['./avability.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class AvabilityComponent {
   accommodationName: string = '';

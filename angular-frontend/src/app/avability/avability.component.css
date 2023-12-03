@@ -1,4 +1,4 @@
-/* accommodation-create.component.css */
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 
 .dialog-container {
   display: flex;
@@ -95,4 +95,48 @@
 
 .dialog-button-container {
   margin-top: 20px;
+}
+
+.custom-datepicker-input {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  flex: 1;
+  margin-right: -1px;
+  visibility: visible;
+
+}
+hr {
+  border: 1px solid #002e64;
+  margin: 20px 0;
+}
+/* Stilovi za MatDatepickerToggle */
+.custom-datepicker-toggle {
+  cursor: pointer;
+  color: #007bff;
+  visibility: visible;
+  background-color: rgba(255, 131, 0, 0.47);
+
+}
+
+
+
+/* Stilovi za prikazivanje alerta */
+.alert {
+  color: red;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.custom-datepicker-input-container {
+  position: relative;
+}
+.material-icons{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 10px;
+  cursor: pointer;
 }

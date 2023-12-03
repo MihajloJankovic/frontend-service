@@ -34,6 +34,7 @@ export class ConfigService {
   _getAllAvailability_url: string;
   _checkAvailability_url: string;
   _reservation_url: string;
+  _avaibility_set_url: string;
 
 
   constructor() {
@@ -54,7 +55,7 @@ export class ConfigService {
     this._filtered_accommodations_url = this._api_url + '/filtered_accommodations';
     this._addAccommodation_url = this._api_url + '/add-accommodation';
     this._updateAccommodation_url = this._api_url + '/update-accommodation';
-
+    this._avaibility_set_url = this._api_url + "/set-avaibility";
     // Auth Endpoints
     this._register_url = this._api_url + '/register';
     this._getTicket_url = this._api_url + '/getTicket';

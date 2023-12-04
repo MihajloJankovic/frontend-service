@@ -23,8 +23,8 @@
 
       <label for="amenities">Amenities:</label>
       <div class="amenities-checkboxes">
-        <label *ngFor="let amenity of amenitiesList">
-          <input type="checkbox" [value]="amenity" formControlName="amenities" id="amenities"> {{ amenity }}
+        <label *ngFor="let amenity of amenitiesList; let i = index">
+          <input type="checkbox" [formControl]="amenitiesFormArray.controls[i]" [id]="'amenities' + i"> {{ amenity }}
         </label>
       </div>
 

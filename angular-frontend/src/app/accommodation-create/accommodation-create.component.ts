@@ -1,7 +1,7 @@
 // accommodation-create.component.ts
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { AuthGuard } from '../services/auth.guard';
 import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
 import {AccomondationService} from "../services/accomondation.service";
@@ -25,9 +25,23 @@ export class AccommodationCreateComponent implements OnInit {
   ) {
     this.accommodationForm = this.fb.group({
       name: ['', Validators.required],
-      location:['', Validators.required],
+      location: ['', Validators.required],
       amenities: this.fb.array([]),
+    });
 
+
+    this.populateAmenities();
+  }
+
+  get amenitiesFormArray(): FormArray {
+    return this.accommodationForm.get('amenities') as FormArray;
+  }
+
+  populateAmenities() {
+    const selectedAmenities = this.data && this.data.selectedAmenities ? this.data.selectedAmenities : [];
+
+    this.amenitiesList.forEach((amenity) => {
+      this.amenitiesFormArray.push(this.fb.control(selectedAmenities.includes(amenity)));
     });
   }
 

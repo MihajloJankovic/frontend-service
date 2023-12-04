@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, ViewEncapsulation} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ReservationService} from "../services/reservation.service";
@@ -9,7 +9,8 @@ import {AuthService} from "../services/auth.service";
 @Component({
   selector: 'app-reservation',
   templateUrl: './reservation.component.html',
-  styleUrls: ['./reservation.component.css']
+  styleUrls: ['./reservation.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class ReservationComponent {
   reservationForm: FormGroup;

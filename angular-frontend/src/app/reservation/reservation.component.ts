@@ -47,10 +47,12 @@ export class ReservationComponent {
       reservationData.accid = this.data.id
       this.reservation.reserve(reservationData)
       console.log('Reservation submitted:', reservationData);
+      alert('Reservation submitted')
 
       this.dialogRef.close();
     } else {
       console.log('Form is invalid. Please check the fields.');
+      alert('Form is invalid. Please check the fields.');
     }
   }
 

@@ -37,10 +37,10 @@ export class AccommodationsComponent{
   ngOnInit(): void {
     // Perform role check
     // kada ase otkomentarise role check baca gresku i svakako pusta da se ostane na stranice, ne radi redirect na login kao sto bi trebalo
-    // const canActivate = this.authGuard.canActivate(
-    //   {} as ActivatedRouteSnapshot,
-    //   {} as RouterStateSnapshot
-    // );
+    const canActivate = this.authGuard.canActivate(
+      {} as ActivatedRouteSnapshot,
+      {} as RouterStateSnapshot
+    );
     this.accommodationsService.getAllAccommodations().subscribe(
       (data) => {
         console.log("data:" + data)
@@ -50,12 +50,12 @@ export class AccommodationsComponent{
         console.error("error fetching accommodations", error);
       }
     )
-    // if (!canActivate) {
-    //   console.log('Unauthorized access');
-    //   this.router.navigate(['/login']);
-    // } else {
-    //   console.log('Component initialized');
-    // }
+    if (!canActivate) {
+      console.log('Unauthorized access');
+      this.router.navigate(['/login']);
+    } else {
+      console.log('Component initialized');
+    }
   }
 
   get filteredAccommodations(): Accommodation[] {

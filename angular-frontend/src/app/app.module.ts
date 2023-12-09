@@ -35,11 +35,13 @@ import {ReservationService} from "./services/reservation.service";
 import {AccomondationService} from "./services/accomondation.service";
 import {RecaptchaModule} from "ng-recaptcha";
 import { AvabilityComponent } from './avability/avability.component';
+import { NavbarComponent } from './navbar/navbar.component';
 
 
 
 
 const routes: Routes = [
+  { path: '', component: HomeComponent},
   { path: 'profile', component: UserProfileComponent},
   { path: 'editProfile', component: UserProfileEditComponent},
   { path: 'passwordChange', component: PasswordChangeComponent},
@@ -69,6 +71,7 @@ const routes: Routes = [
     ResetRequestComponent,
     ResetPasswordComponent,
     AvabilityComponent,
+    NavbarComponent,
   ],
 
   imports: [

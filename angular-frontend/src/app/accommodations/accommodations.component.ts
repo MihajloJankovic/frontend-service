@@ -73,11 +73,15 @@ export class AccommodationsComponent{
       minPrice: this.minPrice,
       maxPrice: this.maxPrice,
       owner: this.ownerFilter,
-      amenities: this.amenities
+      amenities: this.getSelectedAmenities()
     };
     console.log("aa");
     //ovde se doda zahtev
-    
+
+  }
+
+  private getSelectedAmenities(): string[] {
+    return Object.keys(this.selectedAmenities).filter(key => this.selectedAmenities[key]);
   }
 
   private hasAnyAmenity(accommodation: Accommodation, selectedAmenities: string[]): boolean {

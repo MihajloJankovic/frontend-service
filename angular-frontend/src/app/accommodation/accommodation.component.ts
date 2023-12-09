@@ -70,9 +70,10 @@ id:any;
 
           this.accommodationTitle = this.post.name;
           this.locationDescription = this.post.location;
-          this.facilities = this.post.amenities;
+          this.facilities = this.post.amenities || [];
           this.owner = this.post.email;
           this.b = 1;
+          console.log('Facilities:', this.facilities);
         });
 
     }

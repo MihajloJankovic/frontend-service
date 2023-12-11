@@ -17,29 +17,37 @@
       <div>
         <div class="form-group">
           <label for="firstname">Firstname</label>
-          <input type="text" id="firstname" formControlName="firstname" required>
+          <div class="inputContainer">
+            <input type="text" id="firstname" formControlName="firstname" required>
+          </div>
         </div>
         <div class="form-group">
           <label for="lastname">Lastname</label>
-          <input type="text" id="lastname" formControlName="lastname" required>
+          <div class="inputContainer">
+            <input type="text" id="lastname" formControlName="lastname" required>
+          </div>
         </div>
         <div class="form-group">
           <label for="gender">Gender</label>
-          <select id="gender" formControlName="gender" required>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-          </select>
+          <div class="inputContainer">
+            <select id="gender" formControlName="gender" required>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
+          </div>
         </div>
         <div class="form-group">
           <label for="role">Role</label>
-          <select id="role" formControlName="role" required>
-            <option value="Host">Host</option>
-            <option value="Guest">Guest</option>
-          </select>
+          <div class="inputContainer">
+            <select id="role" formControlName="role" required>
+              <option value="Host">Host</option>
+              <option value="Guest">Guest</option>
+            </select>
+          </div>
         </div>
         <div class="form-group">
           <label for="birthday">Birth date</label>
-          <div class="custom-datepicker-input-container">
+          <div class="custom-datepicker-input-container inputContainer">
             <input readonly matInput [matDatepicker]="picker" formControlName="birthday" id="birthday" placeholder="Choose a date" class="custom-datepicker-input" (focus)="picker.open()">
             <mat-datepicker #picker class="custom-datepicker"></mat-datepicker>
             <i class="material-icons"></i>
@@ -49,19 +57,27 @@
       <div>
         <div class="form-group">
           <label for="username">Username</label>
-          <input type="text" id="username" formControlName="username" required>
+          <div class="inputContainer">
+            <input type="text" id="username" formControlName="username" required>
+          </div>
         </div>
         <div class="form-group">
           <label for="email">Email Address</label>
-          <input type="email" id="email" formControlName="email" required>
+          <div class="inputContainer">
+            <input type="email" id="email" formControlName="email" required>
+          </div>
         </div>
         <div class="form-group">
           <label for="password">Password</label>
-          <input type="password" id="password" formControlName="password" required>
+          <div class="inputContainer">
+            <input type="password" id="password" formControlName="password" required>
+          </div>
         </div>
         <div class="form-group">
           <label for="confirmPassword">Confirm Password</label>
-          <input type="password" id="confirmPassword" formControlName="confirmPassword" required>
+          <div class="inputContainer">
+            <input type="password" id="confirmPassword" formControlName="confirmPassword" required>
+          </div>
         </div>
       </div>
     </div>

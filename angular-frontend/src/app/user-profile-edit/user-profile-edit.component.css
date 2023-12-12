@@ -117,5 +117,7 @@ input[type="tel"]:focus {
 
 }
 
-
+#form-group-email {
+  display: none;
+}
 

@@ -1,8 +1,10 @@
-import {Component, ViewEncapsulation} from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from "../services/auth.service";
 import { UserService } from "../services/user.service";
+import {DialogComponent} from "../dialog/dialog.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-user-profile-edit',
@@ -15,20 +17,19 @@ export class UserProfileEditComponent {
 
   constructor(
     private fb: FormBuilder,
+    private dialog: MatDialog,
     private router: Router,
     private auth: AuthService,
     private service: UserService,
     private route: ActivatedRoute
   ) {
-    // ... (ostatak koda)
-
     this.userForm = this.fb.group({
-      email: [''],
-      username: [''],
-      firstname: [''],
-      lastname: [''],
-      gender: [''],
-      birthday: [''],
+      email: [{ value: '', readonly:true}],
+      username: ['', [Validators.required, Validators.minLength(6)]],
+      firstname: ['', [Validators.required, Validators.pattern(/^[A-Z][a-z]*$/)]],
+      lastname: ['', [Validators.required, Validators.pattern(/^[A-Z][a-z]*$/)]],
+      gender: ['', Validators.required],
+      birthday: ['', Validators.required],
     });
   }
 
@@ -38,9 +39,9 @@ export class UserProfileEditComponent {
   email: any;
   token: any;
 
-  async ngOnInit() {
+  ngOnInit() {
     this.b = 1;
-    this.token = this.auth.getDecodedAccessToken()
+    this.token = this.auth.getDecodedAccessToken();
     var profile = this.service.getOne(this.token.email).subscribe((data) => {
       this.post = data;
 
@@ -53,22 +54,155 @@ export class UserProfileEditComponent {
         gender: this.post.gender
       });
 
-      console.log(this.post)
+      console.log(this.post);
 
     });
-
   }
 
-  submitForm() {
-    if (this.userForm.valid) {
-      const updatedUserData = this.userForm.value;
-      this.service.saveUser(updatedUserData)
-      console.log('Changes saved:', updatedUserData);
+  openDialog(message: string) {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      data: { message: message },
+    });
 
-      this.router.navigate(['/profile']);
+    dialogRef.afterClosed().subscribe(() => {
+      if (message === 'Profile updated') {
+        this.router.navigate(['/profile']);
+      }
+    });
+  }
+
+  checkForm(userForm: FormGroup): boolean {
+    if (this.areFieldsEmpty()) {
+      this.openDialog('All fields are required.');
+      this.setBorderForField();
+      return false;
+    }
+
+    // Provera za ime i prezime sa prvim velikim slovom
+    const nameRegex = /^[A-Z][a-z]*$/;
+
+// Provera za ime
+    if (!nameRegex.test(userForm.value.firstname)) {
+      this.setRedBorderForField('firstname')
+      this.openDialog('First name must start with a capital letter.');
+      return false;
+    }
+    else{
+      this.setGreenBorderForField('firstname')
+    }
+
+// Provera za prezime
+    if (!nameRegex.test(userForm.value.lastname)) {
+      this.setRedBorderForField('lastname')
+      this.openDialog('Last name must start with a capital letter.');
+      return false;
+    }
+    else{
+      this.setGreenBorderForField('lastname')
+    }
+
+
+
+    const usernameRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/;
+    if (!usernameRegex.test(userForm.value.username)) {
+      this.setRedBorderForField('username');
+      this.openDialog('Username must contain at least one lowercase letter, one uppercase letter, one number, and be at least 6 characters long.');
+      return false;
+    }
+    else{
+      this.setGreenBorderForField('username')
+    }
+
+
+    this.setInvalidClass('firstname', !nameRegex.test(userForm.value.firstname));
+    this.setInvalidClass('lastname', !nameRegex.test(userForm.value.lastname));
+    this.setInvalidClass('gender', !userForm.value.gender);
+    this.setInvalidClass('username', !usernameRegex.test(userForm.value.username));
+
+    return true;
+  }
+
+  areFieldsEmpty(): boolean {
+    let isEmpty = false;
+    Object.keys(this.userForm.controls).forEach((field) => {
+      const control = this.userForm.get(field);
+      if (control && control.value === '') {
+        isEmpty = true;
+        this.setInvalidClass(field, true);
+      }
+    });
+    return isEmpty;
+  }
+  setInvalidClass(controlName: string, condition?: boolean): boolean {
+    const control = this.userForm.get(controlName);
+
+    if (condition !== undefined) {
+      if (control && condition && (control.dirty || control.touched)) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+    if (control && control.invalid && (control.dirty || control.touched)) {
+      return true;
+    }
+
+    return false;
+  }
+
+
+  submitForm() {
+    this.setGreenBorderForField('username')
+    this.setGreenBorderForField('firstname')
+    this.setGreenBorderForField('lastname')
+    this.setGreenBorderForField('gender')
+    this.setGreenBorderForField('birthday')
+    if (this.checkForm(this.userForm) == true) {
+      this.service.saveUser(this.userForm.value)
+      this.router.navigate(['/profile'])
+    }
+  }
+
+  setGreenBorderForField(inputId: string) {
+    const control = this.userForm.get(inputId);
+    if (control) {
+      const inputElement = document.getElementById(inputId);
+      if (inputElement) {
+        inputElement.style.border = '2.5px solid green';
+      }
+    }
+  }
+
+  setRedBorderForField(inputId: string) {
+    const control = this.userForm.get(inputId);
+    if (control) {
+      const inputElement = document.getElementById(inputId);
+      if (inputElement) {
+        inputElement.style.border = '2.5px solid red';
+      }
+    }
+  }
+
+  setBorderForField(inputId?: string, color: 'red' | 'green' = 'red') {
+    if (inputId) {
+      const control = this.userForm.get(inputId);
+      if (control && control.value === '') {
+        const inputElement = document.getElementById(inputId);
+        if (inputElement) {
+          inputElement.style.border = `2.5px solid ${color}`;
+        }
+      }
     } else {
-      alert('Form is invalid. Please check the fields.');
-      this.router.navigate(['/profile']);
+      Object.keys(this.userForm.controls).forEach((field) => {
+        const control = this.userForm.get(field);
+        if (control && control.value === '') {
+          const inputElement = document.getElementById(field);
+          if (inputElement) {
+            inputElement.style.border = `2.5px solid ${color}`;
+          }
+        }
+      });
     }
   }
 }

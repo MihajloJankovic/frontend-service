@@ -43,6 +43,13 @@ export class UserProfileComponent {
 
     this.b = 1;
   }
+  isAuthenticated(): boolean {
+    return this.auth.isAuthenticated();
+  }
 
+  logout(): void {
+    localStorage.removeItem('jwt');
+    this.router.navigate(['/login']);
+  }
 
 }

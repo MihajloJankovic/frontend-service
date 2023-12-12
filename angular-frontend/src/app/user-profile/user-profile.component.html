@@ -6,6 +6,20 @@
   <link rel="stylesheet" href="user-profile.component.css">
 </head>
 <body>
+<nav class="navbar-container">
+  <ul>
+    <li><a routerLink="/">Home</a></li>
+    <li><a routerLink="/accommodations">Accommodations
+    </a></li>
+    <ng-container *ngIf="!isAuthenticated()">
+      <a href="http://localhost:4200/login"><button id="loginbttn">Login</button></a>
+      <a href="http://localhost:4200/register"><button id="registerbttn">Register</button></a>
+    </ng-container>
+    <ng-container *ngIf="isAuthenticated()">
+      <button id="logoutbttn" (click)="logout()">Logout</button>
+    </ng-container>
+  </ul>
+</nav>
 <div class="profile-container">
   <div class="profile-header">
     <h1>User Profile</h1>

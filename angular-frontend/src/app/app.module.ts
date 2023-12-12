@@ -35,7 +35,6 @@ import {ReservationService} from "./services/reservation.service";
 import {AccomondationService} from "./services/accomondation.service";
 import {RecaptchaModule} from "ng-recaptcha";
 import { AvabilityComponent } from './avability/avability.component';
-import { NavbarComponent } from './navbar/navbar.component';
 
 
 
@@ -71,7 +70,6 @@ const routes: Routes = [
     ResetRequestComponent,
     ResetPasswordComponent,
     AvabilityComponent,
-    NavbarComponent,
   ],
 
   imports: [

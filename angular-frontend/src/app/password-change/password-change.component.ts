@@ -35,9 +35,165 @@ export class PasswordChangeComponent {
   }
   user:any
   token:any;
+
+  checkForm(changePasswordForm: FormGroup): boolean {
+    if (this.areFieldsEmpty()) {
+      this.openDialog('All fields are required.');
+      this.setBorderForField();
+      this.setRedBorderForField('currentPassword');
+      return false;
+    }
+
+    // Provera za lozinku
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{7,}$/;
+
+    if (!this.isCurrentPasswordValid(changePasswordForm.value.currentPassword)) {
+      this.setRedBorderForField('currentPassword');
+      this.openDialog('Current password is not valid.');
+      return false;
+    } else {
+      this.setGreenBorderForField('currentPassword');
+    }
+
+    if (
+      changePasswordForm.value.newPassword !== changePasswordForm.value.confirmPassword ||
+      !passwordRegex.test(changePasswordForm.value.newPassword)
+    ) {
+      this.setRedBorderForField('newPassword');
+      this.setRedBorderForField('confirmPassword');
+      this.openDialog(
+        'Passwords must match and contain at least one lowercase letter, one uppercase letter, one number, and one special character. Password must be at least 7 characters long.'
+      );
+      return false;
+    } else {
+      this.setGreenBorderForField('newPassword');
+      this.setGreenBorderForField('confirmPassword');
+    }
+
+    if (changePasswordForm.value.newPassword === changePasswordForm.value.currentPassword) {
+      this.setRedBorderForField('newPassword');
+      this.setRedBorderForField('currentPassword');
+      this.openDialog('New password must be different from the current password.');
+      return false;
+    } else {
+      this.setGreenBorderForField('newPassword');
+      this.setGreenBorderForField('currentPassword');
+    }
+
+    this.setInvalidClass(
+      'currentPassword',
+      changePasswordForm.value.currentPassword !== changePasswordForm.value.confirmPassword ||
+      !passwordRegex.test(changePasswordForm.value.currentPassword)
+    );
+    this.setInvalidClass(
+      'newPassword',
+      changePasswordForm.value.newPassword !== changePasswordForm.value.confirmPassword ||
+      !passwordRegex.test(changePasswordForm.value.newPassword)
+    );
+    this.setInvalidClass(
+      'confirmPassword',
+      changePasswordForm.value.newPassword !== changePasswordForm.value.confirmPassword ||
+      !passwordRegex.test(changePasswordForm.value.confirmPassword)
+    );
+
+    return true; // Ako sve provere prođu, forma je validna
+  }
+
+  // Ovo je samo privremena implementacija, zamenite sa stvarnom logikom
+  isCurrentPasswordValid(currentPassword: string): boolean {
+    // Decodirajte JWT token iz lokalnog skladišta
+    const token = localStorage.getItem('jwt');
+    if (!token) {
+      return false; // Ako token nije prisutan, lozinka nije validna
+    }
+
+    try {
+      const decodedToken: any = this.jwtHelper.decodeToken(token);
+
+      // Provera da li je lozinka iz JWT tokena jednaka trenutnoj lozinci
+      return currentPassword === decodedToken.currentPassword;
+    } catch (error) {
+      return false; // Greška pri dekodiranju tokena, lozinka nije validna
+    }
+  }
+
+
+
+  areFieldsEmpty(): boolean {
+    let isEmpty = false;
+    Object.keys(this.changePasswordForm.controls).forEach((field) => {
+      const control = this.changePasswordForm.get(field);
+      if (control && control.value === '') {
+        isEmpty = true;
+        this.setInvalidClass(field, true);
+      }
+    });
+    return isEmpty;
+  }
+
+  setInvalidClass(controlName: string, condition?: boolean): boolean {
+    const control = this.changePasswordForm.get(controlName);
+
+    if (condition !== undefined) {
+      if (control && condition && (control.dirty || control.touched)) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+    if (control && control.invalid && (control.dirty || control.touched)) {
+      return true;
+    }
+
+    return false;
+  }
+
+  setGreenBorderForField(inputId: string) {
+    const control = this.changePasswordForm.get(inputId);
+    if (control) {
+      const inputElement = document.getElementById(inputId);
+      if (inputElement) {
+        inputElement.style.border = '2.5px solid green';
+      }
+    }
+  }
+
+  setRedBorderForField(inputId: string) {
+    const control = this.changePasswordForm.get(inputId);
+    if (control) {
+      const inputElement = document.getElementById(inputId);
+      if (inputElement) {
+        inputElement.style.border = '2.5px solid red';
+      }
+    }
+  }
+
+  setBorderForField(inputId?: string, color: 'red' | 'green' = 'red') {
+    if (inputId) {
+      const control = this.changePasswordForm.get(inputId);
+      if (control && control.value === '') {
+        const inputElement = document.getElementById(inputId);
+        if (inputElement) {
+          inputElement.style.border = `2.5px solid ${color}`;
+        }
+      }
+    } else {
+      Object.keys(this.changePasswordForm.controls).forEach((field) => {
+        const control = this.changePasswordForm.get(field);
+        if (control && control.value === '') {
+          const inputElement = document.getElementById(field);
+          if (inputElement) {
+            inputElement.style.border = `2.5px solid ${color}`;
+          }
+        }
+      });
+    }
+  }
+
   submitForm() {
     let message: string;
-    if (this.changePasswordForm.valid) {
+    if (this.checkForm(this.changePasswordForm) == true) {
       const currentPassword = this.changePasswordForm.get('currentPassword')?.value;
       const newPassword = this.changePasswordForm.get('newPassword')?.value;
       const confirmPassword = this.changePasswordForm.get('confirmPassword')?.value;
@@ -45,7 +201,7 @@ export class PasswordChangeComponent {
       // Check whether the token is expired and return
       // true or false
       let s = this.jwtHelper.decodeToken(this.token)
-      this.user= {
+      this.user = {
         email: s.email,
         currentPassword: currentPassword,
         newPassword: newPassword
@@ -57,10 +213,18 @@ export class PasswordChangeComponent {
         this.auth.changePassword(this.user)
         message = 'Password changed successfully';
       }
-    } else {
-      message = 'Form is invalid. Please check the fields.';
-    }
 
-    this.openDialog(message);
+
+      this.openDialog(message);
+    }
+  }
+
+  isAuthenticated(): boolean {
+    return this.auth.isAuthenticated();
+  }
+
+  logout(): void {
+    localStorage.removeItem('jwt');
+    this.router.navigate(['/login']);
   }
 }

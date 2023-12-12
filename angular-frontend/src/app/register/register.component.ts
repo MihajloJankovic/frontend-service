@@ -243,4 +243,13 @@ export class RegisterComponent {
       this.router.navigate(['/login'])
     }
   }
+
+  isAuthenticated(): boolean {
+    return this.auth.isAuthenticated();
+  }
+
+  logout(): void {
+    localStorage.removeItem('jwt');
+    this.router.navigate(['/login']);
+  }
 }

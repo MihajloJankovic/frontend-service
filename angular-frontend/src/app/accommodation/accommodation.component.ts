@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import {MatDialog} from "@angular/material/dialog";
 import {ReservationComponent} from "../reservation/reservation.component";
-import {ActivatedRoute, ActivatedRouteSnapshot, RouterStateSnapshot} from "@angular/router";
+import {ActivatedRoute, ActivatedRouteSnapshot, Router, RouterStateSnapshot} from "@angular/router";
 import {AccomondationService} from "../services/accomondation.service";
 import {FormControl, FormGroup} from "@angular/forms";
 import {JwtHelperService} from "@auth0/angular-jwt";
 import {AvabilityComponent} from "../avability/avability.component";
+import {AuthService} from "../services/auth.service";
 
 @Component({
   selector: 'app-accommodation',
@@ -32,7 +33,7 @@ export class AccommodationComponent {
   b:number  = 0
   currentImageIndex: number = 0;
 
-  constructor(private dialog: MatDialog,private accservice : AccomondationService,public jwtHelper: JwtHelperService,private route: ActivatedRoute) {
+  constructor(private dialog: MatDialog,private accservice : AccomondationService,public jwtHelper: JwtHelperService,private route: ActivatedRoute, private router: Router, private auth: AuthService) {
     // ...
   }
 
@@ -106,6 +107,13 @@ id:any;
     });
   }
 
+  isAuthenticated(): boolean {
+    return this.auth.isAuthenticated();
+  }
 
+  logout(): void {
+    localStorage.removeItem('jwt');
+    this.router.navigate(['/login']);
+  }
 
 }

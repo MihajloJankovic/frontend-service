@@ -6,6 +6,7 @@ import {AccommodationCreateComponent} from "../accommodation-create/accommodatio
 import {MatDialog} from "@angular/material/dialog";
 import { AuthGuard } from '../services/auth.guard';
 import { AccomondationService } from '../services/accomondation.service';
+import {AuthService} from "../services/auth.service";
 
 class Accommodation {
   constructor(
@@ -32,7 +33,8 @@ export class AccommodationsComponent{
 
   constructor(private http: HttpClient, private router: Router, private dialog: MatDialog,
     private authGuard: AuthGuard,
-    private accommodationsService: AccomondationService) {}
+    private accommodationsService: AccomondationService,
+  private auth: AuthService) {}
 
   ngOnInit(): void {
     // Perform role check
@@ -105,6 +107,15 @@ export class AccommodationsComponent{
   viewAccommodationDetails(accommodation: any) {
     this.router.navigate(['/accommodation'])
     console.log('View details for accommodation:', accommodation);
+  }
+
+  isAuthenticated(): boolean {
+    return this.auth.isAuthenticated();
+  }
+
+  logout(): void {
+    localStorage.removeItem('jwt');
+    this.router.navigate(['/login']);
   }
 
 }

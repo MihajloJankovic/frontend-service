@@ -63,4 +63,13 @@ export class LoginComponent {
     this.authService.login(credentials)
 
   }
+
+  isAuthenticated(): boolean {
+    return this.authService.isAuthenticated();
+  }
+
+  logout(): void {
+    localStorage.removeItem('jwt');
+    this.router.navigate(['/login']);
+  }
 }

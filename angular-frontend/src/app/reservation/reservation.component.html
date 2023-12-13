@@ -21,9 +21,7 @@
         <label for="dateFrom">Check-In Date:</label>
         <div class="custom-datepicker-input-container">
 
-          <input readonly matInput [matDatepicker]="picker" formControlName="dateFrom" id="dateFrom"
-            placeholder="Choose a date" class="custom-datepicker-input" (focus)="picker.open()">
-          <mat-datepicker #picker class="custom-datepicker"></mat-datepicker>
+
 
           <input readonly matInput [matDatepicker]="pickerFrom" formControlName="dateFrom" id="dateFrom"
             placeholder="Choose a date" class="custom-datepicker-input" (focus)="pickerFrom.open()">
@@ -35,9 +33,7 @@
         <label for="dateTo">Check-Out Date:</label>
         <div class="custom-datepicker-input-container">
 
-          <input readonly matInput [matDatepicker]="picker" formControlName="dateTo" id="dateTo"
-            placeholder="Choose a date" class="custom-datepicker-input" (focus)="picker.open()">
-          <mat-datepicker #picker class="custom-datepicker"></mat-datepicker>
+
 
           <input readonly matInput [matDatepicker]="pickerTo" formControlName="dateTo" id="dateTo"
             placeholder="Choose a date" class="custom-datepicker-input" (focus)="pickerTo.open()">

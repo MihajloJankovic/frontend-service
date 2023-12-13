@@ -47,7 +47,7 @@
       <h2>Location</h2>
       <p>{{ locationDescription }}</p>
     </div>
-    <div class="accommodation-container">
+    <div class="accommodation-container" *ngIf="isAuthenticated()">
       <button class="reserve-button" (click)="openReservationDialog()">Reserve accommodation</button>
     </div>
     <div class="accommodation-container" *ngIf="emaila == owner">

@@ -62,9 +62,11 @@ id:any;
   emaila: any;
   token:any;
     ngOnInit(): void {
+    if(this.auth.isAuthenticated()){
       this.token = localStorage.getItem('jwt');
       let s = this.jwtHelper.decodeToken(this.token)
       this.emaila = s.email;
+    }
         this.id = this.route.snapshot.paramMap.get('id');
         this.accservice.getOne(this.id).subscribe((data) => {
           this.post  = data;
@@ -75,7 +77,10 @@ id:any;
           this.owner = this.post.email;
           this.b = 1;
           console.log('Facilities:', this.facilities);
-        });
+        },
+          (error) => {
+            console.error("error fetching accommodation", error);
+          });
 
     }
 

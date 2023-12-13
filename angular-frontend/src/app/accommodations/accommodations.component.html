@@ -22,7 +22,7 @@
 
   <div class="filters">
     <div class="price-filter">
-      <label for="price">Price Range:</label>
+      <label for="minPrice">Price Range:</label>
       <input type="number" id="minPrice" placeholder="Min" [(ngModel)]="minPrice">
       <input type="number" id="maxPrice" placeholder="Max" [(ngModel)]="maxPrice">
     </div>
@@ -33,7 +33,7 @@
     </div>
 
     <div class="amenities-filter">
-      <label for="{{ amenities }}">Amenities:</label>
+      <label >Amenities:</label>
       <div *ngFor="let amenity of amenities">
         <input type="checkbox" id="{{ amenity }}" [(ngModel)]="selectedAmenities[amenity]" [value]="amenity">
         <label for="{{ amenity }}">{{ amenity }}</label>
@@ -49,12 +49,12 @@
 </div>
 
 <!-- Prikaz kartica -->
-<div class="accommodations-container">
-  <div *ngFor="let accommodation of accommodations" class="accommodation-card">
-    <img [src]="'/assets/images/image1.jpg'" alt="{{ accommodation.name }}" class="accommodation-image">
+<div class="accommodations-container" *ngIf="b==1">
+  <div *ngFor="let accommodation of accommodations" class="accommodation-card" >
+<!--    <img [src]="'/assets/images/image1.jpg'" alt="{{ accommodation.name }}" class="accommodation-image">-->
     <div class="accommodation-info">
-      <h3>{{ accommodation.name }}</h3>
-      <p>Price: ${{ accommodation.price }}/night</p>
+      <h3>Name: {{ accommodation.name }}</h3>
+      <p>Location: {{ accommodation.location }}/night</p>
     </div>
     <button class="view-details-button" (click)="viewAccommodationDetails(accommodation)">View Details</button>
   </div>

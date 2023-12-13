@@ -12,6 +12,7 @@ class Accommodation {
   constructor(
     public name: string,
     public price: number,
+    public location:string,
     public owner: string,
     public amenities: string[]
   ) {}
@@ -22,7 +23,7 @@ class Accommodation {
   templateUrl: './accommodations.component.html',
   styleUrls: ['./accommodations.component.css']
 })
-export class AccommodationsComponent{
+export class AccommodationsComponent implements OnInit{
   amenities: string[] = ['Swimming Pool', 'Free Wi-Fi', 'Gym'];
   selectedAmenities: { [key: string]: boolean } = {};
   accommodations: Accommodation[] = [];
@@ -35,30 +36,8 @@ export class AccommodationsComponent{
     private authGuard: AuthGuard,
     private accommodationsService: AccomondationService,
   private auth: AuthService) {}
+ b:any =5;
 
-  ngOnInit(): void {
-    // Perform role check
-    // kada ase otkomentarise role check baca gresku i svakako pusta da se ostane na stranice, ne radi redirect na login kao sto bi trebalo
-    const canActivate = this.authGuard.canActivate(
-      {} as ActivatedRouteSnapshot,
-      {} as RouterStateSnapshot
-    );
-    this.accommodationsService.getAllAccommodations().subscribe(
-      (data) => {
-        console.log("data:" + data)
-        this.accommodations = data;
-      },
-      (error) => {
-        console.error("error fetching accommodations", error);
-      }
-    )
-    if (!canActivate) {
-      console.log('Unauthorized access');
-      this.router.navigate(['/login']);
-    } else {
-      console.log('Component initialized');
-    }
-  }
 
   get filteredAccommodations(): Accommodation[] {
     return this.accommodations.filter(acc =>
@@ -70,6 +49,29 @@ export class AccommodationsComponent{
     );
   }
 
+  ngOnInit(): void {
+
+    // const canActivate = this.authGuard.canActivate(
+    //   {} as ActivatedRouteSnapshot,
+    //   {} as RouterStateSnapshot
+    // );
+    this.accommodationsService.getAllAccommodations().subscribe(
+      (data) => {
+        console.log("data:" + data)
+        this.accommodations = data;
+        this.b=1;
+      },
+      (error) => {
+        console.error("error fetching accommodations", error);
+      }
+    )
+    // if (!canActivate) {
+    //   console.log('Unauthorized access');
+    //   this.router.navigate(['/login']);
+    // } else {
+    //   console.log('Component initialized');
+    // }
+  }
   applyFilters(): void {
     const filters = {
       minPrice: this.minPrice,
@@ -77,7 +79,7 @@ export class AccommodationsComponent{
       owner: this.ownerFilter,
       amenities: this.getSelectedAmenities()
     };
-    console.log("aa");
+    // console.log("aa");
     //ovde se doda zahtev
 
   }

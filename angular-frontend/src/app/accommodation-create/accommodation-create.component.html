@@ -24,8 +24,10 @@
 
       <div class="amenities-checkboxes">
         <label *ngFor="let amenity of amenitiesList; let i = index">
-          <input type="checkbox" [formControlName]="i" [id]="'amenities' + i"> {{ amenity }}
+          <input type="checkbox" [formControlName]="i" [id]="'amenities' + i" [checked]="isSelected(amenity)" (change)="updateAmenitiesList(amenity)">
+          {{ amenity }}
         </label>
+
       </div>
 
       <div class="dialog-button-container">

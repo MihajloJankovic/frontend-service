@@ -13,7 +13,8 @@ import {AccomondationService} from "../services/accomondation.service";
 })
 export class AccommodationCreateComponent implements OnInit {
   accommodationForm: FormGroup;
-  amenitiesList: string[] = ['Wifi', 'Parking', 'Air Conditioning', 'Swimming Pool', 'Gym']
+  amenitiesList: string[] = ['Wifi', 'Parking', 'Air Conditioning', 'Swimming Pool', 'Gym'];
+  selectedAmenities: string[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -26,24 +27,32 @@ export class AccommodationCreateComponent implements OnInit {
     this.accommodationForm = this.fb.group({
       name: ['', Validators.required],
       location: ['', Validators.required],
-      amenities: this.fb.array([]),
     });
-
-
-    this.populateAmenities();
   }
+
 
   get amenitiesFormArray(): FormArray {
     return this.accommodationForm.get('amenities') as FormArray;
   }
 
-  populateAmenities() {
-    const selectedAmenities = this.data && this.data.selectedAmenities ? this.data.selectedAmenities : [];
-
-    this.amenitiesList.forEach((amenity) => {
-      this.amenitiesFormArray.push(this.fb.control(selectedAmenities.includes(amenity)));
-    });
+  isSelected(amenity: string): boolean {
+    const isSelected = this.selectedAmenities.includes(amenity);
+    return isSelected;
   }
+
+
+  updateAmenitiesList(amenity: string) {
+    const index = this.selectedAmenities.indexOf(amenity);
+
+    if (index !== -1) {
+      // Ako je pronađeno, uklonite iz liste
+      this.selectedAmenities.splice(index, 1);
+    } else {
+      // Ako nije pronađeno, dodajte u listu
+      this.selectedAmenities.push(amenity);
+    }
+  }
+
 
   ngOnInit(): void {
     // Perform role check
@@ -62,6 +71,7 @@ export class AccommodationCreateComponent implements OnInit {
 
   submitAccommodation() {
     if (this.accommodationForm.valid) {
+      this.accommodationForm.value.amenities = this.selectedAmenities;
       this.service.createAccommodation(this.accommodationForm.value)
       console.log('Accommodation created:', this.accommodationForm.value);
 
@@ -71,6 +81,7 @@ export class AccommodationCreateComponent implements OnInit {
       console.log('Form is invalid. Please check the fields.');
     }
   }
+
 
   closeDialog() {
     this.dialogRef.close();

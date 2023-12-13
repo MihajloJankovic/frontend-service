@@ -6,20 +6,20 @@
   <link rel="stylesheet" href="accommodation.component.css">
 </head>
 <body>
-<nav class="navbar-container">
-  <ul>
-    <li><a routerLink="/">Home</a></li>
-    <li><a routerLink="/accommodations">Accommodations
-    </a></li>
-    <ng-container *ngIf="!isAuthenticated()">
-      <a href="http://localhost:4200/login"><button id="loginbttn">Login</button></a>
-      <a href="http://localhost:4200/register"><button id="registerbttn">Register</button></a>
-    </ng-container>
-    <ng-container *ngIf="isAuthenticated()">
-      <button id="logoutbttn" (click)="logout()">Logout</button>
-    </ng-container>
-  </ul>
-</nav>
+  <nav class="navbar-container">
+    <ul>
+      <li><a routerLink="/">Home</a></li>
+      <li><a routerLink="/accommodations">Accommodations
+      </a></li>
+      <ng-container *ngIf="!isAuthenticated()">
+        <a href="http://localhost:4200/login"><button id="loginbttn">Login</button></a>
+        <a href="http://localhost:4200/register"><button id="registerbttn">Register</button></a>
+      </ng-container>
+      <ng-container *ngIf="isAuthenticated()">
+        <button id="logoutbttn" (click)="logout()">Logout</button>
+      </ng-container>
+    </ul>
+  </nav>
 <div class="accommodation-container" *ngIf="b ==1">
   <div class="accommodation-header">
     <h1>{{ accommodationTitle }}</h1>
@@ -47,11 +47,13 @@
       <h2>Location</h2>
       <p>{{ locationDescription }}</p>
     </div>
-    <div class="accommodation-container" *ngIf="isAuthenticated()">
-      <button class="reserve-button" (click)="openReservationDialog()">Reserve accommodation</button>
-    </div>
-    <div class="accommodation-container" *ngIf="emaila == owner">
-      <button class="reserve-button" (click)="openAvaibilityDialog()">Add avaibility for accommodation</button>
+    <div class="buttons">
+      <div class="button-container" *ngIf="isAuthenticated()">
+        <button class="reserve-button" (click)="openReservationDialog()">Reserve accommodation</button>
+      </div>
+      <div class="button-container" *ngIf="emaila == owner">
+        <button class="reserve-button" (click)="openAvaibilityDialog()">Add avaibility for accommodation</button>
+      </div>
     </div>
   </div>
 </div>

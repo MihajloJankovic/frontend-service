@@ -24,7 +24,18 @@ class Accommodation {
   styleUrls: ['./accommodations.component.css']
 })
 export class AccommodationsComponent implements OnInit{
-  amenities: string[] = ['Swimming Pool', 'Free Wi-Fi', 'Gym'];
+  amenities: string[] = [
+    'Free Wi-Fi',
+    'Swimming Pool',
+    'Gym',
+    'Restaurant',
+    'Parking',
+    'Spa and Wellness Center',
+    '24/7 Front Desk',
+    'Air Conditioning',
+    'Business Center',
+    'Pet-Friendly'
+  ];
   selectedAmenities: { [key: string]: boolean } = {};
   accommodations: Accommodation[] = [];
   searchText = '';
@@ -118,6 +129,15 @@ export class AccommodationsComponent implements OnInit{
   logout(): void {
     localStorage.removeItem('jwt');
     this.router.navigate(['/login']);
+  }
+
+  hasRole(role: string): boolean {
+
+    const userRole = this.auth.getToken().user.get.role;
+    if (userRole == 'host' && role == userRole){
+      return true;
+    }
+    return false;
   }
 
 }

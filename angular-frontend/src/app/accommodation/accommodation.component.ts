@@ -16,7 +16,19 @@ import {AuthService} from "../services/auth.service";
 export class AccommodationComponent {
   accommodationTitle: string = 'Beautiful Accommodation';
   locationDescription: string = 'Located in a peaceful area with stunning views.';
-  facilities: string[] = ['Free Wi-Fi', 'Swimming Pool', 'Gym', 'Restaurant'];
+  facilities: string[] = [
+    'Free Wi-Fi',
+    'Swimming Pool',
+    'Gym',
+    'Restaurant',
+    'Parking',
+    'Spa and Wellness Center',
+    '24/7 Front Desk',
+    'Air Conditioning',
+    'Business Center',
+    'Pet-Friendly'
+  ];
+
 
   arrows: boolean[] = [false, true];
 

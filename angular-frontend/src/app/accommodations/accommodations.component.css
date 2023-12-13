@@ -1,105 +1,15 @@
-/* accommodations.component.css */
+html, body{
+  margin: 0;
+  height:100vh;
+  padding: 0;
+  border: 0;
+}
 
 body {
   font-family: Arial, sans-serif;
   margin: 0;
   background: linear-gradient(to bottom, #00b2ff, #fff);
-}
-
-.mainDiv {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-}
-
-.filter-container {
-  display: flex;
-  flex-direction: column; /* Postavljamo raspored vertikalno */
-  align-items: flex-start; /* Postavljamo poravnanje sa leve strane */
-  margin-right: 20px;
-}
-
-.search-bar {
-  display: flex;
-  margin-bottom: 10px;
-}
-
-.search-bar input,
-.price-filter input,
-.owner-filter input {
-  padding: 10px;
-  margin-right: 10px;
-}
-
-.price-filter label,
-.owner-filter label,
-.amenities-filter label {
-  margin-right: 10px;
-}
-
-.amenities-filter input {
-  margin-right: 5px;
-}
-
-.accommodations-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-}
-
-.accommodation-card {
-  width: 300px;
-  margin: 10px;
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.accommodation-image {
-  width: 100%;
-  height: 150px;
-  object-fit: cover;
-  border-radius: 8px;
-}
-
-.accommodation-info {
-  padding: 10px;
-}
-
-.view-details-button {
-  background-color: #007BFF;
-  color: #fff;
-  padding: 10px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.view-details-button:hover {
-  background-color: #0056b3;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-}
-
-.add-accommodation-container {
-  text-align: center;
-  margin-top: 20px;
-}
-
-.add-accommodation-button {
-  background-color: #28a745;
-  color: #fff;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.add-accommodation-button:hover {
-  background-color: #218838;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  padding: 0;
 }
 
 .navbar-container {
@@ -154,3 +64,176 @@ body {
 .content {
   margin-top: 70px; /* Visina fiksnog navbar-a + malo dodatnog prostora */
 }
+
+
+.searching-segment {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  margin-left: 50px;
+  margin-right: 50px;
+  background-color: #f5f5f5;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+h2{
+  text-align: center;
+}
+.search-bar input {
+  padding: 10px;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.filters {
+  display: flex;
+  gap: 20px;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.filter-group label {
+  margin-bottom: 5px;
+}
+
+.price-inputs {
+  display: flex;
+  gap: 10px;
+}
+
+.amenities-checkboxes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.amenities-checkboxes input {
+  margin-right: 5px;
+}
+
+.search-button {
+  background-color: #007BFF;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.3s;
+}
+
+.search-button:hover {
+  background-color: #0056b3;
+}
+
+.accommodations-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.accommodation-card {
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  width: 300px;
+  padding: 20px;
+}
+
+.accommodation-info h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.accommodation-info p {
+  font-size: 14px;
+  color: #666;
+}
+
+.view-details-button {
+  background-color: #007BFF;
+  color: #fff;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.3s;
+  margin-top: 10px;
+}
+
+.view-details-button:hover {
+  background-color: #0056b3;
+}
+
+.accommodationsBox {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  background-color: #4d72e3;
+  position: relative;
+  padding: 20px;
+  overflow: hidden;
+  margin-left: 50px;
+  margin-right: 50px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px; /* Dodato za zaobljenje ivica */
+}
+.add-accommodation-button{
+  font-family: 'Arial', sans-serif;
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  font-size: 14px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.add-accommodation-button:hover{
+  background-color: #45a049;
+}
+
+.add-accommodation-container{
+  display: flex;
+  justify-content: center;
+
+}
+.lower{
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: space-around;
+  background-color: #4d72e3;
+  position: relative;
+  padding: 20px;
+  overflow: hidden;
+  margin-left: 50px;
+  margin-right: 50px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+hr {
+  width: 100%;
+  border: 0; /* Uklonjen okvir */
+  height: 2px; /* Debljina linije */
+  background-color: #ffffff; /* Boja linije */
+  margin: 20px 0; /* Razmak iznad i ispod linije */
+}
+
+
+
+
+
+
+
+

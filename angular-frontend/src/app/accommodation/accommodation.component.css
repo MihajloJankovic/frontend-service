@@ -7,15 +7,18 @@ html, body, div, h1, h2, p, ul, li, button, img {
 body {
   font-family: Arial, sans-serif;
   background: linear-gradient(to bottom, #00b2ff, #fff);
+  display:flex;
+  justify-content: center;
 }
 .accommodation-container {
   max-width: 800px;
-  margin: 0 auto;
-  margin-top: 20px;
+
+  margin-top: 90px;
+  height:fit-content;
   padding: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   border-radius: 8px;
-  background-color: #fff;
+  background-color: #bbe4f6;
 }
 .accommodation-header {
   text-align: center;
@@ -104,6 +107,8 @@ button.reserve-button {
   /* Style the reservation button */
   padding: 10px 20px;
   background-color: #007BFF;
+  width:300px;
+  border-radius:4px;
   color: #fff;
   font-size: 16px;
 }
@@ -147,6 +152,7 @@ button.reserve-button:hover {
 .navbar-container button {
   font-family: 'Arial', sans-serif;
   background-color: #4caf50;
+  width: 100px;
   color: white;
   padding: 10px 20px;
   font-size: 14px;
@@ -162,4 +168,13 @@ button.reserve-button:hover {
 
 .content {
   margin-top: 70px; /* Visina fiksnog navbar-a + malo dodatnog prostora */
+}
+
+.button-container{
+  margin-bottom: 20px;
+}
+.buttons{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

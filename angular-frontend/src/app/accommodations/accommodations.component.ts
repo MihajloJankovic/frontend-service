@@ -119,7 +119,7 @@ export class AccommodationsComponent implements OnInit{
   }
 
   viewAccommodationDetails(accommodation: any) {
-    this.router.navigate(['/accommodation'])
+    this.router.navigate(['/accommodation/'+accommodation.uid])
     console.log('View details for accommodation:', accommodation);
   }
 

@@ -7,9 +7,10 @@
     </a></li>
     <ng-container *ngIf="!isAuthenticated()">
       <a href="http://localhost:4200/login"><button id="loginbttn">Login</button></a>
-      <a href="http://localhost:4200/register"><button id="registerbttn">Register</button></a>
+      <a  style="margin-left: 10px;margin-right: 10px" href="http://localhost:4200/register"><button id="registerbttn">Register</button></a>
     </ng-container>
     <ng-container *ngIf="isAuthenticated()">
+      <a  style="margin-left: 10px;margin-right: 10px"href="http://localhost:4200/profile"><button id="profilebutn">Profile</button></a>
       <button id="logoutbttn" (click)="logout()">Logout</button>
     </ng-container>
   </ul>

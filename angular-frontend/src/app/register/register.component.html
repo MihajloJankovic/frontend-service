@@ -17,6 +17,7 @@
       <a href="http://localhost:4200/register"><button id="registerbttn">Register</button></a>
     </ng-container>
     <ng-container *ngIf="isAuthenticated()">
+      <a href="http://localhost:4200/profile"><button id="profilebutn">Profile</button></a>
       <button id="logoutbttn" (click)="logout()">Logout</button>
     </ng-container>
   </ul>

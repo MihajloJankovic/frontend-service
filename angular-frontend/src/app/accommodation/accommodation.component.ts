@@ -7,6 +7,7 @@ import {FormControl, FormGroup} from "@angular/forms";
 import {JwtHelperService} from "@auth0/angular-jwt";
 import {AvabilityComponent} from "../avability/avability.component";
 import {AuthService} from "../services/auth.service";
+import {ReservationService} from "../services/reservation.service";
 
 @Component({
   selector: 'app-accommodation',
@@ -45,7 +46,7 @@ export class AccommodationComponent {
   b:number  = 0
   currentImageIndex: number = 0;
 
-  constructor(private dialog: MatDialog,private accservice : AccomondationService,public jwtHelper: JwtHelperService,private route: ActivatedRoute, private router: Router, private auth: AuthService) {
+  constructor(private dialog: MatDialog,private accservice : AccomondationService,public jwtHelper: JwtHelperService,private route: ActivatedRoute, private router: Router, private auth: AuthService, private reservation: ReservationService) {
     // ...
   }
 
@@ -69,6 +70,7 @@ export class AccommodationComponent {
     this.arrows[1] = this.currentImageIndex !== this.images.length - 1;
   }
 id:any;
+  accommodations: any[] = [];
   post:any;
   owner:any;
   emaila: any;
@@ -82,7 +84,15 @@ id:any;
         this.id = this.route.snapshot.paramMap.get('id');
         this.accservice.getOne(this.id).subscribe((data) => {
           this.post  = data;
-
+          this.reservation.get_avaibility(this.id).subscribe((res) => {
+            if(res.body == "NOT_ACCEPTABLE" || res.name == "HttpErrorResponse")
+            {
+              alert("Error")
+            }else {
+              console.log(res)
+              this.accommodations = res.body.dummy;
+            }
+          });
           this.accommodationTitle = this.post.name;
           this.locationDescription = this.post.location;
           this.facilities = this.post.amenities || [];

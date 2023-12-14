@@ -55,6 +55,26 @@
         <button class="reserve-button" (click)="openAvaibilityDialog()">Add avaibility for accommodation</button>
       </div>
     </div>
+    <table class="custom-table">
+      <thead>
+      <tr>
+        <th>From</th>
+        <th>To</th>
+        <th>Price per Person</th>
+        <th>Capacity</th>
+        <th>Price Hole</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let accommodation of accommodations">
+        <td>{{ accommodation.from }}</td>
+        <td>{{ accommodation.to }}</td>
+        <td>{{ accommodation.price_per_person }}</td>
+        <td>{{ accommodation.number_of_people }}</td>
+        <td>{{ accommodation.price_hole }}</td>
+      </tr>
+      </tbody>
+    </table>
   </div>
 </div>
 </body>

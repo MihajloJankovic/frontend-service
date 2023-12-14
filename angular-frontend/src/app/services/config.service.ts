@@ -65,7 +65,7 @@ export class ConfigService {
 
     // Availability Endpoints
     this._setAvailability_url = this._api_url + '/set-availability';
-    this._getAllAvailability_url = this._api_url + '/get-all-availability';
+    this._getAllAvailability_url = this._api_url + '/get-all-avaibility';
     this._checkAvailability_url = this._api_url + '/check-availability';
   }
 }

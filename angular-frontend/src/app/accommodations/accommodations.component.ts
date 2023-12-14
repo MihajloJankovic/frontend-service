@@ -71,6 +71,7 @@ export class AccommodationsComponent implements OnInit{
         console.log("data:" + data)
         this.accommodations = data;
         this.b=1;
+
       },
       (error) => {
         console.error("error fetching accommodations", error);

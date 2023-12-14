@@ -5,7 +5,7 @@ import {UserService} from "./user.service";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {ConfigService} from "./config.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {Subscription} from "rxjs";
+import {Observable, Subscription} from "rxjs";
 import {DatePipe} from "@angular/common";
 
 @Injectable({
@@ -90,6 +90,23 @@ export class ReservationService {
           this.router.navigate([returnUrl + "/accomondation/"+reservation.uid]);
         }
       });
+
+
+
+
+  }
+  get_avaibility(ava: any): Observable<any> {
+    const loginHeaders = new HttpHeaders({
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    });
+
+    const body = {
+
+      'id': ava,
+    };
+    console.log(body);
+    return this.apiService.post(this.config._getAllAvailability_url, JSON.stringify(body), loginHeaders);
 
 
 

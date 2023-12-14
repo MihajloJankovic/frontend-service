@@ -32,26 +32,24 @@ export class UserProfileComponent {
     token:any;
     forma :any;
   async ngOnInit() {
+    this.token = this.auth.getDecodedAccessToken();
+    this.post = await this.service.getOne(this.token.email).toPromise();
 
-
-
-
-
-      this. uname = document.getElementById('username');
-    this.email = document.getElementById('email');
-      this.bdate = document.getElementById('bdate');
-      this.token = this.auth.getDecodedAccessToken()
-    var profile = this.service.getOne(this.token.email).subscribe((data) => {
-      this.post  = data;
-
-        this.forma = new FormGroup({
-            username: new FormControl(this.post.username),
-            email: new FormControl(this.post.email),
-            bdate: new FormControl(this.post.birthday),
-
-        });
-        this.b=1;
+    this.forma = new FormGroup({
+      username: new FormControl(this.post.username),
+      email: new FormControl(this.post.email),
+      bdate: new FormControl(this.post.birthday),
     });
+
+    this.b = 1;
+  }
+  isAuthenticated(): boolean {
+    return this.auth.isAuthenticated();
+  }
+
+  logout(): void {
+    localStorage.removeItem('jwt');
+    this.router.navigate(['/login']);
   }
 
 }

@@ -66,14 +66,7 @@ export class UserService {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     });
-    // if (userToSave.gender == "male")
-    // {
-    //   userToSave.gender = "true";
-    // }
-    // if (userToSave.gender == "female")
-    // {
-    //   userToSave.gender = "false";
-    // }
+
     userToSave.birthday = this.datePipe.transform(userToSave.birthday, 'yyyy-MM-dd')
     const body = {
       'username': userToSave.username,

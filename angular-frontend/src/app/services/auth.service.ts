@@ -46,7 +46,7 @@ export class AuthService {
     // true or false
     if(this.jwtHelper.isTokenExpired(token))
     {
-      localStorage.clear();
+      localStorage.removeItem('jwt');
       return false;
     }
     return true;

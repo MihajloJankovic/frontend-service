@@ -40,6 +40,7 @@ import { AvabilityComponent } from './avability/avability.component';
 
 
 const routes: Routes = [
+  { path: '', component: HomeComponent},
   { path: 'profile', component: UserProfileComponent},
   { path: 'editProfile', component: UserProfileEditComponent},
   { path: 'passwordChange', component: PasswordChangeComponent},

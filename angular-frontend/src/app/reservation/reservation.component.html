@@ -1,34 +1,53 @@
 <!-- reservation-dialog.component.html -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Reservation</title>
   <link rel="stylesheet" href="reservation.component.css">
 </head>
+
 <body>
-<div class="dialog-container">
-  <div class="dialog-content">
-    <span class="dialog-close" (click)="closeDialog()">×</span>
-    <h2 class="dialog-title">Reservation</h2>
+  <div class="dialog-container">
+    <div class="dialog-content">
+      <span class="dialog-close" (click)="closeDialog()">×</span>
+      <h2 class="dialog-title">Reservation</h2>
 
 
-    <form [formGroup]="reservationForm" class="dialog-form" (ngSubmit)="submitReservation()">
+      <form [formGroup]="reservationForm" class="dialog-form" (ngSubmit)="submitReservation()">
 
-      <label for="dateFrom">Check-In Date:</label>
-      <input type="text" id="dateFrom" formControlName="dateFrom" class="dialog-input" >
-<!--      <input type="date" id="checkIn" formControlName="checkIn" class="dialog-input">-->
+        <label for="dateFrom">Check-In Date:</label>
+        <div class="custom-datepicker-input-container">
 
-      <label for="dateTo">Check-Out Date:</label>
-      <input type="text" id="dateTo" formControlName="dateTo" class="dialog-input" >
-<!--      <input type="date" id="checkOut" formControlName="checkOut" class="dialog-input">-->
 
-      <div class="dialog-button-container">
-        <button type="submit" class="dialog-button">Submit</button>
-      </div>
-    </form>
+
+          <input readonly matInput [matDatepicker]="pickerFrom" formControlName="dateFrom" id="dateFrom"
+            placeholder="Choose a date" class="custom-datepicker-input" (focus)="pickerFrom.open()">
+          <mat-datepicker #pickerFrom class="custom-datepicker"></mat-datepicker>
+
+          <i class="material-icons"></i>
+        </div>
+
+        <label for="dateTo">Check-Out Date:</label>
+        <div class="custom-datepicker-input-container">
+
+
+
+          <input readonly matInput [matDatepicker]="pickerTo" formControlName="dateTo" id="dateTo"
+            placeholder="Choose a date" class="custom-datepicker-input" (focus)="pickerTo.open()">
+          <mat-datepicker #pickerTo class="custom-datepicker"></mat-datepicker>
+
+          <i class="material-icons"></i>
+        </div>
+
+        <div class="dialog-button-container">
+          <button type="submit" class="dialog-button">Submit</button>
+        </div>
+      </form>
+    </div>
   </div>
-</div>
 </body>
+
 </html>

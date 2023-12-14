@@ -5,11 +5,14 @@ import {ReservationComponent} from "../reservation/reservation.component";
 import {AccommodationCreateComponent} from "../accommodation-create/accommodation-create.component";
 import {MatDialog} from "@angular/material/dialog";
 import { AuthGuard } from '../services/auth.guard';
+import { AccomondationService } from '../services/accomondation.service';
+import {AuthService} from "../services/auth.service";
 
 class Accommodation {
   constructor(
     public name: string,
     public price: number,
+    public location:string,
     public owner: string,
     public amenities: string[]
   ) {}
@@ -20,8 +23,19 @@ class Accommodation {
   templateUrl: './accommodations.component.html',
   styleUrls: ['./accommodations.component.css']
 })
-export class AccommodationsComponent{
-  amenities: string[] = ['Swimming Pool', 'Free Wi-Fi', 'Gym'];
+export class AccommodationsComponent implements OnInit{
+  amenities: string[] = [
+    'Free Wi-Fi',
+    'Swimming Pool',
+    'Gym',
+    'Restaurant',
+    'Parking',
+    'Spa and Wellness Center',
+    '24/7 Front Desk',
+    'Air Conditioning',
+    'Business Center',
+    'Pet-Friendly'
+  ];
   selectedAmenities: { [key: string]: boolean } = {};
   accommodations: Accommodation[] = [];
   searchText = '';
@@ -30,22 +44,11 @@ export class AccommodationsComponent{
   ownerFilter = '';
 
   constructor(private http: HttpClient, private router: Router, private dialog: MatDialog,
-    private authGuard: AuthGuard) {}
+    private authGuard: AuthGuard,
+    private accommodationsService: AccomondationService,
+  private auth: AuthService) {}
+ b:any =5;
 
-  ngOnInit(): void {
-    // Perform role check
-    const canActivate = this.authGuard.canActivate(
-      {} as ActivatedRouteSnapshot,
-      {} as RouterStateSnapshot
-    );
-
-    if (!canActivate) {
-      console.log('Unauthorized access');
-      this.router.navigate(['/login']);
-    } else {
-      console.log('Component initialized');
-    }
-  }
 
   get filteredAccommodations(): Accommodation[] {
     return this.accommodations.filter(acc =>
@@ -57,16 +60,44 @@ export class AccommodationsComponent{
     );
   }
 
+  ngOnInit(): void {
+
+    // const canActivate = this.authGuard.canActivate(
+    //   {} as ActivatedRouteSnapshot,
+    //   {} as RouterStateSnapshot
+    // );
+    this.accommodationsService.getAllAccommodations().subscribe(
+      (data) => {
+        console.log("data:" + data)
+        this.accommodations = data;
+        this.b=1;
+
+      },
+      (error) => {
+        console.error("error fetching accommodations", error);
+      }
+    )
+    // if (!canActivate) {
+    //   console.log('Unauthorized access');
+    //   this.router.navigate(['/login']);
+    // } else {
+    //   console.log('Component initialized');
+    // }
+  }
   applyFilters(): void {
     const filters = {
       minPrice: this.minPrice,
       maxPrice: this.maxPrice,
       owner: this.ownerFilter,
-      amenities: this.amenities
+      amenities: this.getSelectedAmenities()
     };
-    console.log("aa");
+    // console.log("aa");
     //ovde se doda zahtev
-    
+
+  }
+
+  private getSelectedAmenities(): string[] {
+    return Object.keys(this.selectedAmenities).filter(key => this.selectedAmenities[key]);
   }
 
   private hasAnyAmenity(accommodation: Accommodation, selectedAmenities: string[]): boolean {
@@ -90,6 +121,24 @@ export class AccommodationsComponent{
   viewAccommodationDetails(accommodation: any) {
     this.router.navigate(['/accommodation'])
     console.log('View details for accommodation:', accommodation);
+  }
+
+  isAuthenticated(): boolean {
+    return this.auth.isAuthenticated();
+  }
+
+  logout(): void {
+    localStorage.removeItem('jwt');
+    this.router.navigate(['/login']);
+  }
+
+  hasRole(role: string): boolean {
+
+    const userRole = this.auth.getToken().user.get.role;
+    if (userRole == 'host' && role == userRole){
+      return true;
+    }
+    return false;
   }
 
 }

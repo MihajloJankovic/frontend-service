@@ -5,7 +5,7 @@ import {UserService} from "./user.service";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {ConfigService} from "./config.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {Subscription} from "rxjs";
+import {Observable, Subscription} from "rxjs";
 import {DatePipe} from "@angular/common";
 
 @Injectable({
@@ -40,17 +40,18 @@ export class ReservationService {
     };
     return this.apiService.post(this.config._reservation_url, JSON.stringify(body), loginHeaders)
       .subscribe((res) => {
-        if(res.body == "NOT_ACCEPTABLE" || res.name == "HttpErrorResponse")
-        {
-          alert("Error")
-        }else {
-          alert("Save success");
+          alert("Success");
           console.log(res)
           let returnUrl : String;
           returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
           this.router.navigate([returnUrl + "/"]);
+
+      },
+        (error) => {
+          alert('There is active reservation for date range');
+
         }
-      });
+      );
 
 
 
@@ -90,6 +91,23 @@ export class ReservationService {
           this.router.navigate([returnUrl + "/accomondation/"+reservation.uid]);
         }
       });
+
+
+
+
+  }
+  get_avaibility(ava: any): Observable<any> {
+    const loginHeaders = new HttpHeaders({
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    });
+
+    const body = {
+
+      'id': ava,
+    };
+    console.log(body);
+    return this.apiService.post(this.config._getAllAvailability_url, JSON.stringify(body), loginHeaders);
 
 
 

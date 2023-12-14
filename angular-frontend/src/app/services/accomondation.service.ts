@@ -29,6 +29,7 @@ export class AccomondationService {
   }
 
   getAllAccommodations(): Observable<any> {
+    console.log("trazim");
     return this.apiService.get(this.config._accommodations_url);
   }
 

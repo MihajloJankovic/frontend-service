@@ -1,47 +1,86 @@
-<!-- Filtriranje -->
-<div class="filter-container">
-  <h2>Accommodations</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Accommodations</title>
+  <link rel="stylesheet" href="accommodations.component.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar-container">
+  <ul>
+    <li><a routerLink="/">Home</a></li>
+    <li><a routerLink="/accommodations">Accommodations</a></li>
+    <ng-container *ngIf="!isAuthenticated()">
+      <a href="http://localhost:4200/login"><button id="loginbttn">Login</button></a>
+      <a href="http://localhost:4200/register"><button id="registerbttn">Register</button></a>
+    </ng-container>
+    <ng-container *ngIf="isAuthenticated()">
+      <button id="logoutbttn" (click)="logout()">Logout</button>
+    </ng-container>
+  </ul>
+</nav>
+<div class="wrapper">
 
-  <div class="search-bar">
-    <input type="text" placeholder="Search by name" [(ngModel)]="searchText">
-  </div>
+  <section class="accommodations-section">
+    <h2>Accommodations</h2>
+    <!-- Search Bar and Filters -->
+    <div class="searching-segment">
+      <div class="search-bar">
+        <input type="text" placeholder="Search by name" [(ngModel)]="searchText">
+      </div>
 
-  <div class="filters">
-    <div class="price-filter">
-      <label for="price">Price Range:</label>
-      <input type="number" id="minPrice" placeholder="Min" [(ngModel)]="minPrice">
-      <input type="number" id="maxPrice" placeholder="Max" [(ngModel)]="maxPrice">
+      <div class="filters">
+        <div class="filter-group">
+          <label for="minPrice">Price Range:</label>
+          <div class="price-inputs">
+            <input type="number" id="minPrice" placeholder="Min" [(ngModel)]="minPrice">
+            <input type="number" id="maxPrice" placeholder="Max" [(ngModel)]="maxPrice">
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <label for="owner">Owner:</label>
+          <input type="text" id="owner" placeholder="Search by owner" [(ngModel)]="ownerFilter">
+        </div>
+
+        <div class="filter-group">
+          <label>Amenities:</label>
+          <div class="amenities-checkboxes">
+            <div *ngFor="let amenity of amenities">
+              <input type="checkbox" id="{{ amenity }}" [(ngModel)]="selectedAmenities[amenity]" [value]="amenity">
+              <label for="{{ amenity }}">{{ amenity }}</label>
+            </div>
+          </div>
+        </div>
+
+        <button class="search-button" (click)="applyFilters()">Search</button>
+      </div>
     </div>
+    <div class="lower">
+      <div class="add-accommodation-container">
+        <button class="add-accommodation-button" (click)="openCreateAccommodationDialog()">Add New Accommodation</button>
+      </div>
+      <hr>
+      <div class="accommodationsBox">
 
-    <div class="owner-filter">
-      <label for="owner">Owner:</label>
-      <input type="text" id="owner" placeholder="Search by owner" [(ngModel)]="ownerFilter">
-    </div>
-
-    <div class="amenities-filter">
-      <label for="{{ amenities }}">Amenities:</label>
-      <div *ngFor="let amenity of amenities">
-        <input type="checkbox" id="{{ amenity }}" [(ngModel)]="selectedAmenities[amenity]" [value]="amenity">
-        <label for="{{ amenity }}">{{ amenity }}</label>
+        <div class="accommodations-container" *ngIf="b==1">
+          <div *ngFor="let accommodation of accommodations" class="accommodation-card">
+            <div class="accommodation-info">
+              <h3>Name: {{ accommodation.name }}</h3>
+              <p>Location: {{ accommodation.location }}</p>
+              <p>Price: {{accommodation.price}}/night</p>
+            </div>
+            <button class="view-details-button" (click)="viewAccommodationDetails(accommodation)">View Details</button>
+          </div>
+        </div>
       </div>
     </div>
 
-    <button (click)="applyFilters()">Search</button>
+  </section>
 
-    <div class="add-accommodation-container">
-      <button class="add-accommodation-button" (click)="openCreateAccommodationDialog()">Add New Accommodation</button>
-    </div>
-  </div>
 </div>
 
-<!-- Prikaz kartica -->
-<div class="accommodations-container">
-  <div *ngFor="let accommodation of accommodations" class="accommodation-card">
-    <img [src]="'/assets/images/image1.jpg'" alt="{{ accommodation.name }}" class="accommodation-image">
-    <div class="accommodation-info">
-      <h3>{{ accommodation.name }}</h3>
-      <p>Price: ${{ accommodation.price }}/night</p>
-    </div>
-    <button class="view-details-button" (click)="viewAccommodationDetails(accommodation)">View Details</button>
-  </div>
-</div>
+</body>
+</html>

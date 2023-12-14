@@ -6,20 +6,43 @@
   <link rel="stylesheet" href="user-profile.component.css">
 </head>
 <body>
-<div class="profile-container" *ngIf="b ==1" >
+<nav class="navbar-container">
+  <ul>
+    <li><a routerLink="/">Home</a></li>
+    <li><a routerLink="/accommodations">Accommodations
+    </a></li>
+    <ng-container *ngIf="!isAuthenticated()">
+      <a href="http://localhost:4200/login"><button id="loginbttn">Login</button></a>
+      <a href="http://localhost:4200/register"><button id="registerbttn">Register</button></a>
+    </ng-container>
+    <ng-container *ngIf="isAuthenticated()">
+      <button id="logoutbttn" (click)="logout()">Logout</button>
+    </ng-container>
+  </ul>
+</nav>
+<div class="profile-container">
   <div class="profile-header">
     <h1>User Profile</h1>
   </div>
-  <form [formGroup]="forma" >
-    <label>Username :  </label>
-    <input type="text" readonly="true" formControlName="username" value="{{post.username}}"  name="username"><br><br>
-    <label>Email :  </label>
-    <input type="text" readonly="true"  formControlName="email" value="{{post.email}}" name="email"><br><br>
-    <label>BirthDay :  </label>
-    <input type="text" readonly="true"  formControlName="bdate" value="{{post.birthday}}" name="bdate"><br><br>
+  <form [formGroup]="forma" class="profile-form" *ngIf="b == 1">
+    <label>Username : </label>
+    <input type="text" readonly="true" formControlName="username" [ngClass]="{'input-field': true, 'read-only': true}" value="{{post.username}}" name="username"><br><br>
+
+    <label>Email : </label>
+    <input type="text" readonly="true" formControlName="email" [ngClass]="{'input-field': true, 'read-only': true}" value="{{post.email}}" name="email"><br><br>
+
+    <label>BirthDay : </label>
+    <input type="text" readonly="true" formControlName="bdate" [ngClass]="{'input-field': true, 'read-only': true}" value="{{post.birthday}}" name="bdate"><br><br>
   </form>
-  <a href="editProfile" class="edit-button">Edit Profile</a>
-  <a href="passwordChange" class="edit-button">Change password</a>
+  <div class="buttons">
+    <a href="editProfile" class="edit-button">Edit Profile</a>
+    <a href="passwordChange" class="edit-button">Change password</a>
+  </div>
+
 </div>
+<script>
+  document.body.classList.remove('mat-typography');
+</script>
+
 </body>
 </html>

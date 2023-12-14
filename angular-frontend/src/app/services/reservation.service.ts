@@ -40,17 +40,18 @@ export class ReservationService {
     };
     return this.apiService.post(this.config._reservation_url, JSON.stringify(body), loginHeaders)
       .subscribe((res) => {
-        if(res.body == "NOT_ACCEPTABLE" || res.name == "HttpErrorResponse")
-        {
-          alert("Error")
-        }else {
-          alert("Save success");
+          alert("Success");
           console.log(res)
           let returnUrl : String;
           returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
           this.router.navigate([returnUrl + "/"]);
+
+      },
+        (error) => {
+          alert('There is active reservation for date range');
+
         }
-      });
+      );
 
 
 

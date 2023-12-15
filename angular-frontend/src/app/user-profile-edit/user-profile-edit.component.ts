@@ -220,7 +220,7 @@ export class UserProfileEditComponent {
         }
       )
     } else {
-      this.apiService.get(this.config._delete_host_url + "/" + this.post.email).subscribe(
+      this.apiService.get(this.config._delete_guest_url + "/" + this.post.email).subscribe(
         () => {
           console.log('Profile deletion successful');
           this.logout();

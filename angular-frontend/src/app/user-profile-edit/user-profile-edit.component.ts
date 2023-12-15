@@ -214,16 +214,27 @@ export class UserProfileEditComponent {
     console.log(this.config._delete_host_url + "/" + this.post.email + "\n"+ this.config._delete_host_url + "/" + this.post.email)
     if (this.post.role == "Host") {
       this.apiService.get(this.config._delete_host_url + "/" + this.post.email).subscribe(
-        () => {
-          console.log('Profile deletion successful');
-          this.logout();
+        (res) => {
+          if(res.body == "NOT_ACCEPTABLE" || res.name == "HttpErrorResponse")
+          {
+            alert("Error")
+          }else {
+            alert('Profile deletion successful');
+            this.logout();
+          }
+
         }
       )
     } else {
       this.apiService.get(this.config._delete_guest_url + "/" + this.post.email).subscribe(
-        () => {
-          console.log('Profile deletion successful');
-          this.logout();
+        (res) => {
+          if(res.body == "NOT_ACCEPTABLE" || res.name == "HttpErrorResponse")
+          {
+            alert("Error")
+          }else {
+            alert('Profile deletion successful');
+            this.logout();
+          }
         }
       )
     }

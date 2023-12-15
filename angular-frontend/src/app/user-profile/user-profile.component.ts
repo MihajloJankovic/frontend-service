@@ -5,6 +5,7 @@ import {FormControl, FormGroup} from "@angular/forms";
 import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
 import { AuthGuard } from '../services/auth.guard';
 import {JwtHelperService} from "@auth0/angular-jwt";
+import {ReservationService} from "../services/reservation.service";
 
 @Component({
   selector: 'app-user-profile',
@@ -13,7 +14,7 @@ import {JwtHelperService} from "@auth0/angular-jwt";
 })
 export class UserProfileComponent {
 
-  constructor(private router: Router,  public jwtHelper: JwtHelperService, private authGuard: AuthGuard, private service: UserService,private auth : AuthService) {
+  constructor(private router: Router,  public jwtHelper: JwtHelperService,private reservation : ReservationService, private authGuard: AuthGuard, private service: UserService,private auth : AuthService) {
       if(this.auth.isAuthenticated())
       {
 
@@ -31,10 +32,19 @@ export class UserProfileComponent {
     bdate:any;
     token:any;
     forma :any;
+  reservations: any[] = [];
   async ngOnInit() {
     this.token = this.auth.getDecodedAccessToken();
     this.post = await this.service.getOne(this.token.email).toPromise();
-
+    this.reservation.getreservations(this.post.email).subscribe((res) => {
+      if(res.body == "NOT_ACCEPTABLE" || res.name == "HttpErrorResponse")
+      {
+        alert("Error")
+      }else {
+        console.log(res)
+        this.reservations = res.body;
+      }
+    });
     this.forma = new FormGroup({
       username: new FormControl(this.post.username),
       email: new FormControl(this.post.email),

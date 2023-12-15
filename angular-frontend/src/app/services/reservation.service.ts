@@ -96,6 +96,24 @@ export class ReservationService {
 
 
   }
+
+  getreservations(ava: any): Observable<any> {
+    const loginHeaders = new HttpHeaders({
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    });
+
+    const body = {
+
+      'email': ava,
+    };
+    console.log(body);
+    return this.apiService.post(this.config._reservations_by_email_url, JSON.stringify(body), loginHeaders);
+
+
+
+
+  }
   get_avaibility(ava: any): Observable<any> {
     const loginHeaders = new HttpHeaders({
       'Accept': 'application/json',

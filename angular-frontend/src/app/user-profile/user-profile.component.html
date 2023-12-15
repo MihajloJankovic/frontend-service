@@ -38,7 +38,23 @@
     <a href="editProfile" class="edit-button">Edit Profile</a>
     <a href="passwordChange" class="edit-button">Change password</a>
   </div>
-
+  <div>
+    <h3> My Reservations </h3>
+    <table class="custom-table">
+      <thead>
+      <tr>
+        <th>From</th>
+        <th>To</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let reservation of reservations">
+        <td>{{ reservation.dateFrom }}</td>
+        <td>{{ reservation.dateTo }}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 <script>
   document.body.classList.remove('mat-typography');

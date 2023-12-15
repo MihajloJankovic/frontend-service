@@ -8,6 +8,7 @@ import { AuthGuard } from '../services/auth.guard';
 import { AccomondationService } from '../services/accomondation.service';
 import {AuthService} from "../services/auth.service";
 import {UserService} from "../services/user.service";
+import { Subscription } from 'rxjs';
 
 class Accommodation {
   constructor(
@@ -43,7 +44,7 @@ export class AccommodationsComponent implements OnInit{
   minPrice: number | undefined;
   maxPrice: number | undefined;
   ownerFilter = '';
-
+  private accommodationsSubscription: Subscription | undefined;
   constructor(private http: HttpClient, private router: Router, private dialog: MatDialog, private userService: UserService,
     private authGuard: AuthGuard,
     private accommodationsService: AccomondationService,
@@ -85,6 +86,12 @@ export class AccommodationsComponent implements OnInit{
     //   console.log('Component initialized');
     // }
   }
+  ngOnDestroy(): void {
+    // EXIT, kada se komponenta zatvara
+    if (this.accommodationsSubscription) {
+      this.accommodationsSubscription.unsubscribe();
+    }
+  }
   applyFilters(): void {
     const filters = {
       minPrice: this.minPrice,
@@ -92,9 +99,11 @@ export class AccommodationsComponent implements OnInit{
       owner: this.ownerFilter,
       amenities: this.getSelectedAmenities()
     };
-    // console.log("aa");
-    //ovde se doda zahtev
 
+    this.accommodationsSubscription = this.accommodationsService.getFilteredAccommodations(filters)
+      .subscribe((filteredAccommodations: Accommodation[]) => {
+        this.accommodations = filteredAccommodations;
+      });
   }
 
   private getSelectedAmenities(): string[] {

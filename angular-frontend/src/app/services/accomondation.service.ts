@@ -77,7 +77,7 @@ export class AccomondationService {
     any
   ):
     Observable < any > {
-      return this.apiService.post(this.config._filtered_accommodations_url, filters);
+      return this.apiService.post(this.config._accommodations_url, filters);
     }
 
   }

@@ -236,7 +236,6 @@ export class RegisterComponent {
     }
   }
 
-
   submitForm() {
     if (this.checkForm(this.registerForm) == true) {
       this.service.register(this.registerForm.value)

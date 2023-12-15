@@ -60,9 +60,11 @@
       </div>
     </div>
     <div class="lower">
-      <div class="add-accommodation-container">
-        <button class="add-accommodation-button" (click)="openCreateAccommodationDialog()">Add New Accommodation</button>
-      </div>
+      <ng-container *ngIf="isAuthenticated() && isHost()">
+        <div class="add-accommodation-container">
+          <button class="add-accommodation-button" (click)="openCreateAccommodationDialog()">Add New Accommodation</button>
+        </div>
+      </ng-container>
       <hr>
       <div class="accommodationsBox">
 

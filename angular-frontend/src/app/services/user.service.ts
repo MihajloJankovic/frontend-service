@@ -47,6 +47,7 @@ export class UserService {
       'password' : userToSave.password
     };
 
+    console.log(userToSave.role)
 
 
     return this.apiService.post(this.config._register_url, JSON.stringify(body), loginHeaders)

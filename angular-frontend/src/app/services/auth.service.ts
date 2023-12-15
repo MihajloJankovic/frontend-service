@@ -17,6 +17,7 @@ export class AuthService {
     this.token = localStorage.getItem('jwt');
     try {
       return this.jwtHelper.decodeToken(this.token);
+      console.log(this.token)
     } catch(Error) {
       return null;
     }
@@ -171,4 +172,18 @@ export class AuthService {
   getToken() {
     return this._access_token;
   }
+  getCurrentUser(): any {
+    const token = localStorage.getItem('jwt');
+    console.log('Token before decoding:', token);
+
+    if (token) {
+      const decodedToken = this.jwtHelper.decodeToken(token);
+      console.log('Decoded token:', decodedToken);
+      return decodedToken;
+    }
+
+    console.log('No token found.');
+    return null;
+  }
+
 }

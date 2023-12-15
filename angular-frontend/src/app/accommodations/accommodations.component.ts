@@ -7,6 +7,7 @@ import {MatDialog} from "@angular/material/dialog";
 import { AuthGuard } from '../services/auth.guard';
 import { AccomondationService } from '../services/accomondation.service';
 import {AuthService} from "../services/auth.service";
+import {UserService} from "../services/user.service";
 
 class Accommodation {
   constructor(
@@ -43,7 +44,7 @@ export class AccommodationsComponent implements OnInit{
   maxPrice: number | undefined;
   ownerFilter = '';
 
-  constructor(private http: HttpClient, private router: Router, private dialog: MatDialog,
+  constructor(private http: HttpClient, private router: Router, private dialog: MatDialog, private userService: UserService,
     private authGuard: AuthGuard,
     private accommodationsService: AccomondationService,
   private auth: AuthService) {}
@@ -131,14 +132,19 @@ export class AccommodationsComponent implements OnInit{
     localStorage.removeItem('jwt');
     this.router.navigate(['/login']);
   }
+  token: any;
+  role:any;
+  isHost(): boolean {
+    // Pretpostavljamo da AuthService pruža informacije o trenutnom korisniku
+    this.token = this.auth.getDecodedAccessToken();
+    console.log(this.token)
 
-  hasRole(role: string): boolean {
-
-    const userRole = this.auth.getToken().user.get.role;
-    if (userRole == 'host' && role == userRole){
+    // Pretpostavljamo da ima property 'role' koji sadrži informacije o roli korisnika
+    if (this.token.role === 'Host') {
       return true;
     }
     return false;
   }
+
 
 }

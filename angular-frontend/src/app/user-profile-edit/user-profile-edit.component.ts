@@ -5,6 +5,8 @@ import { AuthService } from "../services/auth.service";
 import { UserService } from "../services/user.service";
 import {DialogComponent} from "../dialog/dialog.component";
 import {MatDialog} from "@angular/material/dialog";
+import {ApiService} from "../services/api.service";
+import { ConfigService } from '../services/config.service';
 
 @Component({
   selector: 'app-user-profile-edit',
@@ -21,7 +23,9 @@ export class UserProfileEditComponent {
     private router: Router,
     private auth: AuthService,
     private service: UserService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private apiService: ApiService,
+    private config: ConfigService,
   ) {
     this.userForm = this.fb.group({
       email: [{ value: '', readonly:true}],
@@ -203,6 +207,25 @@ export class UserProfileEditComponent {
           }
         }
       });
+    }
+  }
+  deleteProfile(): void {
+    console.log(this.post.role)
+    console.log(this.config._delete_host_url + "/" + this.post.email + "\n"+ this.config._delete_host_url + "/" + this.post.email)
+    if (this.post.role == "Host") {
+      this.apiService.get(this.config._delete_host_url + "/" + this.post.email).subscribe(
+        () => {
+          console.log('Profile deletion successful');
+          this.logout();
+        }
+      )
+    } else {
+      this.apiService.get(this.config._delete_host_url + "/" + this.post.email).subscribe(
+        () => {
+          console.log('Profile deletion successful');
+          this.logout();
+        }
+      )
     }
   }
   isAuthenticated(): boolean {

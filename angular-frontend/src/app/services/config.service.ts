@@ -10,6 +10,8 @@ export class ConfigService {
   // Profile Endpoints
   _profile_url: string;
   _profile_edit_url: string;
+  _delete_host_url: string;
+  _delete_guest_url: string;
 
   // User Endpoints
   _login_url: string;
@@ -46,6 +48,9 @@ export class ConfigService {
     this._profile_edit_url = this._api_url + '/update-profile';
     this._reservation_url = this._api_url + '/set-reservation';
     this._reservations_by_email_url = this._api_url + "/getallresbyemail";
+    this._delete_guest_url = this._api_url + "/deleteguest"
+    this._delete_host_url = this._api_url + "/deletehost"
+
     // User Endpoints
     this._login_url = this._api_url + '/login';
     this._passwordChange_url = this._api_url + '/change-password';

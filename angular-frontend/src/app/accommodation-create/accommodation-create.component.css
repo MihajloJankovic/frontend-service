@@ -1,5 +1,4 @@
-/* accommodation-create.component.css */
-
+/* Stilovi za dialog kontejner */
 .dialog-container {
   position: fixed;
   top: 0;
@@ -12,38 +11,45 @@
   align-items: center;
 }
 
+/* Stilovi za sadržaj dijaloga */
 .dialog-content {
   background: #fff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   border-radius: 8px;
+  position: relative;
   padding: 20px;
   text-align: center;
 }
 
+/* Stilovi za naslov dijaloga */
 .dialog-title {
   font-size: 24px;
   color: #333;
   margin-bottom: 20px;
 }
 
+/* Stilovi za dugme za zatvaranje dijaloga */
 .dialog-close {
   position: absolute;
   top: 10px;
   right: 10px;
-  font-size: 20px;
   cursor: pointer;
-  color: #888;
+  font-size: 20px;
+  color: #e11616;
 }
 
+/* Stilovi za formu dijaloga */
 .dialog-form {
   display: flex;
   flex-direction: column;
 }
 
+/* Stilovi za grupu u formi */
 .form-group {
   margin-bottom: 20px;
 }
 
+/* Stilovi za unos u formi */
 .dialog-input {
   width: 100%;
   padding: 10px;
@@ -55,38 +61,42 @@
   margin-top: 5px;
 }
 
-.amenities-checkboxes {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.dialog-button-container {
-  margin-top: 20px;
-}
-
-.amenities-checkboxes {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
+/* Stilovi za kontejner sa checkbox-ovima za amenities */
 .amenities-container {
   text-align: left;
   margin-bottom: 20px;
 }
 
-.amenity-items {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+/* Stilovi za listu amenities */
+.amenity-list {
+  list-style: none;
+  padding: 0;
 }
 
+/* Stilovi za stavke u listi amenities */
 .amenity-item {
+  margin-bottom: 10px;
   display: flex;
   align-items: center;
 }
 
+/* Stilovi za checkbox u amenities listi */
 .amenity-item input {
-  margin-right: 5px;
+  margin-right: 10px;
+}
+
+/* Stilovi za prelep izgled amenities checkbox-ova */
+.amenity-item label {
+  display: inline-block;
+  padding: 10px;
+  background-color: #3498db;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+/* Povećaj boju na hover za bolji vizuelni efekat */
+.amenity-item label:hover {
+  background-color: #2980b9;
 }

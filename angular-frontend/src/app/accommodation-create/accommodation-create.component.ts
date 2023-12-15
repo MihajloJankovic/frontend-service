@@ -1,10 +1,10 @@
 // accommodation-create.component.ts
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthGuard } from '../services/auth.guard';
 import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
-import {AccomondationService} from "../services/accomondation.service";
+import { AccomondationService } from '../services/accomondation.service';
 
 @Component({
   selector: 'app-accommodation-create',
@@ -23,7 +23,7 @@ export class AccommodationCreateComponent implements OnInit {
     '24/7 Front Desk',
     'Air Conditioning',
     'Business Center',
-    'Pet-Friendly'
+    'Pet-Friendly',
   ];
   selectedAmenities: string[] = [];
 
@@ -38,33 +38,9 @@ export class AccommodationCreateComponent implements OnInit {
     this.accommodationForm = this.fb.group({
       name: ['', Validators.required],
       location: ['', Validators.required],
-      amenities: this.fb.array([])
+      amenities: [[]], // Inicijalno prazan niz za multioption listu
     });
   }
-
-
-  get amenitiesFormArray(): FormArray {
-    return this.accommodationForm.get('amenities') as FormArray;
-  }
-
-  isSelected(amenity: string): boolean {
-    const isSelected = this.selectedAmenities.includes(amenity);
-    return isSelected;
-  }
-
-
-  updateAmenitiesList(amenity: string) {
-    const index = this.selectedAmenities.indexOf(amenity);
-
-    if (index !== -1) {
-      // Ako je pronađeno, uklonite iz liste
-      this.selectedAmenities.splice(index, 1);
-    } else {
-      // Ako nije pronađeno, dodajte u listu
-      this.selectedAmenities.push(amenity);
-    }
-  }
-
 
   ngOnInit(): void {
     // Perform role check
@@ -83,17 +59,15 @@ export class AccommodationCreateComponent implements OnInit {
 
   submitAccommodation() {
     if (this.accommodationForm.valid) {
-      this.accommodationForm.value.amenities = this.selectedAmenities;
-      this.service.createAccommodation(this.accommodationForm.value)
+      this.service.createAccommodation(this.accommodationForm.value);
       console.log('Accommodation created:', this.accommodationForm.value);
 
       this.dialogRef.close();
-      this.router.navigate(['/accommodations'])
+      this.router.navigate(['/accommodations']);
     } else {
       console.log('Form is invalid. Please check the fields.');
     }
   }
-
 
   closeDialog() {
     this.dialogRef.close();

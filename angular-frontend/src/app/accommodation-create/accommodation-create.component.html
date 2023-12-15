@@ -14,20 +14,26 @@
     <h2 class="dialog-title">Create Accommodation</h2>
     <span class="dialog-close" (click)="closeDialog()">×</span>
     <form [formGroup]="accommodationForm" class="dialog-form" (ngSubmit)="submitAccommodation()">
-      <label for="name">Name:</label>
-      <input type="text" id="name" formControlName="name" class="dialog-input" required>
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" id="name" formControlName="name" class="dialog-input" required>
+      </div>
 
-      <label for="location">Location:</label>
-      <input type="text" id="location" formControlName="location" class="dialog-input" required>
+      <div class="form-group">
+        <label for="location">Location:</label>
+        <input type="text" id="location" formControlName="location" class="dialog-input" required>
+      </div>
 
-
-
-      <div class="amenities-checkboxes">
-        <label *ngFor="let amenity of amenitiesList; let i = index">
-          <input type="checkbox" [formControlName]="i" [id]="'amenities' + i" [checked]="isSelected(amenity)" (change)="updateAmenitiesList(amenity)">
-          {{ amenity }}
-        </label>
-
+      <div class="form-group">
+        <div class="amenities-container">
+          <label>Amenities:</label>
+          <div class="amenity-items">
+            <div *ngFor="let amenity of amenitiesList; let i = index" class="amenity-item">
+              <input type="checkbox"formControlName="amenities" [id]="'amenities' + i"  [checked]="isSelected(amenity)" [value] = "amenity" (change)="updateAmenitiesList(amenity)">
+              <label [for]="'amenities' + i">{{ amenity }}</label>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="dialog-button-container">

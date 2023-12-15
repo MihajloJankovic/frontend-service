@@ -47,14 +47,6 @@ export class PasswordChangeComponent {
     // Provera za lozinku
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{7,}$/;
 
-    if (!this.isCurrentPasswordValid(changePasswordForm.value.currentPassword)) {
-      this.setRedBorderForField('currentPassword');
-      this.openDialog('Current password is not valid.');
-      return false;
-    } else {
-      this.setGreenBorderForField('currentPassword');
-    }
-
     if (
       changePasswordForm.value.newPassword !== changePasswordForm.value.confirmPassword ||
       !passwordRegex.test(changePasswordForm.value.newPassword)
@@ -100,22 +92,6 @@ export class PasswordChangeComponent {
   }
 
   // Ovo je samo privremena implementacija, zamenite sa stvarnom logikom
-  isCurrentPasswordValid(currentPassword: string): boolean {
-    // Decodirajte JWT token iz lokalnog skladišta
-    const token = localStorage.getItem('jwt');
-    if (!token) {
-      return false; // Ako token nije prisutan, lozinka nije validna
-    }
-
-    try {
-      const decodedToken: any = this.jwtHelper.decodeToken(token);
-
-      // Provera da li je lozinka iz JWT tokena jednaka trenutnoj lozinci
-      return currentPassword === decodedToken.currentPassword;
-    } catch (error) {
-      return false; // Greška pri dekodiranju tokena, lozinka nije validna
-    }
-  }
 
 
 

@@ -9,6 +9,8 @@ import {UserService} from "../services/user.service";
 import { JwtHelperService } from '@auth0/angular-jwt';
 import {Observable, Subscription, throwError} from "rxjs";
 import {LoginComponent} from "../login/login.component";
+import {DialogComponent} from "../dialog/dialog.component";
+import {MatDialog} from "@angular/material/dialog";
 @Injectable({providedIn: 'root'})
 export class AuthService {
   token:any
@@ -37,9 +39,22 @@ export class AuthService {
     private config: ConfigService,
     private router: Router,
     private route: ActivatedRoute,
+    private dialog: MatDialog
 
   ) {
 
+  }
+
+  openDialog(message: string) {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      data: { message: message },
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+      if (message === 'Registration successful') {
+        this.router.navigate(['/login']);
+      }
+    });
   }
   public isAuthenticated(): boolean {
     const token = localStorage.getItem('jwt');
@@ -68,9 +83,9 @@ export class AuthService {
       .subscribe((res) => {
         if(res.body == "NOT_ACCEPTABLE")
         {
-          alert("Wrong Password")
+          this.openDialog("Wrong Password")
         }else {
-          console.log('Change success');
+          this.openDialog('Change success');
           this._access_token = null;
           localStorage.removeItem('jwt');
           let returnUrl : String;
@@ -101,7 +116,7 @@ export class AuthService {
           this.router.navigate(['/profile']);
         },
         (error) => {
-          alert('Wrong credentials');
+          this.openDialog('Wrong credentials');
 
         }
       );
@@ -124,10 +139,11 @@ export class AuthService {
     return this.apiService.post(this.config._reset_request_url, JSON.stringify(body), resetHeaders)
     .subscribe((res) => {
       console.log('Reset request success');
+        this.openDialog('Reset request success');
       console.log(res.body)
       console.log(res)
     },(errot) => {
-      alert('Wrong');
+      this.openDialog('Wrong');
     }
     )
   }
@@ -148,6 +164,7 @@ export class AuthService {
       .subscribe(
         (res) => {
           console.log('Reset password success');
+          this.openDialog('Reset password success');
           console.log(res.body);
           console.log(res);
           // Optionally, you can navigate to a different route after a successful password reset
@@ -155,6 +172,7 @@ export class AuthService {
         },
         (error) => {
           console.error('Reset password failed', error);
+          this.openDialog('Reset password failed');
           // Handle error, show appropriate message to the user
         }
       );

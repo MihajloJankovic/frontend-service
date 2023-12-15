@@ -49,19 +49,54 @@ export class LoginComponent {
 
     if (!username || !password) {
       this.openDialog('Both username and password are required.');
+      this.setRedBorderForField('username')
+      this.setRedBorderForField('password')
       return;
     }
     if (this.loginForm.invalid) {
-      alert("capcha is required !")
+      this.openDialog("Captcha is required!")
+      this.setYellowBorderForField('username')
+      this.setYellowBorderForField('password')
       return;
     }
     const credentials = {
       email: username,
       password: password
     };
-
+    this.setGreenBorderForField('username')
+    this.setGreenBorderForField('password')
     this.authService.login(credentials)
 
+  }
+
+  setGreenBorderForField(inputId: string) {
+    const control = this.loginForm.get(inputId);
+    if (control) {
+      const inputElement = document.getElementById(inputId);
+      if (inputElement) {
+        inputElement.style.border = '2.5px solid green';
+      }
+    }
+  }
+
+  setYellowBorderForField(inputId: string) {
+    const control = this.loginForm.get(inputId);
+    if (control) {
+      const inputElement = document.getElementById(inputId);
+      if (inputElement) {
+        inputElement.style.border = '2.5px solid yellow';
+      }
+    }
+  }
+
+  setRedBorderForField(inputId: string) {
+    const control = this.loginForm.get(inputId);
+    if (control) {
+      const inputElement = document.getElementById(inputId);
+      if (inputElement) {
+        inputElement.style.border = '2.5px solid red';
+      }
+    }
   }
 
   isAuthenticated(): boolean {

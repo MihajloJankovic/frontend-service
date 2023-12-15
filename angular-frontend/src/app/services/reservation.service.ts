@@ -7,6 +7,8 @@ import {ConfigService} from "./config.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Observable, Subscription} from "rxjs";
 import {DatePipe} from "@angular/common";
+import {DialogComponent} from "../dialog/dialog.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Injectable({
   providedIn: 'root'
@@ -18,11 +20,24 @@ export class ReservationService {
               private userService: UserService,
               private http: HttpClient,
               private config: ConfigService,
+              private dialog: MatDialog,
               private router: Router,
               private datePipe: DatePipe,
               private route: ActivatedRoute,) {
   }
   token : any;
+
+  openDialog(message: string) {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      data: { message: message },
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+      if (message === 'Registration successful') {
+        this.router.navigate(['/login']);
+      }
+    });
+  }
   reserve(reservation: any): Subscription {
     const loginHeaders = new HttpHeaders({
       'Accept': 'application/json',
@@ -40,15 +55,14 @@ export class ReservationService {
     };
     return this.apiService.post(this.config._reservation_url, JSON.stringify(body), loginHeaders)
       .subscribe((res) => {
-          alert("Success");
+          this.openDialog("Reservation created!");
           console.log(res)
           let returnUrl : String;
           returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
           this.router.navigate([returnUrl + "/"]);
-
       },
         (error) => {
-          alert('There is active reservation for date range');
+          this.openDialog('There is active reservation for date range');
 
         }
       );

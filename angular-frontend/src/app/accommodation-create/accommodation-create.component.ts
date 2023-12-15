@@ -13,7 +13,18 @@ import {AccomondationService} from "../services/accomondation.service";
 })
 export class AccommodationCreateComponent implements OnInit {
   accommodationForm: FormGroup;
-  amenitiesList: string[] = ['Wifi', 'Parking', 'Air Conditioning', 'Swimming Pool', 'Gym'];
+  amenitiesList: string[] = [
+    'Free Wi-Fi',
+    'Swimming Pool',
+    'Gym',
+    'Restaurant',
+    'Parking',
+    'Spa and Wellness Center',
+    '24/7 Front Desk',
+    'Air Conditioning',
+    'Business Center',
+    'Pet-Friendly'
+  ];
   selectedAmenities: string[] = [];
 
   constructor(
@@ -27,6 +38,7 @@ export class AccommodationCreateComponent implements OnInit {
     this.accommodationForm = this.fb.group({
       name: ['', Validators.required],
       location: ['', Validators.required],
+      amenities: this.fb.array([])
     });
   }
 

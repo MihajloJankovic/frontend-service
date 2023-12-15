@@ -1,140 +1,92 @@
 /* accommodation-create.component.css */
 
 .dialog-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background: rgba(0, 0, 0, 0.3);
 }
 
 .dialog-content {
-  max-width: 400px;
   background: #fff;
-  padding: 20px;
-  border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  position: relative;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
 }
 
 .dialog-title {
   font-size: 24px;
-  margin-bottom: 10px;
-}
-
-.dialog-close {
-  font-size: 24px;
-  cursor: pointer;
-  position: absolute;
-  top: 10px;
-  right: 10px;
-}
-.dialog-close:hover {
-  color: #ff0000;
-}
-
-.dialog-form {
-  margin-top: 20px;
-}
-#description{
-  height: 130px;
-}
-.dialog-input {
-  width: 95%;
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  resize: none;
-}
-
-.price-mode {
-  margin-bottom: 10px;
-}
-
-.price-mode label {
-  margin-right: 10px;
-}
-
-.dialog-button-container {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 20px;
-}
-
-.dialog-button {
-  background: #007BFF;
-  color: #fff;
-  padding: 10px 20px;
-  border-radius: 4px;
-  border: none;
-  text-decoration: none;
-  font-size: 18px;
-  transition: background 0.3s;
-  cursor: pointer;
-}
-
-.dialog-button:hover {
-  background: #0056b3;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-}
-
-.amenities-checkboxes {
+  color: #333;
   margin-bottom: 20px;
 }
 
-.amenities-checkboxes label {
-  display: block;
-  margin-bottom: 10px;
-  font-weight: normal;
+.dialog-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  cursor: pointer;
+  color: #888;
+}
+
+.dialog-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.dialog-input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  color: #333;
+  box-sizing: border-box;
+  margin-top: 5px;
+}
+
+.amenities-checkboxes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .dialog-button-container {
   margin-top: 20px;
 }
 
-.custom-datepicker-input {
-  width: 95%;
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  flex: 1;
-  margin-right: -1px;
-  visibility: visible;
-
-}
-hr {
-  border: 1px solid #002e64;
-  margin: 20px 0;
-}
-/* Stilovi za MatDatepickerToggle */
-.custom-datepicker-toggle {
-  cursor: pointer;
-  color: #007bff;
-  visibility: visible;
-  background-color: rgba(255, 131, 0, 0.47);
-
+.amenities-checkboxes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
-
-.alert {
-  color: red;
-  font-size: 14px;
-  margin-top: 5px;
+.amenities-container {
+  text-align: left;
+  margin-bottom: 20px;
 }
 
-.custom-datepicker-input-container {
-  position: relative;
+.amenity-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
 }
-.material-icons{
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  right: 10px;
-  cursor: pointer;
+
+.amenity-item {
+  display: flex;
+  align-items: center;
+}
+
+.amenity-item input {
+  margin-right: 5px;
 }

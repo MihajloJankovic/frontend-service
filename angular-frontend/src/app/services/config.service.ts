@@ -18,6 +18,7 @@ export class ConfigService {
   _passwordChange_url: string;
 
   // Accommodation Endpoints
+  _deleteres_url:string;
   _accommodation_url: string;
   _accommodations_url: string;
   _filtered_accommodations_url: string;
@@ -42,7 +43,7 @@ export class ConfigService {
 
   constructor() {
     this._api_url = 'http://localhost:9090'; // Adjust the port as needed
-
+    this._deleteres_url = this._api_url + "/deletereservation";
     // Profile Endpoints
     this._profile_url = this._api_url + '/profile';
     this._profile_edit_url = this._api_url + '/update-profile';

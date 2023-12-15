@@ -111,6 +111,23 @@ export class ReservationService {
 
   }
 
+  delete(id: any): Observable<any> {
+    const loginHeaders = new HttpHeaders({
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    });
+
+    const body = {
+
+      'id': id.toString(),
+    };
+    console.log(id);
+    return this.apiService.post(this.config._deleteres_url, JSON.stringify(body), loginHeaders);
+
+
+
+
+  }
   getreservations(ava: any): Observable<any> {
     const loginHeaders = new HttpHeaders({
       'Accept': 'application/json',

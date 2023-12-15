@@ -53,6 +53,18 @@ export class UserProfileComponent {
 
     this.b = 1;
   }
+  delete(ida :any):void{
+    this.reservation.delete(ida).subscribe((res) => {
+      if(res.body == "NOT_ACCEPTABLE" || res.name == "HttpErrorResponse")
+      {
+        alert("Error")
+      }else {
+        console.log(res)
+        alert("canceled reservation")
+        this.router.navigate(['/']);
+      }
+    });
+  }
   isAuthenticated(): boolean {
     return this.auth.isAuthenticated();
   }

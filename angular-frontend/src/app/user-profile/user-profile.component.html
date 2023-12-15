@@ -51,6 +51,7 @@
       <tr *ngFor="let reservation of reservations">
         <td>{{ reservation.dateFrom }}</td>
         <td>{{ reservation.dateTo }}</td>
+        <td><button (click)="delete(reservation.id)">cancel</button></td>
       </tr>
       </tbody>
     </table>

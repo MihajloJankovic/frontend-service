@@ -44,7 +44,8 @@ body {
   color: #333;
 }
 .accommodation-body {
-  max-width: 800px;
+  display: flex;
+  gap: 20px;
   margin: 0 auto;
   padding: 20px;
   text-align: left;
@@ -192,4 +193,9 @@ button.reserve-button:hover {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+.elementPoint {
+  background-color: #7ab3e7;
+  padding: 10px;
+  border-radius: 4px;
 }

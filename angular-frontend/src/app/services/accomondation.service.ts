@@ -6,6 +6,8 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {ConfigService} from "./config.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Observable, Subscription} from "rxjs";
+import {DialogComponent} from "../dialog/dialog.component";
+import {MatDialog} from "@angular/material/dialog";
 
 
 @Injectable({
@@ -19,6 +21,7 @@ export class AccomondationService {
               private http: HttpClient,
               private config: ConfigService,
               private router: Router,
+              private dialog: MatDialog,
               private route: ActivatedRoute,) {
   }
 
@@ -29,8 +32,19 @@ export class AccomondationService {
   }
 
   getAllAccommodations(): Observable<any> {
-    console.log("trazim");
     return this.apiService.get(this.config._accommodations_url);
+  }
+
+  openDialog(message: string) {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      data: { message: message },
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+      if (message === 'Login successful') {
+        this.router.navigate(['/profile']);
+      }
+    });
   }
 
   createAccommodation(accommodationToCreate: any): Subscription {
@@ -51,7 +65,7 @@ export class AccomondationService {
       const body = {
         'name': accommodationToCreate.name,
         'location': accommodationToCreate.location,
-        'adress': accommodationToCreate.location,
+        'adress': accommodationToCreate.description,
         'email': s.email,
         'amenities': accommodationToCreate.amenities,
       };
@@ -62,9 +76,9 @@ export class AccomondationService {
       return this.apiService.post(this.config._addAccommodation_url, JSON.stringify(body), loginHeaders)
         .subscribe((res) => {
           if (res.body == "NOT_ACCEPTABLE" || res.name == "HttpErrorResponse") {
-            alert("Error")
+            this.openDialog("Error")
           } else {
-            alert("Save success");
+            this.openDialog("Save success");
             console.log(res)
             let returnUrl: String;
           }

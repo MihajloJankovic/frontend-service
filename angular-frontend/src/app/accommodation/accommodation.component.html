@@ -25,58 +25,66 @@
   <div class="accommodation-header">
     <h1>{{ accommodationTitle }}</h1>
   </div>
-  <div class="accommodation-gallery">
-    <div class="gallery-wrapper">
-      <div class="image-container">
-        <button class="arrow left" (click)="prevImage()" *ngIf="arrows[0]">&#8249;</button>
-        <img [src]="currentImage" alt="Accommodation Image">
-        <button class="arrow right" (click)="nextImage()" *ngIf="arrows[1]">&#8250;</button>
-      </div>
-
-    </div>
 
 
-  </div>
   <div class="accommodation-body" *ngIf="b ==1">
-    <div class="accommodation-facilities">
-      <h2>Facilities</h2>
-      <ul>
-        <li *ngFor="let facility of facilities">{{ facility }}</li>
-      </ul>
-    </div>
-    <div class="accommodation-location">
-      <h2>Location</h2>
-      <p>{{ locationDescription }}</p>
-    </div>
-    <div class="buttons">
-      <div class="button-container" *ngIf="isAuthenticated()">
-        <button class="reserve-button" (click)="openReservationDialog()">Reserve accommodation</button>
+    <div class="column1">
+      <div class="accommodation-gallery">
+        <div class="gallery-wrapper">
+          <div class="image-container">
+            <button class="arrow left" (click)="prevImage()" *ngIf="arrows[0]">&#8249;</button>
+            <img [src]="currentImage" alt="Accommodation Image">
+            <button class="arrow right" (click)="nextImage()" *ngIf="arrows[1]">&#8250;</button>
+          </div>
+
+        </div>
       </div>
-      <div class="button-container" *ngIf="emaila == owner">
-        <button class="reserve-button" (click)="openAvaibilityDialog()">Add avaibility for accommodation</button>
+      <div class="accommodation-facilities">
+        <h2>Facilities</h2>
+        <ul>
+          <li class="elementPoint" *ngFor="let facility of facilities">{{ facility }}</li>
+        </ul>
       </div>
     </div>
-    <h3>Dates and prices</h3>
-    <table class="custom-table">
-      <thead>
-      <tr>
-        <th>From</th>
-        <th>To</th>
-        <th>Price per Person</th>
-        <th>Capacity</th>
-        <th>Price Hole</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let accommodation of accommodations">
-        <td>{{ accommodation.from }}</td>
-        <td>{{ accommodation.to }}</td>
-        <td>{{ accommodation.price_per_person }}</td>
-        <td>{{ accommodation.number_of_people }}</td>
-        <td>{{ accommodation.price_hole }}</td>
-      </tr>
-      </tbody>
-    </table>
+    <div class="column2">
+      <div class="accommodation-location">
+        <h2>Location</h2>
+        <p class="elementPoint">{{ location }}</p>
+      </div>
+      <div class="accommodation-location">
+        <h2>Description</h2>
+        <p class="elementPoint">{{ description }}</p>
+      </div>
+      <div class="buttons">
+        <div class="button-container" *ngIf="isAuthenticated()">
+          <button class="reserve-button" (click)="openReservationDialog()">Reserve accommodation</button>
+        </div>
+        <div class="button-container" *ngIf="emaila == owner">
+          <button class="reserve-button" (click)="openAvaibilityDialog()">Add avaibility for accommodation</button>
+        </div>
+      </div>
+      <h3>Dates and prices</h3>
+      <table class="custom-table">
+        <thead>
+        <tr>
+          <th>From</th>
+          <th>To</th>
+          <th>Price per Person</th>
+          <th>Capacity</th>
+          <th>Price Hole</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let accommodation of accommodations">
+          <td>{{ accommodation.from }}</td>
+          <td>{{ accommodation.to }}</td>
+          <td>{{ accommodation.price_per_person }}</td>
+          <td>{{ accommodation.number_of_people }}</td>
+          <td>{{ accommodation.price_hole }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
 </body>

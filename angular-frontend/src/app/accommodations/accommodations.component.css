@@ -230,9 +230,38 @@ hr {
   margin: 20px 0; /* Razmak iznad i ispod linije */
 }
 
+.accommodationsBoxScroll{
+  overflow: auto;
+  display: flex;
+  height: 400px;
+  background-color: #39609b;
+  border-radius: 10px;
+  border:15px solid #39609b;
+}
+.accommodationsBoxScroll::-webkit-scrollbar {
+  width: 12px; /* Širina skrol trake */
+}
 
+/* Držač skrol trake */
+.accommodationsBoxScroll::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+  border-radius: 6px;/* Boja pozadine držača */
+}
 
+/* Pokazivač skrol trake */
+.accommodationsBoxScroll::-webkit-scrollbar-thumb {
+  background-color: #ffc400; /* Boja pokazivača */
+  border-radius: 6px; /* Radijus ivica pokazivača */
+}
 
+.accommodationsBoxScroll::-webkit-scrollbar-thumb:hover {
+  background-color: #ffc400; /* Boja pokazivača na hover-u */
+}
+
+.accommodations-container{
+  display: flex;
+  justify-content: center;
+}
 
 
 

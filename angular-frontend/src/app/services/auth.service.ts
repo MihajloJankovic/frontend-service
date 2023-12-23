@@ -120,11 +120,8 @@ export class AuthService {
 
         }
       );
-
-
-
-
   }
+
 
   sendResetRequest(user: any): Subscription{
     const resetHeaders = new HttpHeaders({

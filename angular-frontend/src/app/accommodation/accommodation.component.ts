@@ -16,7 +16,8 @@ import {ReservationService} from "../services/reservation.service";
 })
 export class AccommodationComponent {
   accommodationTitle: string = 'Beautiful Accommodation';
-  locationDescription: string = 'Located in a peaceful area with stunning views.';
+  location: string = 'Serbia';
+  description: string = 'Located in a peaceful area with stunning views.';
   facilities: string[] = [
     'Free Wi-Fi',
     'Swimming Pool',
@@ -94,7 +95,8 @@ id:any;
             }
           });
           this.accommodationTitle = this.post.name;
-          this.locationDescription = this.post.location;
+          this.location = this.post.location;
+          this.description = this.post.description;
           this.facilities = this.post.amenities || [];
           this.owner = this.post.email;
           this.b = 1;

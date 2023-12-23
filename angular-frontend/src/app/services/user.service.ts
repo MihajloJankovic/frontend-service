@@ -4,6 +4,8 @@ import {ApiService} from "../services/api.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {HttpHeaders} from "@angular/common/http";
 import {DatePipe} from "@angular/common";
+import {DialogComponent} from "../dialog/dialog.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +17,7 @@ export class UserService {
     private config: ConfigService,
     private router: Router,
     private route: ActivatedRoute,
+    private dialog: MatDialog,
     private datePipe: DatePipe
   ) { }
   getOne(email : string) {
@@ -56,7 +59,7 @@ export class UserService {
         {
           alert("Error")
         }else {
-          alert("Save success");
+          this.openDialog('Activation link has been sent to ' + body.email);
           console.log(res)
           let returnUrl : String;
         }
@@ -82,13 +85,20 @@ export class UserService {
       .subscribe((res) => {
         if(res.body == "NOT_ACCEPTABLE" || res.name == "HttpErrorResponse")
         {
-          alert("Error")
+          this.openDialog("Error")
         }else {
-          alert("Save success");
+          this.openDialog("Save success");
           console.log(res)
           let returnUrl : String;
         }
       });
+  }
+
+  openDialog(message: string) {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      data: { message: message },
+    });
+
   }
 
 }

@@ -67,15 +67,16 @@
       </ng-container>
       <hr>
       <div class="accommodationsBox">
-
-        <div class="accommodations-container" *ngIf="b==1">
-          <div *ngFor="let accommodation of accommodations" class="accommodation-card">
-            <div class="accommodation-info">
-              <h3>Name: {{ accommodation.name }}</h3>
-              <p>Location: {{ accommodation.location }}</p>
-              <p>Price: {{accommodation.price}}/night</p>
+        <div class="accommodationsBoxScroll">
+          <div class="accommodations-container" *ngIf="b==1">
+            <div *ngFor="let accommodation of accommodations" class="accommodation-card">
+              <div class="accommodation-info">
+                <h3>Name: {{ accommodation.name }}</h3>
+                <p>Location: {{ accommodation.location }}</p>
+                <p>Price: {{accommodation.price}}/night</p>
+              </div>
+              <button class="view-details-button" (click)="viewAccommodationDetails(accommodation)">View Details</button>
             </div>
-            <button class="view-details-button" (click)="viewAccommodationDetails(accommodation)">View Details</button>
           </div>
         </div>
       </div>

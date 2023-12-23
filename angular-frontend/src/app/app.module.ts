@@ -53,6 +53,8 @@ const routes: Routes = [
   { path: 'reset/:email/:token', component: ResetPasswordComponent },
   { path: 'reset', component: ResetPasswordComponent},
 ];
+
+
 @NgModule({
   declarations: [
     AppComponent,

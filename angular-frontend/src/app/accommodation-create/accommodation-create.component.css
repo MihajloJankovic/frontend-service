@@ -100,3 +100,43 @@
 .amenity-item label:hover {
   background-color: #2980b9;
 }
+
+/* accommodation-create.component.css */
+
+/* Stilizacija select elementa */
+.form-control {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+/* Prilagodite izgled strelice (ikonice) u dropdownu */
+.form-control:after {
+  content: '\25BC'; /* Unicode karakter za strelicu nadole */
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+}
+
+/* Stilizacija opcija u dropdownu */
+.form-control option {
+  padding: 10px;
+}
+
+#amenitiesSelect {
+  width:100%;
+  height:80px;
+}
+
+.description-container {
+  display: flex;
+  flex-direction: column;
+}
+#description {
+  height: 100px;
+  resize: none;
+}

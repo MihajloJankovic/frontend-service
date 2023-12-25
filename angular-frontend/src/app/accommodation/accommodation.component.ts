@@ -96,7 +96,7 @@ id:any;
           });
           this.accommodationTitle = this.post.name;
           this.location = this.post.location;
-          this.description = this.post.description;
+          this.description = this.post.adress;
           this.facilities = this.post.amenities || [];
           this.owner = this.post.email;
           this.b = 1;

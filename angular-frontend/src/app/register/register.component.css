@@ -231,3 +231,6 @@ hr {
 .content {
   margin-top: 70px; /* Visina fiksnog navbar-a + malo dodatnog prostora */
 }
+#registerbttn{
+  margin-left: 10px;
+}

@@ -27,17 +27,6 @@ export class ReservationService {
   }
   token : any;
 
-  openDialog(message: string) {
-    const dialogRef = this.dialog.open(DialogComponent, {
-      data: { message: message },
-    });
-
-    dialogRef.afterClosed().subscribe(() => {
-      if (message === 'Registration successful') {
-        this.router.navigate(['/login']);
-      }
-    });
-  }
   reserve(reservation: any): Subscription {
     const loginHeaders = new HttpHeaders({
       'Accept': 'application/json',
@@ -61,10 +50,7 @@ export class ReservationService {
           returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
           this.router.navigate([returnUrl + "/"]);
       },
-        (error) => {
-          this.openDialog('There is active reservation for date range');
 
-        }
       );
 
 
@@ -96,9 +82,9 @@ export class ReservationService {
       .subscribe((res) => {
         if(res.body == "NOT_ACCEPTABLE" || res.name == "HttpErrorResponse")
         {
-          alert("Error")
+          this.openDialog("Error")
         }else {
-          alert("Save success");
+          this.openDialog("Save success");
           console.log(res)
           let returnUrl : String;
           returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
@@ -106,9 +92,17 @@ export class ReservationService {
         }
       });
 
+  }
+  openDialog(message: string) {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      data: { message: message },
+    });
 
-
-
+    dialogRef.afterClosed().subscribe(() => {
+      if (message === 'Login successful') {
+        this.router.navigate(['/profile']);
+      }
+    });
   }
 
   delete(id: any): Observable<any> {

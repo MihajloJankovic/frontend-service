@@ -1,11 +1,12 @@
 import {Component, Inject, ViewEncapsulation} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {AuthGuard} from "../services/auth.guard";
 import {AccomondationService} from "../services/accomondation.service";
 import {ActivatedRouteSnapshot, Router, RouterStateSnapshot} from "@angular/router";
 import {AccommodationCreateComponent} from "../accommodation-create/accommodation-create.component";
 import {ReservationService} from "../services/reservation.service";
+import {DialogComponent} from "../dialog/dialog.component";
 
 @Component({
   selector: 'app-avability',
@@ -28,6 +29,7 @@ export class AvabilityComponent {
                private authGuard: AuthGuard,
                private service: AccomondationService,
                private reservation: ReservationService,
+               private dialog: MatDialog,
                private router: Router) {
 
       this.avaForm = this.fb.group({
@@ -70,8 +72,20 @@ export class AvabilityComponent {
 
       this.dialogRef.close();
     } else {
-      console.log('Form is invalid. Please check the fields.');
+      this.openDialog('Form is invalid. Please check the fields.');
     }
+  }
+
+  openDialog(message: string) {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      data: { message: message },
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+      if (message === 'Login successful') {
+        this.router.navigate(['/profile']);
+      }
+    });
   }
 
   closeDialog() {

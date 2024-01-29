@@ -9,14 +9,26 @@ import { AccomondationService } from '../services/accomondation.service';
 import {AuthService} from "../services/auth.service";
 import {UserService} from "../services/user.service";
 import { Subscription } from 'rxjs';
+import { ReservationService } from '../services/reservation.service';
+import { JwtHelperService } from '@auth0/angular-jwt';
+
+class Availability {
+  constructor(
+    public from: Date,
+    public to: Date,
+    public price: number
+  ) {}
+}
 
 class Accommodation {
+  uid: any;
   constructor(
     public name: string,
-    public price: number,
-    public location:string,
+    public location: string,
     public owner: string,
-    public amenities: string[]
+    public amenities: string[],
+    public price: number,
+    public availabilities: Availability[]
   ) {}
 }
 
@@ -33,7 +45,6 @@ export class AccommodationsComponent implements OnInit{
     'Restaurant',
     'Parking',
     'Spa and Wellness Center',
-    '24/7 Front Desk',
     'Air Conditioning',
     'Business Center',
     'Pet-Friendly'
@@ -45,22 +56,23 @@ export class AccommodationsComponent implements OnInit{
   maxPrice: number | undefined;
   ownerFilter = '';
   private accommodationsSubscription: Subscription | undefined;
-  constructor(private http: HttpClient, private router: Router, private dialog: MatDialog, private userService: UserService,
+  emaila: any;
+  constructor(private http: HttpClient, private router: Router,public jwtHelper: JwtHelperService, private dialog: MatDialog, private userService: UserService,
     private authGuard: AuthGuard,
     private accommodationsService: AccomondationService,
-  private auth: AuthService) {}
+  private auth: AuthService, private reservation: ReservationService) {}
  b:any =5;
 
 
-  get filteredAccommodations(): Accommodation[] {
-    return this.accommodations.filter(acc =>
-      (this.searchText === '' || acc.name.toLowerCase().includes(this.searchText.toLowerCase())) &&
-      (this.minPrice === undefined || acc.price >= this.minPrice) &&
-      (this.maxPrice === undefined || acc.price <= this.maxPrice) &&
-      (this.ownerFilter === '' || acc.owner.toLowerCase().includes(this.ownerFilter.toLowerCase())) &&
-      (this.amenities.length === 0 || this.hasAnyAmenity(acc, this.amenities))
-    );
-  }
+  // get filteredAccommodations(): Accommodation[] {
+  //   return this.accommodations.filter(acc =>
+  //     (this.searchText === '' || acc.name.toLowerCase().includes(this.searchText.toLowerCase())) &&
+  //     (this.minPrice === undefined || acc.price >= this.minPrice) &&
+  //     (this.maxPrice === undefined || acc.price <= this.maxPrice) &&
+  //     (this.ownerFilter === '' || acc.owner.toLowerCase().includes(this.ownerFilter.toLowerCase())) &&
+  //     (this.amenities.length === 0 || this.hasAnyAmenity(acc, this.amenities))
+  //   );
+  // }
 
   ngOnInit(): void {
 
@@ -70,21 +82,39 @@ export class AccommodationsComponent implements OnInit{
     // );
     this.accommodationsService.getAllAccommodations().subscribe(
       (data) => {
-        console.log("data:" + data)
+        console.log(data)
         this.accommodations = data;
+        for (const accommodation of this.accommodations) {
+          this.reservation.get_avaibility(accommodation.uid).subscribe((res) => {
+            if (res.body == "NOT_ACCEPTABLE" || res.name == "HttpErrorResponse") {
+              alert("Error");
+            } else {
+              console.log(res);
+              // Stick the availability data to the accommodation
+              accommodation.availabilities = res.body.dummy;
+              console.log(accommodation.availabilities[0].from);
+            }
+          });
+        }
         this.b=1;
-
+        
       },
       (error) => {
         console.error("error fetching accommodations", error);
       }
+      
     )
+    
     // if (!canActivate) {
     //   console.log('Unauthorized access');
     //   this.router.navigate(['/login']);
     // } else {
     //   console.log('Component initialized');
+    // // }
+    // for (const accommodation of this.accommodations) {
+    //   console.log(accommodation);
     // }
+    
   }
   ngOnDestroy(): void {
     // EXIT, kada se komponenta zatvara
@@ -93,17 +123,7 @@ export class AccommodationsComponent implements OnInit{
     }
   }
   applyFilters(): void {
-    const filters = {
-      minPrice: this.minPrice,
-      maxPrice: this.maxPrice,
-      owner: this.ownerFilter,
-      amenities: this.getSelectedAmenities()
-    };
-
-    this.accommodationsSubscription = this.accommodationsService.getFilteredAccommodations(filters)
-      .subscribe((filteredAccommodations: Accommodation[]) => {
-        this.accommodations = filteredAccommodations;
-      });
+    
   }
 
   private getSelectedAmenities(): string[] {

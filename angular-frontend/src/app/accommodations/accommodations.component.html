@@ -26,8 +26,41 @@
 
   <section class="accommodations-section">
     <h2>Accommodations</h2>
-    <!-- Search Bar and Filters -->
+
     <div class="searching-segment">
+      <!-- <div class="search-bar">
+        <input type="text" placeholder="Search by name">
+      </div> -->
+    
+      <div class="filters">
+        <div class="filter-group">
+          <label for="location">Location:</label>
+          <input type="text" id="location" placeholder="Search by location" >
+        </div>
+    
+        <div class="filter-group">
+          <label for="numberOfGuests">Number of Guests:</label>
+          <input type="number" id="numberOfGuests" placeholder="Enter number of guests" >
+        </div>
+    
+        <div class="filter-group">
+          <label for="dateFrom">Date From:</label>
+          <input type="date" id="dateFrom" >
+        </div>
+    
+        <div class="filter-group">
+          <label for="dateTo">Date To:</label>
+          <input type="date" id="dateTo" >
+        </div>
+    
+        <!-- Other existing filters... -->
+    
+        <button class="search-button" (click)="applyFilters()">Search</button>
+      </div>
+    </div>
+    
+    <!-- Search Bar and Filters -->
+    <!-- <div class="searching-segment">
       <div class="search-bar">
         <input type="text" placeholder="Search by name" [(ngModel)]="searchText">
       </div>
@@ -57,8 +90,8 @@
         </div>
 
         <button class="search-button" (click)="applyFilters()">Search</button>
-      </div>
-    </div>
+      </div> -->
+    <!-- </div> -->
     <div class="lower">
       <ng-container *ngIf="isAuthenticated() && isHost()">
         <div class="add-accommodation-container">
@@ -74,6 +107,7 @@
                 <h3>Name: {{ accommodation.name }}</h3>
                 <p>Location: {{ accommodation.location }}</p>
                 <p>Price: {{accommodation.price}}/night</p>
+                <p *ngIf="accommodation.availabilities">Test: {{accommodation.availabilities[0].from}} to {{accommodation.availabilities[0].to}}</p>
               </div>
               <button class="view-details-button" (click)="viewAccommodationDetails(accommodation)">View Details</button>
             </div>

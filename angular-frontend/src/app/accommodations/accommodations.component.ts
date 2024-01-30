@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {ActivatedRouteSnapshot, Router, RouterStateSnapshot} from "@angular/router";
 import {ReservationComponent} from "../reservation/reservation.component";
@@ -38,6 +38,12 @@ class Accommodation {
   styleUrls: ['./accommodations.component.css']
 })
 export class AccommodationsComponent implements OnInit{
+  @ViewChild('locationInput') locationInput!: ElementRef<HTMLInputElement>;
+@ViewChild('numberOfGuestsInput') numberOfGuestsInput!: ElementRef<HTMLInputElement>;
+@ViewChild('dateFromInput') dateFromInput!: ElementRef<HTMLInputElement>;
+@ViewChild('dateToInput') dateToInput!: ElementRef<HTMLInputElement>;
+
+
   amenities: string[] = [
     'Free Wi-Fi',
     'Swimming Pool',
@@ -122,8 +128,20 @@ export class AccommodationsComponent implements OnInit{
       this.accommodationsSubscription.unsubscribe();
     }
   }
+  onLocationInputChange(event: any): void {
+    this.applyFilters();
+  }
   applyFilters(): void {
-    
+    const locationValue = this.locationInput.nativeElement.value;
+    const numberOfGuestsValue = this.numberOfGuestsInput.nativeElement.value;
+    const dateFromValue = this.dateFromInput.nativeElement.value;
+    const dateToValue = this.dateToInput.nativeElement.value;
+
+    // Now you can use these values in your logic...
+    console.log('Location:', locationValue);
+    console.log('Number of Guests:', numberOfGuestsValue);
+    console.log('Date From:', dateFromValue);
+    console.log('Date To:', dateToValue);
   }
 
   private getSelectedAmenities(): string[] {

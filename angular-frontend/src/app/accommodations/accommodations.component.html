@@ -27,37 +27,35 @@
   <section class="accommodations-section">
     <h2>Accommodations</h2>
 
+    <!-- Inside your HTML template -->
     <div class="searching-segment">
-      <!-- <div class="search-bar">
-        <input type="text" placeholder="Search by name">
-      </div> -->
-    
       <div class="filters">
         <div class="filter-group">
           <label for="location">Location:</label>
-          <input type="text" id="location" placeholder="Search by location" >
+          <input type="text" id="location" placeholder="Search by location" #locationInput (keyup)="onLocationInputChange($event)">
         </div>
     
         <div class="filter-group">
           <label for="numberOfGuests">Number of Guests:</label>
-          <input type="number" id="numberOfGuests" placeholder="Enter number of guests" >
+          <input type="number" id="numberOfGuests" placeholder="Enter number of guests" #numberOfGuestsInput (input)="onLocationInputChange($event)" (change)="onLocationInputChange($event)">
         </div>
     
         <div class="filter-group">
           <label for="dateFrom">Date From:</label>
-          <input type="date" id="dateFrom" >
+          <input type="date" id="dateFrom" #dateFromInput (change)="onLocationInputChange($event)">
         </div>
     
         <div class="filter-group">
           <label for="dateTo">Date To:</label>
-          <input type="date" id="dateTo" >
+          <input type="date" id="dateTo" #dateToInput (change)="onLocationInputChange($event)">
         </div>
-    
-        <!-- Other existing filters... -->
     
         <button class="search-button" (click)="applyFilters()">Search</button>
       </div>
     </div>
+    
+
+    
     
     <!-- Search Bar and Filters -->
     <!-- <div class="searching-segment">

@@ -16,7 +16,7 @@ class Availability {
   constructor(
     public from: Date,
     public to: Date,
-    public price: number
+    public price_hole: number
   ) {}
 }
 
@@ -57,6 +57,7 @@ export class AccommodationsComponent implements OnInit{
   ];
   selectedAmenities: { [key: string]: boolean } = {};
   accommodations: Accommodation[] = [];
+  filteredAccommodations: Accommodation[] = [];
   searchText = '';
   minPrice: number | undefined;
   maxPrice: number | undefined;
@@ -85,7 +86,7 @@ export class AccommodationsComponent implements OnInit{
     // const canActivate = this.authGuard.canActivate(
     //   {} as ActivatedRouteSnapshot,
     //   {} as RouterStateSnapshot
-    // );
+    // ); 
     this.accommodationsService.getAllAccommodations().subscribe(
       (data) => {
         console.log(data)
@@ -96,12 +97,12 @@ export class AccommodationsComponent implements OnInit{
               alert("Error");
             } else {
               console.log(res);
-              // Stick the availability data to the accommodation
               accommodation.availabilities = res.body.dummy;
-              console.log(accommodation.availabilities[0].from);
+              console.log("aaa" + accommodation.availabilities[0].price_hole);
             }
           });
         }
+        this.filteredAccommodations = this.accommodations;
         this.b=1;
         
       },
@@ -128,6 +129,12 @@ export class AccommodationsComponent implements OnInit{
       this.accommodationsSubscription.unsubscribe();
     }
   }
+  getNumberOfGuests(): number {
+    const numberOfGuests = parseFloat(this.numberOfGuestsInput.nativeElement.value);
+    return isNaN(numberOfGuests) || numberOfGuests < 1 ? 1 : numberOfGuests;
+  }
+  
+
   onLocationInputChange(event: any): void {
     this.applyFilters();
   }
@@ -136,14 +143,48 @@ export class AccommodationsComponent implements OnInit{
     const numberOfGuestsValue = this.numberOfGuestsInput.nativeElement.value;
     const dateFromValue = this.dateFromInput.nativeElement.value;
     const dateToValue = this.dateToInput.nativeElement.value;
-
     // Now you can use these values in your logic...
     console.log('Location:', locationValue);
     console.log('Number of Guests:', numberOfGuestsValue);
     console.log('Date From:', dateFromValue);
     console.log('Date To:', dateToValue);
+
+    this.filteredAccommodations = this.accommodations.filter(acc =>
+      (locationValue === '' || acc.location.includes(locationValue)) &&
+      (this.isDateInRange(acc, dateFromValue, dateToValue))
+    );
   }
 
+  private isDateInRange(accommodation: Accommodation, dateFrom: string, dateTo: string): boolean {
+    if (!dateFrom || !dateTo) {
+      return true;
+    }
+  
+    const fromDate = new Date(dateFrom);
+    const toDate = new Date(dateTo);
+  
+    for (const availability of accommodation.availabilities) {
+      const availFrom = new Date(availability.from);
+      const availTo = new Date(availability.to);
+  
+      // Check if the availability range overlaps with the specified date range
+      if ((availFrom <= toDate && availTo >= fromDate) || (fromDate <= availTo && toDate >= availFrom)) {
+        console.log("prosao")
+        return true;
+      }
+    }
+    console.log("nije prosao")
+    return false;
+  }
+  
+  clearFilters(): void {
+    this.locationInput.nativeElement.value = '';
+    this.numberOfGuestsInput.nativeElement.value = '';
+    this.dateFromInput.nativeElement.value = '';
+    this.dateToInput.nativeElement.value = '';
+    this.applyFilters();
+  }
+  
   private getSelectedAmenities(): string[] {
     return Object.keys(this.selectedAmenities).filter(key => this.selectedAmenities[key]);
   }

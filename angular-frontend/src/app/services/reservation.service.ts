@@ -50,7 +50,10 @@ export class ReservationService {
           returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
           this.router.navigate([returnUrl + "/"]);
       },
-
+        (error) => {
+          console.error(error);
+          this.openDialog("Error creating reservation. Please try again.");
+        }
       );
 
 

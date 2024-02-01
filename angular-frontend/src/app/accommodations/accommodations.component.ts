@@ -115,7 +115,7 @@ export class AccommodationsComponent implements OnInit{
             }
           });
         }
-        this.filteredAccommodations = this.accommodations;
+        this.filteredAccommodations = JSON.parse(JSON.stringify(this.accommodations));
         this.b=1;
 
       },
@@ -152,6 +152,8 @@ export class AccommodationsComponent implements OnInit{
 
     this.applyFilters();
   }
+
+  private a: Accommodation[] = [];
   applyFilters(): void {
 
     const locationValue = this.locationInput.nativeElement.value;
@@ -163,8 +165,8 @@ export class AccommodationsComponent implements OnInit{
     console.log('Number of Guests:', numberOfGuestsValue);
     console.log('Date From:', dateFromValue);
     console.log('Date To:', dateToValue);
-
-    this.filteredAccommodations = this.accommodations.filter(acc =>
+     this.a = JSON.parse(JSON.stringify(this.accommodations));
+    this.filteredAccommodations = this.a.filter(acc =>
       (locationValue === '' || acc.location.includes(locationValue)) &&
       (this.isDateInRange(acc, dateFromValue, dateToValue)) &&
       (this.isGuestOKey(acc, dateFromValue, dateToValue))
@@ -204,7 +206,7 @@ export class AccommodationsComponent implements OnInit{
       if (availability.price_hole > 1 || (availability.price_per_person > 0 && availability.number_of_people >= this.getNumberOfGuests())) {
 
       } else {
-        for (const tempa of this.accommodations) {
+        for (const tempa of this.a) {
           if (JSON.stringify(tempa) === JSON.stringify(accommodation)) {
             return false;
           }
@@ -226,19 +228,7 @@ export class AccommodationsComponent implements OnInit{
       alert("FromDate must be before ToDate");
     }
     let arrayCopy = JSON.parse(JSON.stringify(accommodation.availabilities));
-    for (const availability of arrayCopy) {
-      if (availability.price_hole > 1 || (availability.price_per_person > 0 && availability.number_of_people >= this.getNumberOfGuests())) {
 
-      } else {
-        for (const tempa of this.filteredAccommodations) {
-          if (JSON.stringify(tempa) === JSON.stringify(accommodation)) {
-            let a = this.filteredAccommodations.indexOf(accommodation)
-            this.filteredAccommodations.splice(a, 1);
-          }
-        }
-
-      }
-    }
     for (const availability of arrayCopy) {
       const availFrom = new Date(availability.from);
       const availTo = new Date(availability.to);

@@ -52,7 +52,7 @@ export class ReservationService {
       },
         (error) => {
           console.error(error);
-          this.openDialog("Error creating reservation. Please try again.");
+          this.openDialog("Error creating reservation, reservation not available for the specified date range.");
         }
       );
 

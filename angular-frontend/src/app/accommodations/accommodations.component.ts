@@ -11,12 +11,17 @@ import {UserService} from "../services/user.service";
 import { Subscription } from 'rxjs';
 import { ReservationService } from '../services/reservation.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 class Availability {
   constructor(
     public from: Date,
     public to: Date,
-    public price_hole: number
+    public price_hole: number,
+    public price_per_person: number,
+    public number_of_people: number,
+
+
   ) {}
 }
 
@@ -64,12 +69,20 @@ export class AccommodationsComponent implements OnInit{
   ownerFilter = '';
   private accommodationsSubscription: Subscription | undefined;
   emaila: any;
-  constructor(private http: HttpClient, private router: Router,public jwtHelper: JwtHelperService, private dialog: MatDialog, private userService: UserService,
+  changePasswordForm: FormGroup;
+
+
+  constructor(private http: HttpClient,private fb: FormBuilder, private router: Router,public jwtHelper: JwtHelperService, private dialog: MatDialog, private userService: UserService,
     private authGuard: AuthGuard,
     private accommodationsService: AccomondationService,
-  private auth: AuthService, private reservation: ReservationService) {}
+  private auth: AuthService, private reservation: ReservationService) {
+    this.changePasswordForm = this.fb.group({
+      dateFrom: ['', Validators.required],
+      dateTo: ['', [Validators.required]],
+  });
+  }
  b:any =5;
-
+  flagg:any =0;
 
   // get filteredAccommodations(): Accommodation[] {
   //   return this.accommodations.filter(acc =>
@@ -86,7 +99,7 @@ export class AccommodationsComponent implements OnInit{
     // const canActivate = this.authGuard.canActivate(
     //   {} as ActivatedRouteSnapshot,
     //   {} as RouterStateSnapshot
-    // ); 
+    // );
     this.accommodationsService.getAllAccommodations().subscribe(
       (data) => {
         console.log(data)
@@ -104,14 +117,14 @@ export class AccommodationsComponent implements OnInit{
         }
         this.filteredAccommodations = this.accommodations;
         this.b=1;
-        
+
       },
       (error) => {
         console.error("error fetching accommodations", error);
       }
-      
+
     )
-    
+
     // if (!canActivate) {
     //   console.log('Unauthorized access');
     //   this.router.navigate(['/login']);
@@ -121,7 +134,7 @@ export class AccommodationsComponent implements OnInit{
     // for (const accommodation of this.accommodations) {
     //   console.log(accommodation);
     // }
-    
+
   }
   ngOnDestroy(): void {
     // EXIT, kada se komponenta zatvara
@@ -133,12 +146,14 @@ export class AccommodationsComponent implements OnInit{
     const numberOfGuests = parseFloat(this.numberOfGuestsInput.nativeElement.value);
     return isNaN(numberOfGuests) || numberOfGuests < 1 ? 1 : numberOfGuests;
   }
-  
+
 
   onLocationInputChange(event: any): void {
+
     this.applyFilters();
   }
   applyFilters(): void {
+
     const locationValue = this.locationInput.nativeElement.value;
     const numberOfGuestsValue = this.numberOfGuestsInput.nativeElement.value;
     const dateFromValue = this.dateFromInput.nativeElement.value;
@@ -151,40 +166,139 @@ export class AccommodationsComponent implements OnInit{
 
     this.filteredAccommodations = this.accommodations.filter(acc =>
       (locationValue === '' || acc.location.includes(locationValue)) &&
-      (this.isDateInRange(acc, dateFromValue, dateToValue))
+      (this.isDateInRange(acc, dateFromValue, dateToValue)) &&
+      (this.isGuestOKey(acc, dateFromValue, dateToValue))
     );
-  }
 
+  }
+  public countDays() {
+    // Convert both dates to milliseconds
+    const fromDate = new Date(this.changePasswordForm.value.dateFrom);
+    const toDate = new Date(this.changePasswordForm.value.dateTo);
+
+
+    var startMillis = fromDate.getTime();
+    var endMillis = toDate.getTime();
+
+    // Calculate the difference in milliseconds
+    var differenceMillis = Math.abs(endMillis - startMillis);
+
+    // Convert milliseconds to days
+    var daysDifference = Math.ceil(differenceMillis / (1000 * 3600 * 24));
+
+    return daysDifference;
+  }
+  private isGuestOKey(accommodation: Accommodation, dateFrom: string, dateTo: string): boolean {
+    if (!dateFrom || !dateTo) {
+      return true;
+    }
+
+    const fromDate = new Date(dateFrom);
+    const toDate = new Date(dateTo);
+    if (fromDate >= toDate ) {
+      return false;
+      alert("FromDate must be before ToDate");
+    }
+    let arrayCopy = JSON.parse(JSON.stringify(accommodation.availabilities));
+    for (const availability of arrayCopy) {
+      if (availability.price_hole > 1 || (availability.price_per_person > 0 && availability.number_of_people >= this.getNumberOfGuests())) {
+
+      } else {
+        for (const tempa of this.accommodations) {
+          if (JSON.stringify(tempa) === JSON.stringify(accommodation)) {
+            return false;
+          }
+        }
+
+      }
+    }
+    return true;
+  }
   private isDateInRange(accommodation: Accommodation, dateFrom: string, dateTo: string): boolean {
     if (!dateFrom || !dateTo) {
       return true;
     }
-  
+
     const fromDate = new Date(dateFrom);
     const toDate = new Date(dateTo);
-  
-    for (const availability of accommodation.availabilities) {
-      const availFrom = new Date(availability.from);
-      const availTo = new Date(availability.to);
-  
-      // Check if the availability range overlaps with the specified date range
-      if ((availFrom <= toDate && availTo >= fromDate) || (fromDate <= availTo && toDate >= availFrom)) {
-        console.log("prosao")
-        return true;
+    if (fromDate >= toDate ) {
+      return false;
+      alert("FromDate must be before ToDate");
+    }
+    let arrayCopy = JSON.parse(JSON.stringify(accommodation.availabilities));
+    for (const availability of arrayCopy) {
+      if (availability.price_hole > 1 || (availability.price_per_person > 0 && availability.number_of_people >= this.getNumberOfGuests())) {
+
+      } else {
+        for (const tempa of this.filteredAccommodations) {
+          if (JSON.stringify(tempa) === JSON.stringify(accommodation)) {
+            let a = this.filteredAccommodations.indexOf(accommodation)
+            this.filteredAccommodations.splice(a, 1);
+          }
+        }
+
       }
     }
-    console.log("nije prosao")
-    return false;
+    for (const availability of arrayCopy) {
+      const availFrom = new Date(availability.from);
+      const availTo = new Date(availability.to);
+
+      // Check if the availability range overlaps with the specified date range
+      if (availFrom <= fromDate && availTo >= toDate) {
+
+      }else {
+
+          for(const tempa of accommodation.availabilities){
+            if(JSON.stringify(tempa) === JSON.stringify(availability)){
+              let a = accommodation.availabilities.indexOf(tempa)
+              accommodation.availabilities.splice(a, 1);
+            }
+          }
+
+
+
+      }
+    }
+    if(accommodation.availabilities.length > 0 ){
+      this.flagg = 1;
+      return true;
+    }else {
+      return false;
+    }
   }
-  
+
   clearFilters(): void {
+    this.flagg = 0;
+    this.accommodationsService.getAllAccommodations().subscribe(
+      (data) => {
+        console.log(data)
+        this.accommodations = data;
+        for (const accommodation of this.accommodations) {
+          this.reservation.get_avaibility(accommodation.uid).subscribe((res) => {
+            if (res.body == "NOT_ACCEPTABLE" || res.name == "HttpErrorResponse") {
+              alert("Error");
+            } else {
+              console.log(res);
+              accommodation.availabilities = res.body.dummy;
+            }
+          });
+        }
+        this.filteredAccommodations = this.accommodations;
+        this.b=1;
+
+      },
+      (error) => {
+        console.error("error fetching accommodations", error);
+      }
+
+    )
     this.locationInput.nativeElement.value = '';
     this.numberOfGuestsInput.nativeElement.value = '';
     this.dateFromInput.nativeElement.value = '';
     this.dateToInput.nativeElement.value = '';
     this.applyFilters();
   }
-  
+
   private getSelectedAmenities(): string[] {
     return Object.keys(this.selectedAmenities).filter(key => this.selectedAmenities[key]);
   }
@@ -196,13 +310,13 @@ export class AccommodationsComponent implements OnInit{
 
   showCreateAccommodationDialog: boolean = false;
 
-  openCreateAccommodationDialog() {
-    const dialogRef = this.dialog.open(AccommodationCreateComponent, {
+    openCreateAccommodationDialog() {
+      const dialogRef = this.dialog.open(AccommodationCreateComponent, {
 
-    });
+      });
 
-    // Optional: Add logic after the dialog is closed
-    dialogRef.afterClosed().subscribe(result => {
+      // Optional: Add logic after the dialog is closed
+      dialogRef.afterClosed().subscribe(result => {
       console.log(`Accommodation creating dialog closed. Result: ${result}`);
     });
   }

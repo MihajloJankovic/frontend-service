@@ -28,7 +28,7 @@
     <h2>Accommodations</h2>
 
     <!-- Inside your HTML template -->
-    <div class="searching-segment">
+    <div class="searching-segment" [formGroup]="changePasswordForm">
       <div class="filters">
         <div class="filter-group">
           <label for="location">Location:</label>
@@ -279,30 +279,30 @@
           <option value="Zimbabwe">Zimbabwe</option>
           </select>
         </div>
-    
+
         <div class="filter-group">
           <label for="numberOfGuests">Number of Guests:</label>
           <input type="number" id="numberOfGuests" placeholder="Enter number of guests" #numberOfGuestsInput (input)="onLocationInputChange($event)" (change)="onLocationInputChange($event)">
         </div>
-    
+
         <div class="filter-group">
           <label for="dateFrom">Date From:</label>
-          <input type="date" id="dateFrom" #dateFromInput (change)="onLocationInputChange($event)">
+          <input type="date" formControlName="dateFrom" id="dateFrom" #dateFromInput (change)="onLocationInputChange($event)">
         </div>
-    
+
         <div class="filter-group">
           <label for="dateTo">Date To:</label>
-          <input type="date" id="dateTo" #dateToInput (change)="onLocationInputChange($event)">
+          <input type="date" formControlName="dateTo" id="dateTo" #dateToInput (change)="onLocationInputChange($event)">
         </div>
 
         <button (click)="clearFilters()">Clear Filters</button>
 
       </div>
     </div>
-    
 
-    
-    
+
+
+
     <!-- Search Bar and Filters -->
     <!-- <div class="searching-segment">
       <div class="search-bar">
@@ -350,14 +350,25 @@
               <div class="accommodation-info">
                 <h3>Name: {{ accommodation.name }}</h3>
                 <p>Location: {{ accommodation.location }}</p>
-                <ng-container *ngIf="accommodation.availabilities">
-                  <p *ngFor="let availability of accommodation.availabilities">
+                <div *ngIf="flagg==1">
+                <ng-container *ngIf="accommodation.availabilities" >
+                  <p *ngFor="let availability of accommodation.availabilities" >
+
                     Available: {{ availability.from }} to {{ availability.to }}, <br>
-                    <span style="font-size: 1.2em; font-weight: bold;">
-                      Price: ${{ availability.price_hole * getNumberOfGuests() }}
+                    <span style="font-size: 1.2em; font-weight: bold;" *ngIf="availability.price_per_person > 0" >
+                      Price per person: ${{ availability.price_per_person }} / day
+                      <br>
+                       Capacity: {{ availability.number_of_people }} <br>
+                        Price For Your Stay: ${{  countDays() * availability.price_per_person * getNumberOfGuests()  }}
                     </span>
+                    <span style="font-size: 1.2em; font-weight: bold;" *ngIf="availability.price_hole > 0" >
+                      Price per apartment: ${{ availability.price_hole }} / day
+                       Price For Your Stay: ${{  countDays() * availability.price_hole  }}
+                    </span>
+
                   </p>
                 </ng-container>
+                  </div>
               </div>
               <button class="view-details-button" (click)="viewAccommodationDetails(accommodation)">View Details</button>
             </div>
